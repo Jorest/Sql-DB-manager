@@ -16,7 +16,5 @@ public class Main {
         System.out.println(" hollla");
         Consola ventana=new Consola();
         ventana.setVisible(true);
-       
-        
-    }
+   }
 }
