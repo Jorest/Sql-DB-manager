@@ -13,7 +13,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println(" hollla");
+        System.out.println(" hola");
         Consola ventana=new Consola();
         ventana.setVisible(true);
    }
