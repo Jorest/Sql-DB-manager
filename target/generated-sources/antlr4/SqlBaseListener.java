@@ -40,18 +40,6 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipo(@NotNull SqlParser.TipoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTipo(@NotNull SqlParser.TipoContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterTable_definition(@NotNull SqlParser.Table_definitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -119,18 +107,6 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSql_schema_statement(@NotNull SqlParser.Sql_schema_statementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLiteral(@NotNull SqlParser.LiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLiteral(@NotNull SqlParser.LiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

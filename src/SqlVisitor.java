@@ -23,12 +23,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUse_schema_statement(@NotNull SqlParser.Use_schema_statementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SqlParser#tipo}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTipo(@NotNull SqlParser.TipoContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SqlParser#table_definition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -64,12 +58,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSql_schema_statement(@NotNull SqlParser.Sql_schema_statementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SqlParser#literal}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLiteral(@NotNull SqlParser.LiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SqlParser#constraintType}.
 	 * @param ctx the parse tree

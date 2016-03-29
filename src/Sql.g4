@@ -147,12 +147,7 @@ condition: ID '=' ID ;
               
 list_values : (value (',' (value))* ) ;
          
-value: tipo;
-              
-tipo: literal;
-
-
-literal:  
+value :  
         int_literal
     |   float_literal
     |   date_literal
