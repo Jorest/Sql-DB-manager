@@ -31,6 +31,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	}
 	
 	
+	
+	@Override 
+	public T visitTipo_literal(SqlParser.Tipo_literalContext ctx) {
+		return (T)ctx.getText();
+	}
 	//-----Todas las formas basicas de los tipos -----------
 	
 		@Override 
