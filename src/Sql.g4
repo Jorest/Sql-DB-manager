@@ -136,18 +136,17 @@ relational: '<' | '<=' | '>' | '>=' | '<>' | '=' ;
 
 insert_value: 'INSERT' 'INTO' (column) 'VALUES' (list_values) ';';
 
-update_value: 'UPDATE' ID 'SET' column '=' value 'WHERE' condition ';' ;
+update_value: 'UPDATE' ID 'SET' column '=' literal ('WHERE' expression)? ';' ;
 
-delete_value: 'DELETE' 'FROM' ID 'WHERE' condition ';' ;
+delete_value: 'DELETE' 'FROM' ID ('WHERE' expression)? ';' ;
 
-select_value: 'SELECT' ('*' | ID (',' ID)* ) 'FROM' ID 'WHERE' condition  ('ORDER' 'BY' ('ASC' | 'DESC'))? ';';
+select_value: 'SELECT' ('*' | ID (',' ID)* ) 'FROM' ID ('WHERE' expression)?  ('ORDER' 'BY' ('ASC' | 'DESC'))? ';';
 
+                  
               
-condition: ID '=' ID ;         
-              
-list_values : (value (',' (value))* ) ;
+list_values : (literal (',' (literal))* ) ;
          
-value :  
+literal :  
         int_literal
     |   float_literal
     |   date_literal
@@ -155,10 +154,64 @@ value :
     ;
 
 int_literal: NUM;
-float_literal: FLOAT;
-date_literal: DATE;
+	float_literal: FLOAT;
+	date_literal: DATE;
 char_literal: CHAR;
 
+
+
+rel_op
+	:	'<'												#relL
+	|	'>'												#rekB
+	| 	'<='											#relLE
+	|	'>='											#relBE
+	;
+	
+eq_op
+	:	'='											#eqE
+	|	'<>'										#eqNE	
+	;
+	
+cond_op1
+	:	'AND'
+	;
+	
+cond_op2
+	:	'OR'
+	;	
+
+expression							
+	: expression cond_op2 expr1		#expression1
+	| expr1							#expression2
+	;
+	
+expr1								
+	: expr1 cond_op1 expr2		#expr11
+	|expr2						#expr12
+	;
+	
+expr2								
+	: expr2 eq_op expr3			#expr21
+	| expr3						#expr22
+	;
+
+expr3								
+	: expr3 rel_op unifactor			#expr31
+	| unifactor							#expr32
+	;
+
+unifactor
+	: 'NOT' factor						#uniFactorNot
+	| factor							#uniFactorFactor
+	;
+	
+factor 							
+	: literal					#factorLiteral
+	| '(' expression ')'		#factorExpression
+	| (ID|TABLEID)   			#factorID
+	| NULL						#factorNull
+	;
+	
 
 
               
