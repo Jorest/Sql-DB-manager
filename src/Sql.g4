@@ -1,8 +1,4 @@
-/*
- * PD
- * UVG
- * 2016
- */
+
 
 grammar Sql;
 
@@ -94,7 +90,6 @@ drop_schema_statement: 'DROP' 'DATABASE' ID ';';
 alter_table_statement: 'ALTER' 'TABLE' ID accion ';';
 
 drop_table_statement: 'DROP' 'TABLE' ID ';';
-
 alter_database_statement: 'ALTER' 'DATABASE' ID 'RENAME' 'TO' ID ';' ;
 
  show_schema_statement: 'SHOW' 'DATABASES' ';';
@@ -134,9 +129,9 @@ show_column_statement: 'SHOW' 'COLUMNS' 'FROM' ID ';';
 logic: 'AND' | 'OR' | 'NOT';
 relational: '<' | '<=' | '>' | '>=' | '<>' | '=' ;
 
-insert_value: 'INSERT' 'INTO' (column) 'VALUES' (list_values) ';';
+insert_value: 'INSERT' 'INTO' ID ( '(' ((ID)(','ID)*)? ')' )? 'VALUES' (list_values) ';';
 
-update_value: 'UPDATE' ID 'SET' column '=' literal ('WHERE' expression)? ';' ;
+update_value: 'UPDATE' ID 'SET'  ID '=' literal (','ID '=' literal)* ('WHERE' expression)? ';' ;
 
 delete_value: 'DELETE' 'FROM' ID ('WHERE' expression)? ';' ;
 
