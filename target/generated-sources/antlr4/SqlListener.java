@@ -28,16 +28,6 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitTable_definition(@NotNull SqlParser.Table_definitionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SqlParser#program}.
-	 * @param ctx the parse tree
-	 */
-	void enterProgram(@NotNull SqlParser.ProgramContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SqlParser#program}.
-	 * @param ctx the parse tree
-	 */
-	void exitProgram(@NotNull SqlParser.ProgramContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link SqlParser#int_literal}.
 	 * @param ctx the parse tree
 	 */
@@ -111,6 +101,28 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUniFactorFactor(@NotNull SqlParser.UniFactorFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SqlParser#sql2003Parser}.
+	 * @param ctx the parse tree
+	 */
+	void enterSql2003Parser(@NotNull SqlParser.Sql2003ParserContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SqlParser#sql2003Parser}.
+	 * @param ctx the parse tree
+	 */
+	void exitSql2003Parser(@NotNull SqlParser.Sql2003ParserContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code factorNull}
+	 * labeled alternative in {@link SqlParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactorNull(@NotNull SqlParser.FactorNullContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code factorNull}
+	 * labeled alternative in {@link SqlParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactorNull(@NotNull SqlParser.FactorNullContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SqlParser#exp}.
 	 * @param ctx the parse tree
@@ -335,6 +347,18 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLiteral(@NotNull SqlParser.LiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code factorID}
+	 * labeled alternative in {@link SqlParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactorID(@NotNull SqlParser.FactorIDContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code factorID}
+	 * labeled alternative in {@link SqlParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactorID(@NotNull SqlParser.FactorIDContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SqlParser#constraintType}.
 	 * @param ctx the parse tree

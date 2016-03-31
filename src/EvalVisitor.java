@@ -7,7 +7,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	
 	//*** Todo visitor va de esta forma, podemos retornos cualquier cosa
 	@Override  
-	public T visitProgram (SqlParser.ProgramContext ctx) {
+	public T visitSql2003Parser (SqlParser.Sql2003ParserContext ctx) {
 		  
 		  return (T)"";
 	  }
@@ -62,7 +62,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	
 				
 		@Override
-		public T visitLiteral(SqlParser.LiteralContext ctx) {
+		public T visitValue(SqlParser.ValueContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(0));
 			return (T) dato ;

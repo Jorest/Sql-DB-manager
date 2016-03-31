@@ -42,7 +42,7 @@ COMMENT
 
 // PARSER SPECIFICATION
 
-program 
+sql2003Parser 
 	:	
             ( sql_executable_statement )+
 	;
@@ -203,7 +203,8 @@ unifactor
 factor 							
 	: literal					#factorLiteral
 	| '(' expression ')'		#factorExpression
-	// Quite el null y el TableID, debido a warnings 
+	| (ID|TABLEID)   			#factorID
+	| NULL						#factorNull
 	;
 	
 
