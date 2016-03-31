@@ -23,6 +23,12 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTable_definition(@NotNull SqlParser.Table_definitionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SqlParser#program}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProgram(@NotNull SqlParser.ProgramContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SqlParser#int_literal}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -66,19 +72,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUniFactorFactor(@NotNull SqlParser.UniFactorFactorContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SqlParser#sql2003Parser}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSql2003Parser(@NotNull SqlParser.Sql2003ParserContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code factorNull}
-	 * labeled alternative in {@link SqlParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFactorNull(@NotNull SqlParser.FactorNullContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SqlParser#exp}.
 	 * @param ctx the parse tree
@@ -212,13 +205,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLiteral(@NotNull SqlParser.LiteralContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code factorID}
-	 * labeled alternative in {@link SqlParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFactorID(@NotNull SqlParser.FactorIDContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SqlParser#constraintType}.
 	 * @param ctx the parse tree
