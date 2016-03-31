@@ -1,8 +1,4 @@
-/*
- * PD
- * UVG
- * 2016
- */
+
 
 grammar Sql;
 
@@ -46,7 +42,7 @@ COMMENT
 
 // PARSER SPECIFICATION
 
-sql2003Parser 
+program 
 	:	
             ( sql_executable_statement )+
 	;
@@ -94,7 +90,6 @@ drop_schema_statement: 'DROP' 'DATABASE' ID ';';
 alter_table_statement: 'ALTER' 'TABLE' ID accion ';';
 
 drop_table_statement: 'DROP' 'TABLE' ID ';';
-
 alter_database_statement: 'ALTER' 'DATABASE' ID 'RENAME' 'TO' ID ';' ;
 
  show_schema_statement: 'SHOW' 'DATABASES' ';';
@@ -134,20 +129,19 @@ show_column_statement: 'SHOW' 'COLUMNS' 'FROM' ID ';';
 logic: 'AND' | 'OR' | 'NOT';
 relational: '<' | '<=' | '>' | '>=' | '<>' | '=' ;
 
-insert_value: 'INSERT' 'INTO' (column) 'VALUES' (list_values) ';';
+insert_value: 'INSERT' 'INTO' ID ( '(' ((ID)(','ID)*)? ')' )? 'VALUES' (list_values) ';';
 
-update_value: 'UPDATE' ID 'SET' column '=' value 'WHERE' condition ';' ;
+update_value: 'UPDATE' ID 'SET'  ID '=' literal (','ID '=' literal)* ('WHERE' expression)? ';' ;
 
-delete_value: 'DELETE' 'FROM' ID 'WHERE' condition ';' ;
+delete_value: 'DELETE' 'FROM' ID ('WHERE' expression)? ';' ;
 
-select_value: 'SELECT' ('*' | ID (',' ID)* ) 'FROM' ID 'WHERE' condition  ('ORDER' 'BY' ('ASC' | 'DESC'))? ';';
+select_value: 'SELECT' ('*' | ID (',' ID)* ) 'FROM' ID ('WHERE' expression)?  ('ORDER' 'BY' ('ASC' | 'DESC'))? ';';
 
+                  
               
-condition: ID '=' ID ;         
-              
-list_values : (value (',' (value))* ) ;
+list_values : (literal (',' (literal))* ) ;
          
-value :  
+literal :  
         int_literal
     |   float_literal
     |   date_literal
@@ -155,10 +149,63 @@ value :
     ;
 
 int_literal: NUM;
-float_literal: FLOAT;
-date_literal: DATE;
+	float_literal: FLOAT;
+	date_literal: DATE;
 char_literal: CHAR;
 
+
+
+rel_op
+	:	'<'												#relL
+	|	'>'												#rekB
+	| 	'<='											#relLE
+	|	'>='											#relBE
+	;
+	
+eq_op
+	:	'='											#eqE
+	|	'<>'										#eqNE	
+	;
+	
+cond_op1
+	:	'AND'
+	;
+	
+cond_op2
+	:	'OR'
+	;	
+
+expression							
+	: expression cond_op2 expr1		#expression1
+	| expr1							#expression2
+	;
+	
+expr1								
+	: expr1 cond_op1 expr2		#expr11
+	|expr2						#expr12
+	;
+	
+expr2								
+	: expr2 eq_op expr3			#expr21
+	| expr3						#expr22
+	;
+
+expr3								
+	: expr3 rel_op unifactor			#expr31
+	| unifactor							#expr32
+	;
+
+unifactor
+	: 'NOT' factor						#uniFactorNot
+	| factor							#uniFactorFactor
+	;
+	
+factor 							
+	: literal					#factorLiteral
+	| '(' expression ')'		#factorExpression
+	// Quite el null y el TableID, debido a warnings 
+	;
+	
 
 
               

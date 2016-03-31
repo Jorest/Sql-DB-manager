@@ -17,6 +17,7 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws IOException 
      */
     public static void main(String[] args) {
         Controlador c= new Controlador(); 
