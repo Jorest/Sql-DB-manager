@@ -21,6 +21,9 @@ public class Columna {
         valores= new ArrayList();
     }
 
+    public Columna() {
+    }
+    
     public String getNombre() {
         return nombre;
     }
