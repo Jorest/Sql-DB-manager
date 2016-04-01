@@ -122,13 +122,71 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		public T visitRelL(SqlParser.Expr31Context ctx) {
 			Dato dato1 = (Dato) ctx.getParent().getChild(0);
 			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
 			
-			return (T) dato1 ;
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()<dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
+		
+		public T visitRekB(SqlParser.RekBContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()>dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
+		
+		public T visitRelLE(SqlParser.RelLEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()<=dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
 		}
 		
 		
-		
-		
+		public T visitRelBE(SqlParser.RelBEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()<=dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
 }
 
 
