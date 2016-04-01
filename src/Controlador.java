@@ -1,5 +1,11 @@
 
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -10,7 +16,7 @@ import java.util.Map;
 
 /**
  *
- * @author Luis (wecaso)
+ * @author Luis
  */
 public class Controlador {
     private ArrayList nombresBD; 
@@ -27,7 +33,6 @@ public class Controlador {
                     File directorio = new File("BasesDatos/"+b.getNombre());
                     directorio.mkdir();
         
-                    
          }catch(Exception e) {
               System.out.println("No se pudo crear la Base de Datos "+ nombre);
          }
@@ -64,4 +69,34 @@ public class Controlador {
          //Ingresar las tablas a la base de datos con el set
         
     }
+    private void createT(String nombre,ArrayList columnas,ArrayList primary, ArrayList fore, ArrayList check){
+        Tabla t=new Tabla(nombre);
+        t.setColumnas(columnas);
+        t.setForeignk(fore);
+        t.setPrimaryk(primary);
+        t.setCheck(check);
+        GsonBuilder builder = new GsonBuilder();
+        builder.serializeNulls();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(t);
+        String path= "BaseDatos/"+actual.getNombre()+"/"+t.getNombre()+".json";
+        escribir(json,path);
+        actual.setTabla(t);
+    }
+    
+    public String escribir(String datos,  String path){
+       //codigo=codigo.replace(' ', '\n');
+       try{
+           FileWriter fw= new FileWriter(path);
+           BufferedWriter bw = new BufferedWriter(fw);
+           PrintWriter salida= new PrintWriter(bw);
+           salida.println(datos);
+           salida.close();
+                   
+       }
+       catch(java.io.IOException ioex){
+           System.out.println("Se presento un error: " + ioex);
+       }
+       return path;
+   }
 }

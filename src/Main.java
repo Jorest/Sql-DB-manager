@@ -21,10 +21,7 @@ import java.util.List;
  * @author Luis
  */
 
-
-
-
-public class Main  {
+public class Main {
 
     /**
      * @param args the command line arguments
@@ -119,5 +116,4 @@ public class Main  {
         System.out.println(c.getNombre());**/
         
         
-
-}
+   }
