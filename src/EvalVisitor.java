@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	
-	Controlador controlador = new Controlador() ;
+	ControladorDB controlador = new ControladorDB() ;
 	
 	
 	//*** Todo visitor va de esta forma, podemos retornos cualquier cosa
