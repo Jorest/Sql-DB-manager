@@ -30,7 +30,7 @@ public class Main {
      * @param args the command line arguments
      * @throws IOException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Controlador c= new Controlador(); 
         c.createDB("prueba");
         c.useDB("prueba");
