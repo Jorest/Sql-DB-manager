@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -375,7 +375,7 @@ public class Controlador {
          }
         return resul; 
     }
->>>>>>> refs/remotes/origin/master
+
     public String escribir(String datos,  String path){
        //codigo=codigo.replace(' ', '\n');
        try{
@@ -391,9 +391,9 @@ public class Controlador {
        }
        return path;
    }
-<<<<<<< HEAD
-}
-=======
+
+
+
     private static String readFile(String filePath) throws java.io.IOException{
 	    byte[] buffer = new byte[(int) new File(filePath).length()];
 	    BufferedInputStream f = null;
@@ -405,5 +405,4 @@ public class Controlador {
 	    return new String(buffer);
 	}
 }
->>>>>>> origin/master
->>>>>>> refs/remotes/origin/master
+
