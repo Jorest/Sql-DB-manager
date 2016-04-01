@@ -85,15 +85,61 @@ public class Controlador {
         escribir(json,path);
         actual.setTabla(t);
     }
-    private void alterT(String nombre, String nnombre){
+    private void renameT(String nombre, String nnombre) throws IOException{
         String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
+        Gson gson1 = new Gson();
+        Tabla t = gson1.fromJson(json, Tabla.class);
+        t.setNombre(nnombre);
+        dropT(nombre);
+        GsonBuilder builder = new GsonBuilder();
+        builder.serializeNulls();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        json = gson.toJson(t);
+        String path= "BaseDatos/"+actual.getNombre()+"/"+t.getNombre()+".json";
+        escribir(json,path); 
      
-        boolean resul=directorio.renameTo(directorio1);
+    }
+    private void addColum(){
+        
+    }
+    private void addConstraint(){
+        
+    }
+    private void dropColumn(){
+        
+    }
+    public void dropT(String nombre){
+        File directorio= new File("BaseDatos/"+actual.getNombre()+"/"+nombre+".json");
+        boolean resul=directorio.delete();
         if(resul==false){
             System.out.println("Error en el cambio de nombre a Base de Datos "+ nombre);
         }
+        
     }
-    
+    public ArrayList showTables(){
+        ArrayList resul=new ArrayList();
+        if(actual!=null){
+            File directorio= new File("BasesDatos/"+actual.getNombre());
+            File[] bases=directorio.listFiles();
+            File base=null; 
+            for(int i=0; i<bases.length;i++){
+                resul.add(bases[i].getName());
+            }
+        }
+        return resul;
+    }
+    public ArrayList showCololums(String nombre) throws IOException{
+         ArrayList resul=new ArrayList();
+         String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
+         Gson gson1 = new Gson();
+         Tabla t = gson1.fromJson(json, Tabla.class);
+         ArrayList columnas=t.getColumnas();
+         for(int i=0;i<columnas.size();i++){
+             Columna c=(Columna)columnas.get(i);
+             resul.add(c.getNombre());
+         }
+        return resul; 
+    }
     public String escribir(String datos,  String path){
        //codigo=codigo.replace(' ', '\n');
        try{
