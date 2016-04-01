@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -121,9 +118,4 @@ public class Main {
         System.out.println(c.getNombre());**/
         
         
-<<<<<<< HEAD
 }
-
-=======
-}
->>>>>>> refs/remotes/origin/master
