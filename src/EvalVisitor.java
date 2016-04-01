@@ -4,6 +4,8 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	
+	Controlador controlador = new Controlador() ;
+	
 	
 	//*** Todo visitor va de esta forma, podemos retornos cualquier cosa
 	@Override  
@@ -12,7 +14,12 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		  return (T)"";
 	  }
 	
-	
+	//******************EJERCICIO #1: DDL**************************
+	@Override 
+	public T visitSql_schema_definition_statement(SqlParser.Sql_schema_definition_statementContext ctx) {
+		controlador.createDB(ctx.getChild(2).getText());
+		return (T)"";	
+	}
 	
 	
 	
