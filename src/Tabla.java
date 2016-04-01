@@ -14,9 +14,9 @@ import java.util.Map;
 public class Tabla {
     private String nombre; 
     private ArrayList <Columna> columnas; 
-    private ArrayList primaryk; 
-    private Map foreignk; 
-    private String check; 
+    private ArrayList <PrimaryKey> primaryk; 
+    private ArrayList <ForeignKey> foreignk; 
+    private ArrayList <Check> check; 
     
 
     public Tabla(String nombre) {
@@ -26,7 +26,7 @@ public class Tabla {
 
     public Tabla() {
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -43,10 +43,28 @@ public class Tabla {
         this.columnas = columnas;
     }
 
-    public void setColumna(Columna col) {
-        columnas.add(col);
+    public ArrayList<PrimaryKey> getPrimaryk() {
+        return primaryk;
     }
-    
-    
+
+    public void setPrimaryk(ArrayList<PrimaryKey> primaryk) {
+        this.primaryk = primaryk;
+    }
+
+    public ArrayList<ForeignKey> getForeignk() {
+        return foreignk;
+    }
+
+    public void setForeignk(ArrayList<ForeignKey> foreignk) {
+        this.foreignk = foreignk;
+    }
+
+    public ArrayList<Check> getCheck() {
+        return check;
+    }
+
+    public void setCheck(ArrayList<Check> check) {
+        this.check = check;
+    }
     
 }
