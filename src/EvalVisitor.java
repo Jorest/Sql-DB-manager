@@ -92,43 +92,110 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			dato= (Dato)visit(ctx.getChild(0));
 			return (T) dato ;
 		}
-
+		@Override
 		public T visitFactorExpression(SqlParser.FactorExpressionContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(1));
 			return (T) dato ;
 		}
 		
-
+		@Override
 		public T visitUniFactorNot(SqlParser.UniFactorNotContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(1));
 			dato.setBool(!dato.getBool());
 			return (T) dato ;
 		}
-		
+		@Override
 		public T visitUniFactorFactor(SqlParser.UniFactorFactorContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(1));
 			return (T) dato ;
 		}
-		
+		@Override
 		public T visitExpr32(SqlParser.Expr32Context ctx) {
 			Dato dato = new Dato() ;
-			dato= (Dato)visit(ctx.getChild(1));
+			dato= (Dato)visit(ctx.getChild(0));
 			return (T) dato ;
 		}
-		
-		public T visitRelL(SqlParser.Expr31Context ctx) {
+		@Override
+		public T visitRelL(SqlParser.RelLContext ctx) {
 			Dato dato1 = (Dato) ctx.getParent().getChild(0);
 			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
 			
-			return (T) dato1 ;
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()<dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
+		@Override
+		public T visitRekB(SqlParser.RekBContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()>dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
+		@Override
+		public T visitRelLE(SqlParser.RelLEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()<=dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
 		}
 		
+		@Override
+		public T visitRelBE(SqlParser.RelBEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()>=dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
 		
+		@Override
+		public T visitExpr31(SqlParser.Expr31Context ctx) {
+			Dato dato = (Dato) visit(ctx.getChild(1));
+			return (T)dato ;
+		}
+
 		
-		
+	
 }
 
 
