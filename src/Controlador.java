@@ -1,9 +1,12 @@
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
@@ -82,6 +85,14 @@ public class Controlador {
         escribir(json,path);
         actual.setTabla(t);
     }
+    private void alterT(String nombre, String nnombre){
+        String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
+     
+        boolean resul=directorio.renameTo(directorio1);
+        if(resul==false){
+            System.out.println("Error en el cambio de nombre a Base de Datos "+ nombre);
+        }
+    }
     
     public String escribir(String datos,  String path){
        //codigo=codigo.replace(' ', '\n');
@@ -98,4 +109,14 @@ public class Controlador {
        }
        return path;
    }
+    private static String readFile(String filePath) throws java.io.IOException{
+	    byte[] buffer = new byte[(int) new File(filePath).length()];
+	    BufferedInputStream f = null;
+	    try {
+	        f = new BufferedInputStream(new FileInputStream(filePath));
+	        f.read(buffer);
+	        if (f != null) try { f.close(); } catch (IOException ignored) { }
+	    } catch (IOException ignored) { System.out.println("File not found or invalid path.");}
+	    return new String(buffer);
+	}
 }
