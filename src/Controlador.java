@@ -100,15 +100,66 @@ public class Controlador {
         escribir(json,path); 
      
     }
-    private void addColum(){
-        
+    private void addColum(String nombreTabla, String nombreColumna) throws IOException{
+        String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombreTabla+".json");
+        Gson gson1 = new Gson();
+        Tabla t = gson1.fromJson(json, Tabla.class);
     }
     private void addConstraint(){
         
     }
-    private void dropColumn(){
-        
+    private void dropColumn(String nombreTabla, String nombreColumna) throws IOException{
+        String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombreTabla+".json");
+        Gson gson1 = new Gson();
+        Tabla t = gson1.fromJson(json, Tabla.class);
+        ArrayList <Columna> columnas=t.getColumnas();
+        for(int i=0;i<columnas.size();i++ ){
+            if(columnas.get(i).getNombre().equals(nombreColumna)){
+                columnas.remove(i);
+            }
+        }
+        t.setColumnas(columnas);
+        GsonBuilder builder = new GsonBuilder();
+        builder.serializeNulls();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        json = gson.toJson(t);
+        String path= "BaseDatos/"+actual.getNombre()+"/"+t.getNombre()+".json";
+        escribir(json,path); 
+     
     }
+    private void dropConstraint(String nombreTabla, String nombreCons) throws IOException{
+        String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombreTabla+".json");
+        Gson gson1 = new Gson();
+        Tabla t = gson1.fromJson(json, Tabla.class);
+        ArrayList <PrimaryKey> p=t.getPrimaryk();
+        ArrayList <ForeignKey> f=t.getForeignk();
+        ArrayList <Check> c=t.getCheck();
+        for(int i=0; i<p.size();i++){
+             if(p.get(i).getNombre().equals(nombreCons)){
+                p.remove(i);
+            }
+        }
+        for(int i=0; i<f.size();i++){
+             if(f.get(i).getNombre().equals(nombreCons)){
+                f.remove(i);
+            }
+        }
+        for(int i=0; i<c.size();i++){
+             if(c.get(i).getNombre().equals(nombreCons)){
+                c.remove(i);
+            }
+        }
+        t.setForeignk(f);
+        t.setPrimaryk(p);
+        t.setCheck(c);
+         GsonBuilder builder = new GsonBuilder();
+        builder.serializeNulls();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        json = gson.toJson(t);
+        String path= "BaseDatos/"+actual.getNombre()+"/"+t.getNombre()+".json";
+        escribir(json,path); 
+    }
+    
     public void dropT(String nombre){
         File directorio= new File("BaseDatos/"+actual.getNombre()+"/"+nombre+".json");
         boolean resul=directorio.delete();
