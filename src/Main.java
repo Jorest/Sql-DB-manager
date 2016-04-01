@@ -28,7 +28,10 @@ public class Main {
      * @throws IOException 
      */
     public static void main(String[] args) throws IOException {
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
         Controlador c= new Controlador(); 
         c.createDB("prueba");
         c.useDB("prueba");
@@ -117,4 +120,8 @@ public class Main {
         System.out.println(c.getNombre());**/
         
         
+<<<<<<< HEAD
    }
+=======
+   }
+>>>>>>> origin/master
