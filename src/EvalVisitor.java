@@ -8,9 +8,15 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	
 	
 	//*** Todo visitor va de esta forma, podemos retornos cualquier cosa
+	//progam es el la raiz de los demas visitors
+	
 	@Override  
 	public T visitProgram (SqlParser.ProgramContext ctx) {
-		  
+		for (int i = 0;i<ctx.getChildCount();i++){
+	         //  visito todas los hijos
+			visit(ctx.getChild(i));
+	            }  
+
 		  return (T)"";
 	  }
 	
@@ -37,17 +43,17 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		return (T) values ;
 	}
 	
-	
+	//-----Todas las formas basicas de los tipos -----------	
 	
 	@Override 
 	public T visitTipo_literal(SqlParser.Tipo_literalContext ctx) {
 		return (T)ctx.getText();
 	}
-	//-----Todas las formas basicas de los tipos -----------
 	
 		@Override 
 		public T visitInt_literal(SqlParser.Int_literalContext ctx) {
 			Dato dato = new Dato() ;
+			dato.setTipo("int");
 			dato.setInteger(Integer.parseInt(ctx.getText()));
 			return (T) dato ;
 		}
@@ -55,27 +61,74 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override 
 		public T visitFloat_literal(SqlParser.Float_literalContext ctx) {
 			Dato dato = new Dato() ;
+			dato.setTipo("float");
 			dato.setFloating(Float.parseFloat(ctx.getText()));
+			return (T) dato ;
+		}
+		@Override 
+		public T visitChar_literal(SqlParser.Char_literalContext ctx) {
+			Dato dato = new Dato() ;
+			dato.setTipo("char");
+			dato.setCharacter(ctx.getText());
 			return (T) dato ;
 		}
 		
 		@Override
 		public T visitDate_literal(SqlParser.Date_literalContext ctx) {
 			Dato dato = new Dato() ;
+			dato.setTipo("date");
 			dato.setDate(ctx.getText());
 			return (T) dato ;
 		}
-	// falta el visitChar_literal
 	
 				
+
+
+		//----- todas las expresiones ---------------------
+		
 		@Override
 		public T visitLiteral(SqlParser.LiteralContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(0));
 			return (T) dato ;
 		}
+
+		public T visitFactorExpression(SqlParser.FactorExpressionContext ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(1));
+			return (T) dato ;
+		}
 		
-		//-----Todas las formas basicas de los tipos -----------	
+
+		public T visitUniFactorNot(SqlParser.UniFactorNotContext ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(1));
+			dato.setBool(!dato.getBool());
+			return (T) dato ;
+		}
+		
+		public T visitUniFactorFactor(SqlParser.UniFactorFactorContext ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(1));
+			return (T) dato ;
+		}
+		
+		public T visitExpr32(SqlParser.Expr32Context ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(1));
+			return (T) dato ;
+		}
+		
+		public T visitRelL(SqlParser.Expr31Context ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			
+			return (T) dato1 ;
+		}
+		
+		
 		
 		
 }
+
+
