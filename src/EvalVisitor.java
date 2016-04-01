@@ -92,20 +92,29 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			dato= (Dato)visit(ctx.getChild(0));
 			return (T) dato ;
 		}
+<<<<<<< HEAD
 		@Override
+=======
+
+>>>>>>> refs/remotes/origin/master
 		public T visitFactorExpression(SqlParser.FactorExpressionContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(1));
 			return (T) dato ;
 		}
 		
+<<<<<<< HEAD
 		@Override
+=======
+
+>>>>>>> refs/remotes/origin/master
 		public T visitUniFactorNot(SqlParser.UniFactorNotContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(1));
 			dato.setBool(!dato.getBool());
 			return (T) dato ;
 		}
+<<<<<<< HEAD
 		@Override
 		public T visitUniFactorFactor(SqlParser.UniFactorFactorContext ctx) {
 			Dato dato = new Dato() ;
@@ -196,6 +205,89 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 
 		//coment solo para que cambie esta shit
 	
+=======
+		
+		public T visitUniFactorFactor(SqlParser.UniFactorFactorContext ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(1));
+			return (T) dato ;
+		}
+		
+		public T visitExpr32(SqlParser.Expr32Context ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(1));
+			return (T) dato ;
+		}
+		
+		public T visitRelL(SqlParser.Expr31Context ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()<dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
+		
+		public T visitRekB(SqlParser.RekBContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()>dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
+		
+		public T visitRelLE(SqlParser.RelLEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()<=dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
+		
+		//coment
+		public T visitRelBE(SqlParser.RelBEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			
+			if (dato1.getTipo().equals("float")|dato1.getTipo().equals("float")){
+				if (dato1.getInteger()<=dato2.getInteger()){
+			 		newdato.setBool(true) ;
+			 	}
+			 	else newdato.setBool(false) ;
+	           
+			}
+			else  newdato.setBool(false) ;
+				
+			return (T) newdato ;
+		}
+>>>>>>> refs/remotes/origin/master
 }
 
 
