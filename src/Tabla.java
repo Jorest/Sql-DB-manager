@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /*
  * To change this template, choose Tools | Templates
@@ -12,11 +13,18 @@ import java.util.ArrayList;
  */
 public class Tabla {
     private String nombre; 
-    private ArrayList columnas; 
+    private ArrayList <Columna> columnas; 
+    private ArrayList <PrimaryKey> primaryk; 
+    private ArrayList <ForeignKey> foreignk; 
+    private ArrayList <Check> check; 
+    
 
     public Tabla(String nombre) {
         this.nombre = nombre;
         columnas= new ArrayList();
+    }
+
+    public Tabla() {
     }
 
     public String getNombre() {
@@ -27,14 +35,36 @@ public class Tabla {
         this.nombre = nombre;
     }
 
-    public ArrayList getColumnas() {
+    public ArrayList<Columna> getColumnas() {
         return columnas;
     }
 
-    public void setColumna(Columna col) {
-        columnas.add(col);
+    public void setColumnas(ArrayList<Columna> columnas) {
+        this.columnas = columnas;
     }
-    
-    
+
+    public ArrayList<PrimaryKey> getPrimaryk() {
+        return primaryk;
+    }
+
+    public void setPrimaryk(ArrayList<PrimaryKey> primaryk) {
+        this.primaryk = primaryk;
+    }
+
+    public ArrayList<ForeignKey> getForeignk() {
+        return foreignk;
+    }
+
+    public void setForeignk(ArrayList<ForeignKey> foreignk) {
+        this.foreignk = foreignk;
+    }
+
+    public ArrayList<Check> getCheck() {
+        return check;
+    }
+
+    public void setCheck(ArrayList<Check> check) {
+        this.check = check;
+    }
     
 }

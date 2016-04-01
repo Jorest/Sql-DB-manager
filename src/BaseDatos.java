@@ -1,5 +1,8 @@
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*
  * To change this template, choose Tools | Templates
@@ -12,12 +15,18 @@ import java.util.ArrayList;
  */
 public class BaseDatos {
     private String nombre; 
-    private ArrayList tablas; 
+
+    private List <Tabla> tablas; 
 
     public BaseDatos(String nombre) {
         this.nombre = nombre;
-        tablas=new ArrayList();
+        tablas=new ArrayList() ;
     }
+
+    public BaseDatos() {
+    	
+    }
+    
 
     public String getNombre() {
         return nombre;
@@ -27,14 +36,20 @@ public class BaseDatos {
         this.nombre = nombre;
     }
 
-    public ArrayList getTablas() {
-        return tablas;
+
+    public List<Tabla> getTablas() {
+         return tablas;
     }
 
-    public void setTabla(Tabla tab) {
-        tablas.add(tab);
+    public void setTabla(Tabla ta) {
+        tablas.add(ta);
+    }
+
+    public void setTablas(List<Tabla> tablas) {
+        this.tablas = tablas;
     }
     
-    
-    
+
+  
 }
+ 

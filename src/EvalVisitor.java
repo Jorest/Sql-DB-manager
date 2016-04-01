@@ -4,12 +4,14 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	
+	Controlador controlador = new Controlador() ;
+	
 	
 	//*** Todo visitor va de esta forma, podemos retornos cualquier cosa
 	//progam es el la raiz de los demas visitors
 	
 	@Override  
-	public T visitSql2003Parser (SqlParser.Sql2003ParserContext ctx) {
+	public T visitProgram (SqlParser.ProgramContext ctx) {
 		for (int i = 0;i<ctx.getChildCount();i++){
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
@@ -18,7 +20,12 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		  return (T)"";
 	  }
 	
-	
+	//******************EJERCICIO #1: DDL**************************
+	@Override 
+	public T visitSql_schema_definition_statement(SqlParser.Sql_schema_definition_statementContext ctx) {
+		controlador.createDB(ctx.getChild(2).getText());
+		return (T)"";	
+	}
 	
 	
 	
@@ -116,7 +123,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			Dato dato1 = (Dato) ctx.getParent().getChild(0);
 			Dato dato2 = (Dato) ctx.getParent().getChild(2);
 			
-			return (T) dato ;
+			return (T) dato1 ;
 		}
 		
 		
