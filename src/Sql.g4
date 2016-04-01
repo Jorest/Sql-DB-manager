@@ -203,7 +203,6 @@ unifactor
 factor 							
 	: literal					#factorLiteral
 	| '(' expression ')'		#factorExpression
-	// Quite el null y el TableID, debido a warnings 
 	;
 	
 

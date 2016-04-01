@@ -2,20 +2,34 @@
 public class Dato {
 	
 	private int integer ;
-	private char character ;
+	private String character ;
 	private float floating ;
 	private String date ;
+	private String tipo ;
+	private boolean bool ;
 	public int getInteger() {
 		return integer;
 	}
 	public void setInteger(int integer) {
 		this.integer = integer;
 	}
-	public char getCharacter() {
+	public String getCharacter() {
 		return character;
 	}
-	public void setCharacter(char character) {
+	public void setCharacter(String character) {
 		this.character = character;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public boolean getBool() {
+		return bool;
+	}
+	public void setBool(boolean bool) {
+		this.bool = bool;
 	}
 	public float getFloating() {
 		return floating;
