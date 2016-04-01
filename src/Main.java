@@ -21,9 +21,6 @@ import java.util.List;
  * @author Luis
  */
 
-
-
-
 public class Main {
 
     /**
@@ -31,6 +28,7 @@ public class Main {
      * @throws IOException 
      */
     public static void main(String[] args) throws IOException {
+        System.out.println("hika");
         Controlador c= new Controlador(); 
         c.createDB("prueba");
         c.useDB("prueba");
@@ -120,4 +118,3 @@ public class Main {
         
         
    }
-
