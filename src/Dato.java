@@ -7,6 +7,22 @@ public class Dato {
 	private String date ;
 	private String tipo ;
 	private boolean bool ;
+<<<<<<< HEAD
+	
+	public boolean getBool() {
+		return bool;
+	}
+	public void setBool(boolean bool) {
+		this.bool = bool;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+=======
+>>>>>>> refs/remotes/origin/master
 	public int getInteger() {
 		return integer;
 	}

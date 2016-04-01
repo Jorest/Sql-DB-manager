@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class BaseDatos {
     private String nombre; 
+
     private List <Tabla> tablas; 
 
     public BaseDatos(String nombre) {
@@ -23,8 +24,10 @@ public class BaseDatos {
     }
 
     public BaseDatos() {
+    	
     }
     
+
     public String getNombre() {
         return nombre;
     }
@@ -32,6 +35,7 @@ public class BaseDatos {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 
     public List<Tabla> getTablas() {
          return tablas;

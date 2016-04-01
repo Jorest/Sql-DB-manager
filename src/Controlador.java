@@ -1,3 +1,11 @@
+
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+=======
 <<<<<<< HEAD
 
 
@@ -9,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+>>>>>>> refs/remotes/origin/master
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
@@ -87,6 +96,9 @@ public class Controlador {
         escribir(json,path);
         actual.setTabla(t);
     }
+<<<<<<< HEAD
+    
+=======
     private void renameT(String nombre, String nnombre) throws IOException{
         String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
         Gson gson1 = new Gson();
@@ -363,6 +375,7 @@ public class Controlador {
          }
         return resul; 
     }
+
     public String escribir(String datos,  String path){
        //codigo=codigo.replace(' ', '\n');
        try{
@@ -378,6 +391,9 @@ public class Controlador {
        }
        return path;
    }
+
+
+
     private static String readFile(String filePath) throws java.io.IOException{
 	    byte[] buffer = new byte[(int) new File(filePath).length()];
 	    BufferedInputStream f = null;
@@ -389,4 +405,4 @@ public class Controlador {
 	    return new String(buffer);
 	}
 }
->>>>>>> origin/master
+
