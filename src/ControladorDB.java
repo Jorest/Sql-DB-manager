@@ -57,6 +57,15 @@ public class ControladorDB {
             System.out.println("Error en el cambio de nombre a Base de Datos "+ nombre);
         }
     }
+    public ArrayList showDB(){
+        ArrayList nombre= new ArrayList();
+        File directorio= new File("BasesDatos");
+        File[] bases=directorio.listFiles();
+        for(int i=0; i<bases.length;i++){
+            nombre.add(bases[i].getName());
+        }
+        return nombre;
+    }
     public void useDB(String nombre){
          File directorio= new File("BasesDatos");
          File[] bases=directorio.listFiles();
