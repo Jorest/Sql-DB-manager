@@ -97,16 +97,18 @@ alter_database_statement: 'ALTER' 'DATABASE' ID 'RENAME' 'TO' ID ';' ;
 use_schema_statement: 'USE' 'DATABASE' ID ';';
 
 
-column: (ID tipo_literal | constraint) ',' ;
+column: ID tipo_literal ','         #defcolumna
+		| constraint  ','   #defconstraint
+		;
 
 tipo_literal: 'INT' | 'FLOAT' | 'CHAR' | 'DATE' ;
 
 constraint: 'CONSTRAINT' constraintType;
 
 constraintType:
-            ID 'PRIMARY' 'KEY' '(' ID (',' ID)*')'
-        |   ID 'FOREIGN' 'KEY'  '(' ID (',' ID)*')' 'REFERENCES' ID '(' ID (',' ID)*')'
-        |   ID 'CHECK'  '('ID exp ID ')'
+            ID 'PRIMARY' 'KEY' '(' ID (',' ID)*')'                                           #primaryK
+        |   ID 'FOREIGN' 'KEY'  '(' ID (',' ID)*')' 'REFERENCES' ID '(' ID (',' ID)*')'		 #foreignK
+        |   ID 'CHECK'  '('ID exp ID ')'													 #check
         ;
 
 exp: logic | relational;
@@ -114,10 +116,10 @@ exp: logic | relational;
 rename_table_statement: 'ALTER' 'TABLE' ID 'RENAME' 'TO' ID ';';
 
 accion:
-          'ADD' 'COLUMN' ID tipo_literal (constraint)
-        | 'ADD' constraint
-        | 'DROP' 'COLUMN' ID 
-        | 'DROP' 'CONSTRAINT' ID
+          'ADD' 'COLUMN' ID tipo_literal (constraint)					#addColumn
+        | 'ADD' constraint												#addConstraint
+        | 'DROP' 'COLUMN' ID 											#dropColumn
+        | 'DROP' 'CONSTRAINT' ID										#dropConstraint
     ;
 
 

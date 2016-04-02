@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,7 +30,7 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
-        Controlador c= new Controlador(); 
+        ControladorDB c= new ControladorDB(); 
         c.createDB("prueba");
         c.useDB("prueba");
         
@@ -120,10 +117,4 @@ public class Main {
         Tabla c= (Tabla)ab.get(0);
         System.out.println(c.getNombre());**/
         
-        
-<<<<<<< HEAD
 }
-
-=======
-}
->>>>>>> refs/remotes/origin/master

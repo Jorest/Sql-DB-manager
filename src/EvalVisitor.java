@@ -24,8 +24,34 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		return (T)"";	
 	}
 	
-	
-	
+	//alter database
+        public T visitAlter_database_statement( SqlParser.Alter_database_statementContext ctx) { 
+            controlador.alterDB(ctx.getChild(2).getText(), ctx.getChild(5).getText());
+            return null;
+        } 
+        //drop database
+        public T visitDrop_schema_statement(SqlParser.Drop_schema_statementContext ctx) { 
+            controlador.dropDB(ctx.getChild(2).getText());
+            return null;
+        }
+        
+        //show databases
+        public T visitShow_schema_statement(SqlParser.Show_schema_statementContext ctx) { 
+            return (T)controlador.showTables();
+        }
+        //use database
+        public T visitUse_schema_statement(SqlParser.Use_schema_statementContext ctx) { 
+            controlador.useDB(ctx.getChild(2).getText());
+            return null; 
+        }
+        
+        //create table 
+         public T visitTable_definition(SqlParser.Table_definitionContext ctx) { 
+             //controlador.createT();
+             
+             return null;  
+         }
+        
 	
 	//Regresaremos un arraylist de datos 
 	@Override 
