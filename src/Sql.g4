@@ -24,7 +24,7 @@ fragment DAY       : DIGIT | TWO_DIGITS ;
 ID : LETTER ( LETTER | DIGIT )* ;
 NUM : DIGIT ( DIGIT )* ;
 FLOAT: DIGIT ( DIGIT )* ('.' (DIGIT)* )? ;
-Char : '\'' ASCII '\'';
+Char : '\'' ASCII* '\'';
 DATE: YEAR '-' MONTH '-' DAY ;
  
  
@@ -151,7 +151,7 @@ literal :
 int_literal: NUM;
 	float_literal: FLOAT;
 	date_literal: DATE;
-char_literal: CHAR;
+char_literal: Char;
 
 
 
@@ -203,6 +203,7 @@ unifactor
 factor 							
 	: literal					#factorLiteral
 	| '(' expression ')'		#factorExpression
+	| (ID'.'ID|ID)              #factorID 
 	;
 	
 

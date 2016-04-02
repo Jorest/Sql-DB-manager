@@ -1981,7 +1981,7 @@ public class SqlParser extends Parser {
 				setState(358); date_literal();
 				}
 				break;
-			case CHAR:
+			case Char:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(359); char_literal();
@@ -2126,7 +2126,7 @@ public class SqlParser extends Parser {
 	}
 
 	public static class Char_literalContext extends ParserRuleContext {
-		public TerminalNode CHAR() { return getToken(SqlParser.CHAR, 0); }
+		public TerminalNode Char() { return getToken(SqlParser.Char, 0); }
 		public Char_literalContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2152,7 +2152,7 @@ public class SqlParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(368); match(CHAR);
+			setState(368); match(Char);
 			}
 		}
 		catch (RecognitionException re) {
@@ -2971,10 +2971,10 @@ public class SqlParser extends Parser {
 				}
 				break;
 			case T__46:
-			case CHAR:
 			case ID:
 			case NUM:
 			case FLOAT:
+			case Char:
 			case DATE:
 				_localctx = new UniFactorFactorContext(_localctx);
 				enterOuterAlt(_localctx, 2);
@@ -3073,9 +3073,9 @@ public class SqlParser extends Parser {
 		try {
 			setState(448);
 			switch (_input.LA(1)) {
-			case CHAR:
 			case NUM:
 			case FLOAT:
+			case Char:
 			case DATE:
 				_localctx = new FactorLiteralContext(_localctx);
 				enterOuterAlt(_localctx, 1);
@@ -3288,7 +3288,7 @@ public class SqlParser extends Parser {
 		"\u0169\u016b\5F$\2\u016a\u0166\3\2\2\2\u016a\u0167\3\2\2\2\u016a\u0168"+
 		"\3\2\2\2\u016a\u0169\3\2\2\2\u016b?\3\2\2\2\u016c\u016d\7<\2\2\u016dA"+
 		"\3\2\2\2\u016e\u016f\7=\2\2\u016fC\3\2\2\2\u0170\u0171\7?\2\2\u0171E\3"+
-		"\2\2\2\u0172\u0173\78\2\2\u0173G\3\2\2\2\u0174\u0179\7\22\2\2\u0175\u0179"+
+		"\2\2\2\u0172\u0173\7>\2\2\u0173G\3\2\2\2\u0174\u0179\7\22\2\2\u0175\u0179"+
 		"\7.\2\2\u0176\u0179\7!\2\2\u0177\u0179\7\21\2\2\u0178\u0174\3\2\2\2\u0178"+
 		"\u0175\3\2\2\2\u0178\u0176\3\2\2\2\u0178\u0177\3\2\2\2\u0179I\3\2\2\2"+
 		"\u017a\u017d\7\7\2\2\u017b\u017d\7\24\2\2\u017c\u017a\3\2\2\2\u017c\u017b"+
