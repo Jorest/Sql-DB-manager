@@ -518,6 +518,62 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T)dato ;
 		}
 		
+		//-----expr1 y expression operqdores
+		@Override 
+		public T visitCond_op1(SqlParser.Cond_op1Context ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			if (!(dato1.getTipo().equals("bool"))& !(dato1.getTipo().equals("bool"))){
+				System.out.println("error and con operaciones no boleanas");
+				return null ;
+			}
+			else {
+				if ((dato1.getBool()==true)&(dato1.getBool()==true)){
+					newdato.setBool(true);
+				}
+				else{
+					newdato.setBool(false);
+				}
+				return (T) newdato ;
+			}
+			
+		}
+		
+		@Override 
+		public T visitCond_op2(SqlParser.Cond_op2Context ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			if (!(dato1.getTipo().equals("bool"))& !(dato1.getTipo().equals("bool"))){
+				System.out.println("error and con operaciones no boleanas");
+				return null ;
+			}
+			else {
+				if ((dato1.getBool()==true)|(dato1.getBool()==true)){
+					newdato.setBool(true);
+				}
+				else{
+					newdato.setBool(false);
+				}
+				return (T) newdato ;
+			}
+			
+		}
+		
+		
+		@Override
+		public T visitExpr11(SqlParser.Expr11Context ctx) {
+			Dato dato = (Dato) visit(ctx.getChild(1));
+			return (T)dato ;
+		}
+		
+		@Override
+		public T visitExpr12(SqlParser.Expr12Context ctx) {
+			Dato dato = (Dato) visit(ctx.getChild(0));
+			return (T)dato ;
+		}
+		
 		
 }
 
