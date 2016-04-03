@@ -30,17 +30,18 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
-        ControladorDB c= new ControladorDB(); 
+       /* ControladorDB c= new ControladorDB(); 
         c.createDB("prueba");
         c.useDB("prueba");
-        
+        */
         System.out.println(" hola");
         Consola ventana=new Consola();
-        ventana.setVisible(true);       
+        ventana.setVisible(true);  
+        ventana.setResizable(false);
        
         /*****************************************Leer el texto****************************************/
 
-        String text = readFileAsString("C:\\Users\\jores\\workspace\\PruebaAnt3\\src\\editor.txt");
+      /*  String text = readFileAsString("C:\\Users\\jores\\workspace\\PruebaAnt3\\src\\editor.txt");
         //awevos que hay que cambiar esa direccion 
         ANTLRInputStream input = new ANTLRInputStream(text);
 
@@ -58,8 +59,6 @@ public class Main {
     }
 
     
-    /*********************************************FUNCIONES UTULES  ************************************************/
-
 		
 	private static String readFileAsString(String filePath) throws java.io.IOException{
 	    byte[] buffer = new byte[(int) new File(filePath).length()];
@@ -117,4 +116,5 @@ public class Main {
         Tabla c= (Tabla)ab.get(0);
         System.out.println(c.getNombre());**/
         
+}
 }
