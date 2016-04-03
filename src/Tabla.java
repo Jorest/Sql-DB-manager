@@ -22,11 +22,26 @@ public class Tabla {
     public Tabla(String nombre) {
         this.nombre = nombre;
         columnas= new ArrayList();
+        primaryk= new ArrayList();
+        foreignk= new ArrayList();
+        check= new ArrayList();
     }
 
     public Tabla() {
     }
 
+    public void agregarPK(PrimaryKey p){
+        primaryk.add(p);
+    }
+    public void agregarFK(ForeignKey f){
+        foreignk.add(f);
+    }
+     public void agregarCheck(Check c) {
+         check.add(c);
+    }
+     public void setColumna(Columna c) {
+        columnas.add(c);
+    }
     public String getNombre() {
         return nombre;
     }
