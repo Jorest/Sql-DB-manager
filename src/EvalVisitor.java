@@ -1,10 +1,5 @@
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.antlr.v4.runtime.misc.NotNull;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
-        private Tabla actual; 
 	
 	ControladorDB controlador = new ControladorDB() ;
 	
@@ -26,156 +21,38 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	@Override 
 	public T visitSql_schema_definition_statement(SqlParser.Sql_schema_definition_statementContext ctx) {
 		controlador.createDB(ctx.getChild(2).getText());
-             
 		return (T)"";	
 	}
 	
 	//alter database
-        @Override
         public T visitAlter_database_statement( SqlParser.Alter_database_statementContext ctx) { 
             controlador.alterDB(ctx.getChild(2).getText(), ctx.getChild(5).getText());
             return null;
         } 
         //drop database
-        @Override
         public T visitDrop_schema_statement(SqlParser.Drop_schema_statementContext ctx) { 
             controlador.dropDB(ctx.getChild(2).getText());
             return null;
         }
         
         //show databases
-        @Override
         public T visitShow_schema_statement(SqlParser.Show_schema_statementContext ctx) { 
             return (T)controlador.showTables();
         }
         //use database
-        @Override
         public T visitUse_schema_statement(SqlParser.Use_schema_statementContext ctx) { 
             controlador.useDB(ctx.getChild(2).getText());
             return null; 
         }
         
         //create table 
-        @Override
          public T visitTable_definition(SqlParser.Table_definitionContext ctx) { 
-             actual= new Tabla(ctx.getChild(2).getText());
-             visit(ctx.getChild(4));
-             controlador.createT(actual);
+             //controlador.createT();
+             
              return null;  
          }
         
-         //def colulumna
-         public T visitDefcolumna(SqlParser.DefcolumnaContext ctx, Tabla t) { 
-             Columna c= new Columna(ctx.getChild(0).getText(),ctx.getChild(1).getText());
-             actual.setColumna(c);
-             return null; 
-         }
-	//agregando primarykey
-         @Override 
-         public T visitPrimaryK(SqlParser.PrimaryKContext ctx) { 
-             ArrayList<String> ids=new ArrayList();
-             for (int i=4;i<ctx.getChildCount()-1;i++){
-                 String a= ctx.getChild(i).getText();
-                 if(!",".equals(a)){
-                     ids.add(a);
-                 }
-                 
-             }
-             String nombre=ctx.getChild(0).getText();
-             nombre=nombre.replace("PK", "");
-             PrimaryKey p=new PrimaryKey(nombre,ids);
-             actual.agregarPK(p);
-             return null; 
-         }
-         //agregando foreignK
-         @Override 
-         public T visitForeignK(SqlParser.ForeignKContext ctx) { 
-             int particion=0;
-             ArrayList<String> ids=new ArrayList();
-             for (int i=4;i<ctx.getChildCount()-1;i++){
-                 String a= ctx.getChild(i).getText();
-                 if("REFERENCES".equals(a)){
-                     particion=i;
-                     break;
-                 }
-                 if(!",".equals(a)){
-                     ids.add(a);
-                 }
-                 
-             }
-             ArrayList<String> ids1=new ArrayList();
-             for (int i=particion+1;i<ctx.getChildCount()-1;i++){
-                 String a= ctx.getChild(i).getText();
-                if(!",".equals(a)){
-                     ids1.add(a);
-                 }
-                 
-             }
-             String nombre=ctx.getChild(0).getText();
-             nombre=nombre.replace("FK", "");
-             ForeignKey p=new ForeignKey(nombre,ids,ids1);
-             actual.agregarFK(p);
-             return null; 
-         }
-         //agregando check 
-         @Override public T visitCheck(SqlParser.CheckContext ctx) { 
-              String nombre=ctx.getChild(0).getText();
-             nombre=nombre.replace("CH", "");
-             String a="";
-             for (int i=3;i<ctx.getChildCount()-1;i++){
-                 a= a+ctx.getChild(i).getText();
-             }
-             Check c=new Check(nombre,a);
-             actual.agregarCheck(c);
-             return null; 
-         }
 	
-	
-	
-         
-         //renombrar tabla 
-        @Override
-         public T visitRename_table_statement(SqlParser.Rename_table_statementContext ctx) { 
-            try {
-                controlador.renameT(ctx.getChild(2).getText(),ctx.getChild(5).getText());
-                return null;
-            } catch (IOException ex) {
-                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return null;
-        }
-	
-        //drop tabla
-        @Override 
-        public Object visitDrop_table_statement(SqlParser.Drop_table_statementContext ctx) { 
-            controlador.dropT(ctx.getChild(2).getText());
-            return null; 
-        }
-        
-        //show tablas
-        @Override 
-        public T visitShow_table_statement(SqlParser.Show_table_statementContext ctx) { 
-            return (T)controlador.showTables();
-        }
-	
-        //show columnas
-        @Override 
-        public T visitShow_column_statement(@NotNull SqlParser.Show_column_statementContext ctx) {  
-            try {
-                return (T) controlador.showCololums(ctx.getChild(3).getText()); 
-            } catch (IOException ex) {
-                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            }
-        }
-        
-        //alterar tabla
-        @Override public T visitAlter_table_statement(SqlParser.Alter_table_statementContext ctx) {
-            return null;
-        }
-	
-        
-        ///--------------------------------------------------------------------------------------------------------------
 	//Regresaremos un arraylist de datos 
 	@Override 
 	public T visitList_values(SqlParser.List_valuesContext ctx) {
