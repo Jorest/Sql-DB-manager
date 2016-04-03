@@ -81,12 +81,7 @@ public class ControladorDB {
          //Ingresar las tablas a la base de datos con el set
         
     }
-    private void createT(String nombre,ArrayList columnas,ArrayList primary, ArrayList fore, ArrayList check){
-        Tabla t=new Tabla(nombre);
-        t.setColumnas(columnas);
-        t.setForeignk(fore);
-        t.setPrimaryk(primary);
-        t.setCheck(check);
+    public void createT(Tabla t){
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -96,7 +91,7 @@ public class ControladorDB {
         actual.setTabla(t);
     }
 
-    private void renameT(String nombre, String nnombre) throws IOException{
+    public void renameT(String nombre, String nnombre) throws IOException{
         String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
         Gson gson1 = new Gson();
         Tabla t = gson1.fromJson(json, Tabla.class);
@@ -110,13 +105,13 @@ public class ControladorDB {
         escribir(json,path); 
      
     }
-    private void addColum(){
+    public void addColum(){
         
     }
-    private void addConstraint(){
+    public void addConstraint(){
         
     }
-    private void dropColumn(){
+    public void dropColumn(){
         
     }
     public void dropT(String nombre){
