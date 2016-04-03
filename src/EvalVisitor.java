@@ -171,8 +171,71 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         
         //alterar tabla
         @Override public T visitAlter_table_statement(SqlParser.Alter_table_statementContext ctx) {
+            try {
+                actual=controlador.aletT(ctx.getChild(2).getText());
+            } catch (IOException ex) {
+                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            visit(ctx.getChild(3));
+            controlador.createT(actual);
+            ///seteralo
             return null;
         }
+	
+        @Override 
+        public T visitAddColumn(SqlParser.AddColumnContext ctx) { 
+            Columna c= new Columna(ctx.getChild(2).getText(),ctx.getChild(3).getText());
+            actual.setColumna(c);
+            visit(ctx.getChild(4));
+            return null;
+        }
+	
+        @Override
+        public T visitAddConstraint( SqlParser.AddConstraintContext ctx) { 
+            //lo hace en constraintType
+            return null;
+        }
+	
+        @Override
+        public T visitDropColumn( SqlParser.DropColumnContext ctx) { 
+            ArrayList <Columna> colum=actual.getColumnas();
+            String busqueda=ctx.getChild(2).getText();
+            for(int i=0;i<colum.size();i++){
+                if(colum.get(i).getNombre().equals(busqueda)){
+                    colum.remove(i);
+                    break;
+                }
+            }
+            actual.setColumnas(colum);
+            return null; 
+        }
+	
+        @Override
+        public T visitDropConstraint(SqlParser.DropConstraintContext ctx) {
+            String nombreCons=ctx.getChild(2).getText();
+            ArrayList <PrimaryKey> p=actual.getPrimaryk();
+            ArrayList <ForeignKey> f=actual.getForeignk();
+            ArrayList <Check> c=actual.getCheck();
+            for(int i=0; i<p.size();i++){
+                 if(p.get(i).getNombre().equals(nombreCons)){
+                    p.remove(i);
+                }
+            }
+            for(int i=0; i<f.size();i++){
+                 if(f.get(i).getNombre().equals(nombreCons)){
+                    f.remove(i);
+                }
+            }
+            for(int i=0; i<c.size();i++){
+                 if(c.get(i).getNombre().equals(nombreCons)){
+                    c.remove(i);
+                }
+            }
+            actual.setForeignk(f);
+            actual.setPrimaryk(p);
+            actual.setCheck(c);
+            return null; 
+            }
 	
         
         ///--------------------------------------------------------------------------------------------------------------

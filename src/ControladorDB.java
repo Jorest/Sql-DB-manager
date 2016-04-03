@@ -78,8 +78,21 @@ public class ControladorDB {
          }
          System.out.println("Encontrado");
          actual= new BaseDatos(base.getName());
+         cargarTablas();
          //Ingresar las tablas a la base de datos con el set
         
+    }
+    public void cargarTablas(){
+         ArrayList <Tabla> tablas=new ArrayList();
+         File directorio= new File("BasesDatos/"+actual.getNombre());
+         File[] bases=directorio.listFiles();
+         Gson gson1 = new Gson();
+         for(int i=0; i<bases.length; i++){
+             String json=bases[i].getPath();
+             Tabla t = gson1.fromJson(json, Tabla.class);
+             tablas.add(t);
+         }
+         actual.setTablas(tablas);
     }
     public void createT(Tabla t){
         GsonBuilder builder = new GsonBuilder();
@@ -88,7 +101,8 @@ public class ControladorDB {
         String json = gson.toJson(t);
         String path= "BaseDatos/"+actual.getNombre()+"/"+t.getNombre()+".json";
         escribir(json,path);
-        actual.setTabla(t);
+        //actual.setTabla(t);
+        cargarTablas();
     }
 
     public void renameT(String nombre, String nnombre) throws IOException{
@@ -103,16 +117,15 @@ public class ControladorDB {
         json = gson.toJson(t);
         String path= "BaseDatos/"+actual.getNombre()+"/"+t.getNombre()+".json";
         escribir(json,path); 
+        cargarTablas();
      
     }
-    public void addColum(){
-        
-    }
-    public void addConstraint(){
-        
-    }
-    public void dropColumn(){
-        
+   
+    public Tabla aletT(String nombre) throws IOException{
+         String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
+         Gson gson1 = new Gson();
+         Tabla t = gson1.fromJson(json, Tabla.class);
+         return t; 
     }
     public void dropT(String nombre){
         File directorio= new File("BaseDatos/"+actual.getNombre()+"/"+nombre+".json");
@@ -120,8 +133,10 @@ public class ControladorDB {
         if(resul==false){
             System.out.println("Error en el cambio de nombre a Base de Datos "+ nombre);
         }
+        cargarTablas();
         
     }
+   
     public ArrayList showTables(){
         ArrayList resul=new ArrayList();
         if(actual!=null){
