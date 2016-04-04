@@ -50,7 +50,7 @@ public class Columna {
     public void setValor( Object valor) {
         valores.add(valor);
     }
-    
+
     public int getTamaño() {
         return valores.size();
     }
