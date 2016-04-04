@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -121,4 +122,3 @@ public class Main {
         System.out.println(c.getNombre());**/
         
 }
-

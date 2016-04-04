@@ -103,23 +103,25 @@ public interface SqlListener extends ParseTreeListener {
 	void exitAlter_database_statement(@NotNull SqlParser.Alter_database_statementContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code eqE}
-	 * labeled alternative in {@link SqlParser#eq_op}.
+	 * labeled alternative in {@link SqlParser#rel_op}.
 	 * @param ctx the parse tree
 	 */
 	void enterEqE(@NotNull SqlParser.EqEContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code eqE}
-	 * labeled alternative in {@link SqlParser#eq_op}.
+	 * labeled alternative in {@link SqlParser#rel_op}.
 	 * @param ctx the parse tree
 	 */
 	void exitEqE(@NotNull SqlParser.EqEContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SqlParser#cond_op1}.
+	 * Enter a parse tree produced by the {@code cond_op1}
+	 * labeled alternative in {@link SqlParser#cond_op}.
 	 * @param ctx the parse tree
 	 */
 	void enterCond_op1(@NotNull SqlParser.Cond_op1Context ctx);
 	/**
-	 * Exit a parse tree produced by {@link SqlParser#cond_op1}.
+	 * Exit a parse tree produced by the {@code cond_op1}
+	 * labeled alternative in {@link SqlParser#cond_op}.
 	 * @param ctx the parse tree
 	 */
 	void exitCond_op1(@NotNull SqlParser.Cond_op1Context ctx);
@@ -190,12 +192,14 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitRekB(@NotNull SqlParser.RekBContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SqlParser#cond_op2}.
+	 * Enter a parse tree produced by the {@code cond_op2}
+	 * labeled alternative in {@link SqlParser#cond_op}.
 	 * @param ctx the parse tree
 	 */
 	void enterCond_op2(@NotNull SqlParser.Cond_op2Context ctx);
 	/**
-	 * Exit a parse tree produced by {@link SqlParser#cond_op2}.
+	 * Exit a parse tree produced by the {@code cond_op2}
+	 * labeled alternative in {@link SqlParser#cond_op}.
 	 * @param ctx the parse tree
 	 */
 	void exitCond_op2(@NotNull SqlParser.Cond_op2Context ctx);
@@ -381,13 +385,13 @@ public interface SqlListener extends ParseTreeListener {
 	void exitSql_data_statement(@NotNull SqlParser.Sql_data_statementContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code eqNE}
-	 * labeled alternative in {@link SqlParser#eq_op}.
+	 * labeled alternative in {@link SqlParser#rel_op}.
 	 * @param ctx the parse tree
 	 */
 	void enterEqNE(@NotNull SqlParser.EqNEContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code eqNE}
-	 * labeled alternative in {@link SqlParser#eq_op}.
+	 * labeled alternative in {@link SqlParser#rel_op}.
 	 * @param ctx the parse tree
 	 */
 	void exitEqNE(@NotNull SqlParser.EqNEContext ctx);
@@ -476,18 +480,6 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitDrop_schema_statement(@NotNull SqlParser.Drop_schema_statementContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code expr22}
-	 * labeled alternative in {@link SqlParser#expr2}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr22(@NotNull SqlParser.Expr22Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expr22}
-	 * labeled alternative in {@link SqlParser#expr2}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr22(@NotNull SqlParser.Expr22Context ctx);
-	/**
 	 * Enter a parse tree produced by {@link SqlParser#select_value}.
 	 * @param ctx the parse tree
 	 */
@@ -507,18 +499,6 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDate_literal(@NotNull SqlParser.Date_literalContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code expr21}
-	 * labeled alternative in {@link SqlParser#expr2}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpr21(@NotNull SqlParser.Expr21Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expr21}
-	 * labeled alternative in {@link SqlParser#expr2}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpr21(@NotNull SqlParser.Expr21Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link SqlParser#drop_table_statement}.
 	 * @param ctx the parse tree

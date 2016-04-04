@@ -25,6 +25,7 @@ public class ControladorDB {
     private ArrayList nombresBD; 
     private ArrayList cantTablas; 
     private BaseDatos actual;
+    private Tabla tablaActual ;
 
     public ControladorDB() {
     }
@@ -54,7 +55,7 @@ public class ControladorDB {
         File directorio= new File("BasesDatos/"+nombre);
         boolean resul=directorio.delete();
         if(resul==false){
-            System.out.println("Error en el cambio de nombre a Base de Datos "+ nombre);
+            System.out.println("Error en el borrado de nombre a Base de Datos "+ nombre);
         }
     }
     public ArrayList showDB(){
@@ -176,6 +177,17 @@ public class ControladorDB {
        }
        return path;
    }
+    //agregado por jorge
+    public Columna getIDvalues (String id){  
+    	Columna columnareturn = new Columna();
+    	for (Columna columna : tablaActual.getColumnas()) {
+    	    if (columna.getNombre().equals(id)){
+    	    	columnareturn = columna ;
+    	    }
+    	}
+    	return columnareturn;
+    }
+    
     private static String readFile(String filePath) throws java.io.IOException{
 	    byte[] buffer = new byte[(int) new File(filePath).length()];
 	    BufferedInputStream f = null;
