@@ -319,13 +319,20 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		}
 		
 		
-
 		@Override
 		public T visitUniFactorNot(SqlParser.UniFactorNotContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(1));
-			dato.setBool(!dato.getBool());
-			return (T) dato ;
+			ArrayList<Integer> filas =dato.getFilas();
+			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
+			int tamaño = controlador.getTablaActual().getColumnas().get(0).getTamaño();
+			for (int i=0; i <tamaño ; i++){
+				if (!(filas.contains(i))){
+					notFilas.add(i);
+				}
+			}
+			dato.setFilas(notFilas);
+			return (T) dato  ;
 		}
 
 		@Override
