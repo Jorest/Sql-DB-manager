@@ -30,14 +30,17 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
 
+       /* ControladorDB c= new ControladorDB(); 
+        c.createDB("prueba");
+        c.useDB("prueba");
+        */
+        //System.out.println(" hola");
         Consola ventana=new Consola();
         ventana.setVisible(true);  
         ventana.setResizable(false);
        
-        /*****************************************Leer el texto****************************************/
-
-       
-    }
+     
         
+}
 }
 

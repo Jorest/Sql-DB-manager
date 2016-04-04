@@ -112,6 +112,18 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEqE3(@NotNull SqlParser.EqE3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqE3(@NotNull SqlParser.EqE3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAlter_database_statement(@NotNull SqlParser.Alter_database_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -119,6 +131,18 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAlter_database_statement(@NotNull SqlParser.Alter_database_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqE2(@NotNull SqlParser.EqE2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqE2(@NotNull SqlParser.EqE2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -155,18 +179,6 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUniFactorFactor(@NotNull SqlParser.UniFactorFactorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExp(@NotNull SqlParser.ExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExp(@NotNull SqlParser.ExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -304,18 +316,6 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFactorLiteral(@NotNull SqlParser.FactorLiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFactorLiteral(@NotNull SqlParser.FactorLiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDefconstraint(@NotNull SqlParser.DefconstraintContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -352,6 +352,18 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRelL3(@NotNull SqlParser.RelL3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelL3(@NotNull SqlParser.RelL3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterRename_table_statement(@NotNull SqlParser.Rename_table_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -376,6 +388,42 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRekB3(@NotNull SqlParser.RekB3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRekB3(@NotNull SqlParser.RekB3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpr33(@NotNull SqlParser.Expr33Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpr33(@NotNull SqlParser.Expr33Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRekB2(@NotNull SqlParser.RekB2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRekB2(@NotNull SqlParser.RekB2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpr32(@NotNull SqlParser.Expr32Context ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -383,6 +431,18 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpr32(@NotNull SqlParser.Expr32Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpr34(@NotNull SqlParser.Expr34Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpr34(@NotNull SqlParser.Expr34Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -407,6 +467,18 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSql_schema_definition_statement(@NotNull SqlParser.Sql_schema_definition_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRelL2(@NotNull SqlParser.RelL2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelL2(@NotNull SqlParser.RelL2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -556,6 +628,30 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRelBE3(@NotNull SqlParser.RelBE3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelBE3(@NotNull SqlParser.RelBE3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRelBE2(@NotNull SqlParser.RelBE2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelBE2(@NotNull SqlParser.RelBE2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDrop_table_statement(@NotNull SqlParser.Drop_table_statementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -592,6 +688,18 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRelLE2(@NotNull SqlParser.RelLE2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelLE2(@NotNull SqlParser.RelLE2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterInsert_value(@NotNull SqlParser.Insert_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -599,6 +707,18 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInsert_value(@NotNull SqlParser.Insert_valueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqNE2(@NotNull SqlParser.EqNE2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqNE2(@NotNull SqlParser.EqNE2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -652,6 +772,18 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEqNE3(@NotNull SqlParser.EqNE3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqNE3(@NotNull SqlParser.EqNE3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUpdate_value(@NotNull SqlParser.Update_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -683,30 +815,6 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitShow_table_statement(@NotNull SqlParser.Show_table_statementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterRelational(@NotNull SqlParser.RelationalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitRelational(@NotNull SqlParser.RelationalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLogic(@NotNull SqlParser.LogicContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLogic(@NotNull SqlParser.LogicContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

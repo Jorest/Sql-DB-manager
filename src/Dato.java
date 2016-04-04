@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Dato {
 	
@@ -8,7 +9,14 @@ public class Dato {
 	private String tipo ;
 	private boolean bool ;
 	private String id ;
+	private ArrayList<Integer> filas = new  ArrayList<Integer>() ;
 
+	public ArrayList<Integer> getFilas() {
+		return filas;
+	}
+	public void setFilas(ArrayList<Integer> filas) {
+		this.filas = filas;
+	}
 	public String getId() {
 		return id;
 	}

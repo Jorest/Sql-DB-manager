@@ -101,17 +101,20 @@ column: ID tipo_literal ','         #defcolumna
 		| constraint  ','   #defconstraint
 		;
 
-tipo_literal: 'INT' | 'FLOAT' | 'CHAR' | 'DATE' ;
+tipo_literal: 
+				  'INT'      	   #tipoInt
+				| 'FLOAT' 		   #tipoFloat
+				| 'CHAR(' NUM ')'  #tipoChar 
+				| 'DATE' 		   #tipoDate
+				;
 
 constraint: 'CONSTRAINT' constraintType;
 
 constraintType:
             ID 'PRIMARY' 'KEY' '(' ID (',' ID)*')'                                           #primaryK
         |   ID 'FOREIGN' 'KEY'  '(' ID (',' ID)*')' 'REFERENCES' ID '(' ID (',' ID)*')'		 #foreignK
-        |   ID 'CHECK'  '('ID exp ID ')'													 #check
+        |   ID 'CHECK'  '('ID expression ID ')'													 #check
         ;
-
-exp: logic | relational;
 
 rename_table_statement: 'ALTER' 'TABLE' ID 'RENAME' 'TO' ID ';';
 
@@ -126,10 +129,6 @@ accion:
 show_table_statement: 'SHOW' 'TABLES' ';';
 show_column_statement: 'SHOW' 'COLUMNS' 'FROM' ID ';';
          
-          
-          
-logic: 'AND' | 'OR' | 'NOT';
-relational: '<' | '<=' | '>' | '>=' | '<>' | '=' ;
 
 insert_value: 'INSERT' 'INTO' ID ( '(' ((ID)(','ID)*)? ')' )? 'VALUES' (list_values) ';';
 
@@ -162,10 +161,28 @@ rel_op
 	|	'>'												#rekB
 	| 	'<='											#relLE
 	|	'>='											#relBE
-    |	'='											#eqE
-	|	'<>'										#eqNE	
+    |	'='											    #eqE
+	|	'<>'									 	    #eqNE	
 	;
 
+
+rel_op2
+	:	'<'												#relL2
+	|	'>'												#rekB2
+	| 	'<='											#relLE2
+	|	'>='											#relBE2
+    |	'='											    #eqE2
+	|	'<>'										    #eqNE2	
+	;
+
+	rel_op3
+	:	'<'												#relL3
+	|	'>'												#rekB3
+	| 	'<='											#relL3
+	|	'>='											#relBE3
+    |	'='											    #eqE3
+	|	'<>'										    #eqNE3	
+	;
 cond_op
 	:	'AND'   #cond_op1
 	|  'OR' # cond_op2
@@ -187,6 +204,8 @@ expr1
 expr3								
 	: expr3 rel_op unifactor			#expr31
 	| unifactor							#expr32
+	|expr3 rel_op2 literal  				#expr33
+	|literal rel_op3 expr3				#expr34
 	;
 
 unifactor
@@ -194,9 +213,8 @@ unifactor
 	| factor							#uniFactorFactor
 	;
 	
-factor 							
-	: literal					#factorLiteral
-	| '(' expression ')'		#factorExpression
+factor 		
+	: '(' expression ')'		#factorExpression
 	| (ID'.'ID|ID)              #factorID 
 	;
 	

@@ -27,7 +27,27 @@ public class ControladorDB {
     private BaseDatos actual;
     private Tabla tablaActual ;
 
-    public ControladorDB() {
+    public BaseDatos getActual() {
+		return actual;
+	}
+
+
+	public void setActual(BaseDatos actual) {
+		this.actual = actual;
+	}
+
+
+	public Tabla getTablaActual() {
+		return tablaActual;
+	}
+
+
+	public void setTablaActual(Tabla tablaActual) {
+		this.tablaActual = tablaActual;
+	}
+
+
+	public ControladorDB() {
     }
     
     
@@ -195,6 +215,7 @@ public class ControladorDB {
     	}
     	return columnareturn;
     }
+    
     
     private static String readFile(String filePath) throws java.io.IOException{
 	    byte[] buffer = new byte[(int) new File(filePath).length()];
