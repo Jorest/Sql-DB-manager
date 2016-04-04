@@ -1,1 +1,1 @@
-create database prueba 
+CREATE DATABASE HOOOOO ; 

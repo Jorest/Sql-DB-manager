@@ -3,6 +3,8 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 /*
  * To change this template, choose Tools | Templates
@@ -113,7 +115,25 @@ public class Consola extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(evt.getSource()== jButton1){
              String parsear=jTextArea1.getText();
-             escribir(parsear);
+            //awevos que hay que cambiar esa direccion 
+            ANTLRInputStream input = new ANTLRInputStream(parsear);
+
+            // Create an Lexer that receives the char stream
+            SqlLexer lexer = new SqlLexer(input);
+            //lexer.removeErrorListeners();
+            // Create a token stream from the lexer
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+        // Create a parser that receives the token stream
+            SqlParser parser = new SqlParser(tokens);
+
+            SqlParser.ProgramContext arbol = parser.program();
+
+            EvalVisitor eval = new EvalVisitor();
+            eval.visitProgram(arbol);
+
+
+             //escribir(parsear);
            
           }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -124,6 +144,7 @@ public class Consola extends javax.swing.JFrame {
       public String escribir(String codigo){
        //codigo=codigo.replace(' ', '\n');
        String path="editor.txt";
+       
        try{
            FileWriter fw= new FileWriter(path);
            BufferedWriter bw = new BufferedWriter(fw);
