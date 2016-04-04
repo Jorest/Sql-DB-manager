@@ -101,7 +101,12 @@ column: ID tipo_literal ','         #defcolumna
 		| constraint  ','   #defconstraint
 		;
 
-tipo_literal: 'INT' | 'FLOAT' | 'CHAR' | 'DATE' ;
+tipo_literal: 
+				  'INT'      	   #tipoInr
+				| 'FLOAT' 		   #tipoFloar
+				| 'CHAR(' NUM ')'  #tipoChar 
+				| 'DATE' 		   #tipoDate
+				;
 
 constraint: 'CONSTRAINT' constraintType;
 
@@ -156,10 +161,28 @@ rel_op
 	|	'>'												#rekB
 	| 	'<='											#relLE
 	|	'>='											#relBE
-    |	'='											#eqE
-	|	'<>'										#eqNE	
+    |	'='											    #eqE
+	|	'<>'									 	    #eqNE	
 	;
 
+
+rel_op2
+	:	'<'												#relL2
+	|	'>'												#rekB2
+	| 	'<='											#relLE2
+	|	'>='											#relBE2
+    |	'='											    #eqE2
+	|	'<>'										    #eqNE2	
+	;
+
+	rel_op3
+	:	'<'												#relL3
+	|	'>'												#rekB3
+	| 	'<='											#relL3
+	|	'>='											#relBE3
+    |	'='											    #eqE3
+	|	'<>'										    #eqNE3	
+	;
 cond_op
 	:	'AND'   #cond_op1
 	|  'OR' # cond_op2
@@ -181,8 +204,8 @@ expr1
 expr3								
 	: expr3 rel_op unifactor			#expr31
 	| unifactor							#expr32
-	|expr3 rel_op literal  				#expr33
-	|literal rel_op expr3				#expr34
+	|expr3 rel_op2 literal  				#expr33
+	|literal rel_op3 expr3				#expr34
 	;
 
 unifactor
