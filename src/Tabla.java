@@ -39,7 +39,7 @@ public class Tabla {
      public void agregarCheck(Check c) {
          check.add(c);
     }
-     public void setColumna(Columna c) {
+     public void agregarColumna(Columna c) {
         columnas.add(c);
     }
     public String getNombre() {

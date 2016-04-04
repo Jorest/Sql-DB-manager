@@ -67,7 +67,7 @@ public class ControladorDB {
         }
         return nombre;
     }
-    public void useDB(String nombre){
+    public void useDB(String nombre) throws IOException{
          File directorio= new File("BasesDatos");
          File[] bases=directorio.listFiles();
          File base=null;
@@ -80,34 +80,40 @@ public class ControladorDB {
          System.out.println("Encontrado");
          actual= new BaseDatos(base.getName());
          cargarTablas();
+         System.out.println("yapppp");
          //Ingresar las tablas a la base de datos con el set
         
     }
-    public void cargarTablas(){
+    public void cargarTablas() throws IOException{
          ArrayList <Tabla> tablas=new ArrayList();
          File directorio= new File("BasesDatos/"+actual.getNombre());
          File[] bases=directorio.listFiles();
          Gson gson1 = new Gson();
          for(int i=0; i<bases.length; i++){
-             String json=bases[i].getPath();
+             String json=readFile(bases[i].getPath());
              Tabla t = gson1.fromJson(json, Tabla.class);
              tablas.add(t);
          }
          actual.setTablas(tablas);
     }
-    public void createT(Tabla t){
+    public void createT(Tabla t) throws IOException{
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(t);
-        String path= "BaseDatos/"+actual.getNombre()+"/"+t.getNombre()+".json";
-        escribir(json,path);
+        System.out.println(json);
+        //String path= "BaseDatos/"+actual.getNombre();
+        File fichero = new File ("BasesDatos/"+actual.getNombre(),t.getNombre()+".json");
+        fichero.createNewFile();
+        System.out.println("mmmmeiureireiu");
+        escribir(json,fichero.getPath());
         //actual.setTabla(t);
         cargarTablas();
     }
 
     public void renameT(String nombre, String nnombre) throws IOException{
-        String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
+         File directorio= new File("BasesDatos/"+actual.getNombre(),nombre+".json");
+         String json= readFile(directorio.getPath());
         Gson gson1 = new Gson();
         Tabla t = gson1.fromJson(json, Tabla.class);
         t.setNombre(nnombre);
@@ -116,23 +122,25 @@ public class ControladorDB {
         builder.serializeNulls();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         json = gson.toJson(t);
-        String path= "BaseDatos/"+actual.getNombre()+"/"+t.getNombre()+".json";
-        escribir(json,path); 
+        File fichero = new File ("BasesDatos/"+actual.getNombre(),t.getNombre()+".json");
+        fichero.createNewFile();
+        escribir(json,fichero.getPath()); 
         cargarTablas();
      
     }
    
     public Tabla aletT(String nombre) throws IOException{
-         String json= readFile("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
+         File directorio= new File("BasesDatos/"+actual.getNombre(),nombre+".json");
+         String json= readFile(directorio.getPath());
          Gson gson1 = new Gson();
          Tabla t = gson1.fromJson(json, Tabla.class);
          return t; 
     }
-    public void dropT(String nombre){
-        File directorio= new File("BaseDatos/"+actual.getNombre()+"/"+nombre+".json");
+    public void dropT(String nombre) throws IOException{
+        File directorio= new File("BasesDatos/"+actual.getNombre(),nombre+".json");
         boolean resul=directorio.delete();
         if(resul==false){
-            System.out.println("Error en el cambio de nombre a Base de Datos "+ nombre);
+            System.out.println("Error AL BORRAR TABLA "+ nombre);
         }
         cargarTablas();
         
@@ -196,6 +204,7 @@ public class ControladorDB {
 	        f.read(buffer);
 	        if (f != null) try { f.close(); } catch (IOException ignored) { }
 	    } catch (IOException ignored) { System.out.println("File not found or invalid path.");}
+            f.close();
 	    return new String(buffer);
 	}
 }

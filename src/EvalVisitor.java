@@ -21,10 +21,50 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 
 		  return (T)"";
 	  }
+        @Override
+        public T visitSql_executable_statement(SqlParser.Sql_executable_statementContext ctx) { 
+            for (int i = 0;i<ctx.getChildCount();i++){
+	         //  visito todas los hijos
+			visit(ctx.getChild(i));
+	            }  
+
+		  return (T)"";
+        }
+	
+        @Override 
+        public T visitSql_schema_statement(SqlParser.Sql_schema_statementContext ctx) { 
+            for (int i = 0;i<ctx.getChildCount();i++){
+	         //  visito todas los hijos
+			visit(ctx.getChild(i));
+	            }  
+
+		  return (T)"";
+        } 
+	
+        @Override 
+        public T visitSql_schema_manipulation_statement( SqlParser.Sql_schema_manipulation_statementContext ctx) { 
+            for (int i = 0;i<ctx.getChildCount();i++){
+	         //  visito todas los hijos
+			visit(ctx.getChild(i));
+	            }  
+
+		  return (T)"";
+        }
+	
+        @Override 
+        public T visitSql_schema_definition_statement(SqlParser.Sql_schema_definition_statementContext ctx) { 
+            for (int i = 0;i<ctx.getChildCount();i++){
+	         //  visito todas los hijos
+			visit(ctx.getChild(i));
+	            }  
+
+		  return (T)"";
+        }
+	
 	
 	//******************EJERCICIO #1: DDL**************************
-	@Override 
-	public T visitSql_schema_definition_statement(SqlParser.Sql_schema_definition_statementContext ctx) {
+	@Override
+        public T visitSchema_definition( SqlParser.Schema_definitionContext ctx) { 
 		controlador.createDB(ctx.getChild(2).getText());
              
 		return (T)"";	
@@ -51,7 +91,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         //use database
         @Override
         public T visitUse_schema_statement(SqlParser.Use_schema_statementContext ctx) { 
-            controlador.useDB(ctx.getChild(2).getText());
+            try {
+                controlador.useDB(ctx.getChild(2).getText());
+            } catch (IOException ex) {
+                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return null; 
         }
         
@@ -59,15 +103,22 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         @Override
          public T visitTable_definition(SqlParser.Table_definitionContext ctx) { 
              actual= new Tabla(ctx.getChild(2).getText());
-             visit(ctx.getChild(4));
-             controlador.createT(actual);
+              for (int i = 0;i<ctx.getChildCount();i++){
+	         //  visito todas los hijos
+			visit(ctx.getChild(i));
+	            }  
+            try {
+                controlador.createT(actual);
+            } catch (IOException ex) {
+                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            }
              return null;  
          }
         
-         //def colulumna
-         public T visitDefcolumna(SqlParser.DefcolumnaContext ctx, Tabla t) { 
+         @Override public T visitDefcolumna(SqlParser.DefcolumnaContext ctx) {  
+             //System.out.println("NO TE OLVIDES DE MI");
              Columna c= new Columna(ctx.getChild(0).getText(),ctx.getChild(1).getText());
-             actual.setColumna(c);
+             actual.agregarColumna(c);
              return null; 
          }
 	//agregando primarykey
@@ -148,7 +199,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         //drop tabla
         @Override 
         public Object visitDrop_table_statement(SqlParser.Drop_table_statementContext ctx) { 
-            controlador.dropT(ctx.getChild(2).getText());
+            try {
+                controlador.dropT(ctx.getChild(2).getText());
+            } catch (IOException ex) {
+                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return null; 
         }
         
@@ -177,7 +232,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
             }
             visit(ctx.getChild(3));
-            controlador.createT(actual);
+            try {
+                controlador.createT(actual);
+            } catch (IOException ex) {
+                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            }
             ///seteralo
             return null;
         }
@@ -185,7 +244,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         @Override 
         public T visitAddColumn(SqlParser.AddColumnContext ctx) { 
             Columna c= new Columna(ctx.getChild(2).getText(),ctx.getChild(3).getText());
-            actual.setColumna(c);
+            actual.agregarColumna(c);
             visit(ctx.getChild(4));
             return null;
         }
