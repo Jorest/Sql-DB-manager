@@ -101,13 +101,6 @@ public class SqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Sq
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitExp(@NotNull SqlParser.ExpContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitDelete_value(@NotNull SqlParser.Delete_valueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -185,13 +178,6 @@ public class SqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Sq
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFactorLiteral(@NotNull SqlParser.FactorLiteralContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitDefconstraint(@NotNull SqlParser.DefconstraintContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -227,7 +213,21 @@ public class SqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Sq
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitExpr33(@NotNull SqlParser.Expr33Context ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitExpr32(@NotNull SqlParser.Expr32Context ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitExpr34(@NotNull SqlParser.Expr34Context ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -403,20 +403,6 @@ public class SqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Sq
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitShow_table_statement(@NotNull SqlParser.Show_table_statementContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitRelational(@NotNull SqlParser.RelationalContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitLogic(@NotNull SqlParser.LogicContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

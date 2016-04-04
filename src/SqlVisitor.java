@@ -88,12 +88,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUniFactorFactor(@NotNull SqlParser.UniFactorFactorContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SqlParser#exp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExp(@NotNull SqlParser.ExpContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SqlParser#delete_value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -168,13 +162,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRelLE(@NotNull SqlParser.RelLEContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code factorLiteral}
-	 * labeled alternative in {@link SqlParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFactorLiteral(@NotNull SqlParser.FactorLiteralContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code defconstraint}
 	 * labeled alternative in {@link SqlParser#column}.
 	 * @param ctx the parse tree
@@ -208,12 +195,26 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr31(@NotNull SqlParser.Expr31Context ctx);
 	/**
+	 * Visit a parse tree produced by the {@code expr33}
+	 * labeled alternative in {@link SqlParser#expr3}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpr33(@NotNull SqlParser.Expr33Context ctx);
+	/**
 	 * Visit a parse tree produced by the {@code expr32}
 	 * labeled alternative in {@link SqlParser#expr3}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitExpr32(@NotNull SqlParser.Expr32Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code expr34}
+	 * labeled alternative in {@link SqlParser#expr3}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpr34(@NotNull SqlParser.Expr34Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link SqlParser#show_column_statement}.
 	 * @param ctx the parse tree
@@ -372,18 +373,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitShow_table_statement(@NotNull SqlParser.Show_table_statementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SqlParser#relational}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRelational(@NotNull SqlParser.RelationalContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SqlParser#logic}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogic(@NotNull SqlParser.LogicContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code expr11}
 	 * labeled alternative in {@link SqlParser#expr1}.

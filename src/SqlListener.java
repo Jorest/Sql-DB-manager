@@ -138,16 +138,6 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitUniFactorFactor(@NotNull SqlParser.UniFactorFactorContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SqlParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void enterExp(@NotNull SqlParser.ExpContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SqlParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void exitExp(@NotNull SqlParser.ExpContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link SqlParser#delete_value}.
 	 * @param ctx the parse tree
 	 */
@@ -274,18 +264,6 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitRelLE(@NotNull SqlParser.RelLEContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code factorLiteral}
-	 * labeled alternative in {@link SqlParser#factor}.
-	 * @param ctx the parse tree
-	 */
-	void enterFactorLiteral(@NotNull SqlParser.FactorLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code factorLiteral}
-	 * labeled alternative in {@link SqlParser#factor}.
-	 * @param ctx the parse tree
-	 */
-	void exitFactorLiteral(@NotNull SqlParser.FactorLiteralContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code defconstraint}
 	 * labeled alternative in {@link SqlParser#column}.
 	 * @param ctx the parse tree
@@ -342,6 +320,18 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitExpr31(@NotNull SqlParser.Expr31Context ctx);
 	/**
+	 * Enter a parse tree produced by the {@code expr33}
+	 * labeled alternative in {@link SqlParser#expr3}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr33(@NotNull SqlParser.Expr33Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code expr33}
+	 * labeled alternative in {@link SqlParser#expr3}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr33(@NotNull SqlParser.Expr33Context ctx);
+	/**
 	 * Enter a parse tree produced by the {@code expr32}
 	 * labeled alternative in {@link SqlParser#expr3}.
 	 * @param ctx the parse tree
@@ -353,6 +343,18 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr32(@NotNull SqlParser.Expr32Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code expr34}
+	 * labeled alternative in {@link SqlParser#expr3}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr34(@NotNull SqlParser.Expr34Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code expr34}
+	 * labeled alternative in {@link SqlParser#expr3}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr34(@NotNull SqlParser.Expr34Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link SqlParser#show_column_statement}.
 	 * @param ctx the parse tree
@@ -619,26 +621,6 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitShow_table_statement(@NotNull SqlParser.Show_table_statementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SqlParser#relational}.
-	 * @param ctx the parse tree
-	 */
-	void enterRelational(@NotNull SqlParser.RelationalContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SqlParser#relational}.
-	 * @param ctx the parse tree
-	 */
-	void exitRelational(@NotNull SqlParser.RelationalContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SqlParser#logic}.
-	 * @param ctx the parse tree
-	 */
-	void enterLogic(@NotNull SqlParser.LogicContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SqlParser#logic}.
-	 * @param ctx the parse tree
-	 */
-	void exitLogic(@NotNull SqlParser.LogicContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code expr11}
 	 * labeled alternative in {@link SqlParser#expr1}.

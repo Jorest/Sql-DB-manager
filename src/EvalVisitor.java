@@ -310,12 +310,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T) dato ;
 		}
 		
-		@Override
-		public T visitFactorLiteral(SqlParser.FactorLiteralContext ctx) {
-			Dato dato = new Dato() ;
-			dato= (Dato)visit(ctx.getChild(0));
-			return (T) dato ;
-		}
 		
 		@Override
 		public T visitFactorID(SqlParser.FactorIDContext ctx) {

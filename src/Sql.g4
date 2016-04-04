@@ -108,10 +108,8 @@ constraint: 'CONSTRAINT' constraintType;
 constraintType:
             ID 'PRIMARY' 'KEY' '(' ID (',' ID)*')'                                           #primaryK
         |   ID 'FOREIGN' 'KEY'  '(' ID (',' ID)*')' 'REFERENCES' ID '(' ID (',' ID)*')'		 #foreignK
-        |   ID 'CHECK'  '('ID exp ID ')'													 #check
+        |   ID 'CHECK'  '('ID expression ID ')'													 #check
         ;
-
-exp: logic | relational;
 
 rename_table_statement: 'ALTER' 'TABLE' ID 'RENAME' 'TO' ID ';';
 
@@ -126,10 +124,6 @@ accion:
 show_table_statement: 'SHOW' 'TABLES' ';';
 show_column_statement: 'SHOW' 'COLUMNS' 'FROM' ID ';';
          
-          
-          
-logic: 'AND' | 'OR' | 'NOT';
-relational: '<' | '<=' | '>' | '>=' | '<>' | '=' ;
 
 insert_value: 'INSERT' 'INTO' ID ( '(' ((ID)(','ID)*)? ')' )? 'VALUES' (list_values) ';';
 
@@ -187,6 +181,8 @@ expr1
 expr3								
 	: expr3 rel_op unifactor			#expr31
 	| unifactor							#expr32
+	|expr3 rel_op literal  				#expr33
+	|literal rel_op expr3				#expr34
 	;
 
 unifactor
@@ -194,9 +190,8 @@ unifactor
 	| factor							#uniFactorFactor
 	;
 	
-factor 							
-	: literal					#factorLiteral
-	| '(' expression ')'		#factorExpression
+factor 		
+	: '(' expression ')'		#factorExpression
 	| (ID'.'ID|ID)              #factorID 
 	;
 	

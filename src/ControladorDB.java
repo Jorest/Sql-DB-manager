@@ -188,6 +188,7 @@ public class ControladorDB {
     	return columnareturn;
     }
     
+    
     private static String readFile(String filePath) throws java.io.IOException{
 	    byte[] buffer = new byte[(int) new File(filePath).length()];
 	    BufferedInputStream f = null;
