@@ -411,7 +411,9 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			Dato newdato =new Dato() ;
 			
 			switch (dato1.getTipo()) {
-            case "int": 
+            case ""
+            		+ ""
+            		+ "int": 
             	if (dato1.getInteger()<=dato2.getInteger()){
 			 		newdato.setBool(true) ;
 			 	}
@@ -568,18 +570,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T) newdato ;
 		}
 
-		// expr2
-		@Override
-		public T visitExpr22(SqlParser.Expr22Context ctx) {
-			Dato dato = new Dato() ;
-			dato= (Dato)visit(ctx.getChild(0));
-			return (T) dato ;
-		}
-		@Override
-		public T visitExpr21(SqlParser.Expr21Context ctx) {
-			Dato dato = (Dato) visit(ctx.getChild(1));
-			return (T)dato ;
-		}
+
 		
 		//-----expr1 y expression operqdores
 		@Override 
@@ -631,11 +622,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T)dato ;
 		}
 		
-		@Override
-		public T visitExpr12(SqlParser.Expr12Context ctx) {
-			Dato dato = (Dato) visit(ctx.getChild(0));
-			return (T)dato ;
-		}
+		
 		
 		
 		

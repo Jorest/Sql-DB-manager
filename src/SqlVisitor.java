@@ -68,13 +68,14 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitAlter_database_statement(@NotNull SqlParser.Alter_database_statementContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code eqE}
-	 * labeled alternative in {@link SqlParser#eq_op}.
+	 * labeled alternative in {@link SqlParser#rel_op}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitEqE(@NotNull SqlParser.EqEContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SqlParser#cond_op1}.
+	 * Visit a parse tree produced by the {@code cond_op1}
+	 * labeled alternative in {@link SqlParser#cond_op}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -119,7 +120,8 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRekB(@NotNull SqlParser.RekBContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SqlParser#cond_op2}.
+	 * Visit a parse tree produced by the {@code cond_op2}
+	 * labeled alternative in {@link SqlParser#cond_op}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -232,7 +234,7 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSql_data_statement(@NotNull SqlParser.Sql_data_statementContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code eqNE}
-	 * labeled alternative in {@link SqlParser#eq_op}.
+	 * labeled alternative in {@link SqlParser#rel_op}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -288,13 +290,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDrop_schema_statement(@NotNull SqlParser.Drop_schema_statementContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code expr22}
-	 * labeled alternative in {@link SqlParser#expr2}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpr22(@NotNull SqlParser.Expr22Context ctx);
-	/**
 	 * Visit a parse tree produced by {@link SqlParser#select_value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -306,13 +301,6 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDate_literal(@NotNull SqlParser.Date_literalContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code expr21}
-	 * labeled alternative in {@link SqlParser#expr2}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpr21(@NotNull SqlParser.Expr21Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link SqlParser#drop_table_statement}.
 	 * @param ctx the parse tree

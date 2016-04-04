@@ -162,35 +162,27 @@ rel_op
 	|	'>'												#rekB
 	| 	'<='											#relLE
 	|	'>='											#relBE
-	;
-	
-eq_op
-	:	'='											#eqE
+    |	'='											#eqE
 	|	'<>'										#eqNE	
 	;
-	
-cond_op1
-	:	'AND'
+
+cond_op
+	:	'AND'   #cond_op1
+	|  'OR' # cond_op2
 	;
-	
-cond_op2
-	:	'OR'
-	;	
+
+
 
 expression							
-	: expression cond_op2 expr1		#expression1
+	: expression cond_op expr1		#expression1
 	| expr1							#expression2
 	;
 	
 expr1								
-	: expr1 cond_op1 expr2		#expr11
-	|expr2						#expr12
+	: expr1 cond_op expr3		#expr11
+	|expr3						#expr12
 	;
 	
-expr2								
-	: expr2 eq_op expr3			#expr21
-	| expr3						#expr22
-	;
 
 expr3								
 	: expr3 rel_op unifactor			#expr31

@@ -532,18 +532,6 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr22(@NotNull SqlParser.Expr22Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpr22(@NotNull SqlParser.Expr22Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterSelect_value(@NotNull SqlParser.Select_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -563,18 +551,6 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDate_literal(@NotNull SqlParser.Date_literalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExpr21(@NotNull SqlParser.Expr21Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpr21(@NotNull SqlParser.Expr21Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

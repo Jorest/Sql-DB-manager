@@ -41,20 +41,24 @@ public class Main {
        
         /*****************************************Leer el texto****************************************/
 
-      /*  String text = readFileAsString("C:\\Users\\jores\\workspace\\PruebaAnt3\\src\\editor.txt");
+        String text = readFileAsString("test.txt");
         //awevos que hay que cambiar esa direccion 
         ANTLRInputStream input = new ANTLRInputStream(text);
 
         // Create an Lexer that receives the char stream
         SqlLexer lexer = new SqlLexer(input);
-        lexer.removeErrorListeners();
+        //lexer.removeErrorListeners();
         // Create a token stream from the lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
     // Create a parser that receives the token stream
         SqlParser parser = new SqlParser(tokens);
 
-
+    	SqlParser.ProgramContext arbol = parser.program();
+    	
+    	EvalVisitor eval = new EvalVisitor();
+    	eval.visitProgram(arbol);
+    	
      
     }
 
@@ -117,4 +121,4 @@ public class Main {
         System.out.println(c.getNombre());**/
         
 }
-}
+
