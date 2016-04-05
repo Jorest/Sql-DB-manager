@@ -382,7 +382,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			dato= (Dato)visit(ctx.getChild(1));
 			ArrayList<Integer> filas =dato.getColumna();
 			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
-			int tamaño = controlador.getTablaActual().getColumnas().get(0).getTamaño();
+			int tamaño = controlador.getTablaActual().getColumnas().get(0).getTamanio();
 			for (int i=0; i < tamaño ; i++){
 				if (!(filas.contains(i))){
 					notFilas.add(i);
