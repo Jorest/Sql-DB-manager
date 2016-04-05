@@ -51,7 +51,7 @@ public class Columna {
         valores.add(valor);
     }
 
-    public int getTamaño() {
+    public int getTamanio() {
         return valores.size();
     }
     
