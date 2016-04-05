@@ -40,6 +40,18 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitAddConstraint(@NotNull SqlParser.AddConstraintContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code tipoFloar}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipoFloar(@NotNull SqlParser.TipoFloarContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tipoFloar}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipoFloar(@NotNull SqlParser.TipoFloarContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SqlParser#program}.
 	 * @param ctx the parse tree
 	 */
@@ -312,16 +324,6 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitCheck(@NotNull SqlParser.CheckContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SqlParser#tipo_literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterTipo_literal(@NotNull SqlParser.Tipo_literalContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SqlParser#tipo_literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitTipo_literal(@NotNull SqlParser.Tipo_literalContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code relL3}
 	 * labeled alternative in {@link SqlParser#rel_op3}.
 	 * @param ctx the parse tree
@@ -415,6 +417,18 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpr34(@NotNull SqlParser.Expr34Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code tipoInr}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipoInr(@NotNull SqlParser.TipoInrContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tipoInr}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipoInr(@NotNull SqlParser.TipoInrContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SqlParser#show_column_statement}.
 	 * @param ctx the parse tree
@@ -511,6 +525,18 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFactorID(@NotNull SqlParser.FactorIDContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code tipoDate}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipoDate(@NotNull SqlParser.TipoDateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tipoDate}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipoDate(@NotNull SqlParser.TipoDateContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link SqlParser#list_values}.
 	 * @param ctx the parse tree
@@ -619,6 +645,18 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRelL(@NotNull SqlParser.RelLContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code relLE3}
+	 * labeled alternative in {@link SqlParser#rel_op3}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelLE3(@NotNull SqlParser.RelLE3Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code relLE3}
+	 * labeled alternative in {@link SqlParser#rel_op3}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelLE3(@NotNull SqlParser.RelLE3Context ctx);
 	/**
 	 * Enter a parse tree produced by the {@code relBE}
 	 * labeled alternative in {@link SqlParser#rel_op}.
@@ -753,6 +791,18 @@ public interface SqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitShow_table_statement(@NotNull SqlParser.Show_table_statementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code tipoChar}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipoChar(@NotNull SqlParser.TipoCharContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tipoChar}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipoChar(@NotNull SqlParser.TipoCharContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code expr11}
 	 * labeled alternative in {@link SqlParser#expr1}.

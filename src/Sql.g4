@@ -178,7 +178,7 @@ rel_op2
 	rel_op3
 	:	'<'												#relL3
 	|	'>'												#rekB3
-	| 	'<='											#relL3
+	| 	'<='											#relLE3
 	|	'>='											#relBE3
     |	'='											    #eqE3
 	|	'<>'										    #eqNE3	
