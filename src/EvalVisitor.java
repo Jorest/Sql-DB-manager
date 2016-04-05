@@ -382,8 +382,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			dato= (Dato)visit(ctx.getChild(1));
 			ArrayList<Integer> filas =dato.getColumna();
 			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
-			int tamaño = controlador.getTablaActual().getColumnas().get(0).getTamaño();
-			for (int i=0; i < tamaño ; i++){
+			int tamaÃ±o = controlador.getTablaActual().getColumnas().get(0).getTamaÃ±o();
+			for (int i=0; i < tamaÃ±o ; i++){
 				if (!(filas.contains(i))){
 					notFilas.add(i);
 				}
@@ -734,7 +734,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			                break;
 			                
 			            default: 
-			            	System.out.println("eror dato no reconocido");
+			            	System.out.println("error dato no reconocido");
 			            	
 						}
 					}
