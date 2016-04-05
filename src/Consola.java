@@ -141,28 +141,6 @@ public class Consola extends javax.swing.JFrame {
           }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-      public String escribir(String codigo){
-       //codigo=codigo.replace(' ', '\n');
-       String path="editor.txt";
-       
-       try{
-           FileWriter fw= new FileWriter(path);
-           BufferedWriter bw = new BufferedWriter(fw);
-           PrintWriter salida= new PrintWriter(bw);
-           salida.println(codigo);
-           salida.close();
-                   
-       }
-       catch(java.io.IOException ioex){
-           System.out.println("Se presento un error: " + ioex);
-       }
-       return path;
-   }
-   
-      
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;

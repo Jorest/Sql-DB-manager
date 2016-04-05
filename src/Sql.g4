@@ -102,9 +102,9 @@ column: ID tipo_literal ','         #defcolumna
 		;
 
 tipo_literal: 
-				  'INT'      	   #tipoInr
-				| 'FLOAT' 		   #tipoFloar
-				| 'CHAR(' NUM ')'  #tipoChar 
+				  'INT'                    #tipoInt
+				| 'FLOAT' 		   #tipoFloat
+				| 'CHAR(' NUM ')'          #tipoChar 
 				| 'DATE' 		   #tipoDate
 				;
 

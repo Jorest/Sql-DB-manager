@@ -383,7 +383,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			ArrayList<Integer> filas =dato.getColumna();
 			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
 			int tamaño = controlador.getTablaActual().getColumnas().get(0).getTamaño();
-			for (int i=0; i <tamaño ; i++){
+			for (int i=0; i < tamaño ; i++){
 				if (!(filas.contains(i))){
 					notFilas.add(i);
 				}
