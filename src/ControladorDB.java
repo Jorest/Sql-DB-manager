@@ -109,13 +109,14 @@ public class ControladorDB {
     }
     public void dropDB(String nombre){
         File directorio= new File("BasesDatos/"+nombre);
-        JOptionPane optionPane = new JOptionPane(
-        "Esta seguro de quere eliminar la Base de Datos: "+nombre,
-        JOptionPane.QUESTION_MESSAGE,
-        JOptionPane.YES_NO_OPTION);
-        boolean resul=directorio.delete();
-        if(resul==false){
-            System.out.println("Error en el borrado de nombre a Base de Datos "+ nombre);
+         int response = JOptionPane.showConfirmDialog(null, "Esta seguro de quere eliminar la Base de Datos: "+nombre+" ?", "Confirm",
+         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            System.out.println("ssisisi");
+            boolean resul=directorio.delete();
+            if(resul==false){
+                System.out.println("Error en el borrado de nombre a Base de Datos "+ nombre);
+            }
         }
     }
     public ArrayList showDB(){
