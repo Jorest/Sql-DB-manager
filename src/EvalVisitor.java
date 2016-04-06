@@ -492,7 +492,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -531,7 +531,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -568,7 +568,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -608,7 +608,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -665,7 +665,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break ;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -724,7 +724,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break ;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -768,7 +768,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -811,7 +811,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -851,7 +851,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -892,7 +892,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -951,7 +951,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break ;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -1005,7 +1005,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break ;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -1050,7 +1050,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1088,7 +1088,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1126,7 +1126,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1165,7 +1165,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1222,7 +1222,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -1277,7 +1277,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
