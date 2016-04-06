@@ -958,22 +958,78 @@ public class SqlParser extends Parser {
 	}
 
 	public static class Tipo_literalContext extends ParserRuleContext {
-		public TerminalNode NUM() { return getToken(SqlParser.NUM, 0); }
 		public Tipo_literalContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_tipo_literal; }
+	 
+		public Tipo_literalContext() { }
+		public void copyFrom(Tipo_literalContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class TipoDateContext extends Tipo_literalContext {
+		public TipoDateContext(Tipo_literalContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof SqlListener ) ((SqlListener)listener).enterTipo_literal(this);
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).enterTipoDate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof SqlListener ) ((SqlListener)listener).exitTipo_literal(this);
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).exitTipoDate(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof SqlVisitor ) return ((SqlVisitor<? extends T>)visitor).visitTipo_literal(this);
+			if ( visitor instanceof SqlVisitor ) return ((SqlVisitor<? extends T>)visitor).visitTipoDate(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TipoInrContext extends Tipo_literalContext {
+		public TipoInrContext(Tipo_literalContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).enterTipoInr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).exitTipoInr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SqlVisitor ) return ((SqlVisitor<? extends T>)visitor).visitTipoInr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TipoFloarContext extends Tipo_literalContext {
+		public TipoFloarContext(Tipo_literalContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).enterTipoFloar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).exitTipoFloar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SqlVisitor ) return ((SqlVisitor<? extends T>)visitor).visitTipoFloar(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TipoCharContext extends Tipo_literalContext {
+		public TerminalNode NUM() { return getToken(SqlParser.NUM, 0); }
+		public TipoCharContext(Tipo_literalContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).enterTipoChar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).exitTipoChar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SqlVisitor ) return ((SqlVisitor<? extends T>)visitor).visitTipoChar(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -985,18 +1041,21 @@ public class SqlParser extends Parser {
 			setState(177);
 			switch (_input.LA(1)) {
 			case T__11:
+				_localctx = new TipoInrContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(171); match(T__11);
 				}
 				break;
 			case T__4:
+				_localctx = new TipoFloarContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(172); match(T__4);
 				}
 				break;
 			case T__30:
+				_localctx = new TipoCharContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(173); match(T__30);
@@ -1005,6 +1064,7 @@ public class SqlParser extends Parser {
 				}
 				break;
 			case T__12:
+				_localctx = new TipoDateContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(176); match(T__12);
@@ -2572,6 +2632,22 @@ public class SqlParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class RelLE3Context extends Rel_op3Context {
+		public RelLE3Context(Rel_op3Context ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).enterRelLE3(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof SqlListener ) ((SqlListener)listener).exitRelLE3(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SqlVisitor ) return ((SqlVisitor<? extends T>)visitor).visitRelLE3(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class RekB3Context extends Rel_op3Context {
 		public RekB3Context(Rel_op3Context ctx) { copyFrom(ctx); }
 		@Override
@@ -2626,7 +2702,7 @@ public class SqlParser extends Parser {
 				}
 				break;
 			case T__20:
-				_localctx = new RelL3Context(_localctx);
+				_localctx = new RelLE3Context(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(380); match(T__20);

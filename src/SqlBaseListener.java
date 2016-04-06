@@ -52,6 +52,18 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTipoFloar(@NotNull SqlParser.TipoFloarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipoFloar(@NotNull SqlParser.TipoFloarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterProgram(@NotNull SqlParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -340,18 +352,6 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipo_literal(@NotNull SqlParser.Tipo_literalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTipo_literal(@NotNull SqlParser.Tipo_literalContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterRelL3(@NotNull SqlParser.RelL3Context ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -443,6 +443,18 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpr34(@NotNull SqlParser.Expr34Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTipoInr(@NotNull SqlParser.TipoInrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipoInr(@NotNull SqlParser.TipoInrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -551,6 +563,18 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFactorID(@NotNull SqlParser.FactorIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTipoDate(@NotNull SqlParser.TipoDateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipoDate(@NotNull SqlParser.TipoDateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -671,6 +695,18 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRelL(@NotNull SqlParser.RelLContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRelLE3(@NotNull SqlParser.RelLE3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelLE3(@NotNull SqlParser.RelLE3Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -815,6 +851,18 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitShow_table_statement(@NotNull SqlParser.Show_table_statementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTipoChar(@NotNull SqlParser.TipoCharContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipoChar(@NotNull SqlParser.TipoCharContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

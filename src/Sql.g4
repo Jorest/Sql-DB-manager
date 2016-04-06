@@ -185,7 +185,7 @@ rel_op2
 	rel_op3
 	:	'<'												#relL3
 	|	'>'												#rekB3
-	| 	'<='											#relL3
+	| 	'<='											#relLE3
 	|	'>='											#relBE3
     |	'='											    #eqE3
 	|	'<>'										    #eqNE3	
@@ -211,7 +211,7 @@ expr1
 expr3								
 	: expr3 rel_op unifactor			#expr31
 	| unifactor							#expr32
-	|expr3 rel_op2 literal  				#expr33
+	|expr3 rel_op2 literal  			#expr33
 	|literal rel_op3 expr3				#expr34
 	;
 
