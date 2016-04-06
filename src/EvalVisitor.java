@@ -332,7 +332,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		public T visitChar_literal(SqlParser.Char_literalContext ctx) {
 			Dato dato = new Dato() ;
 			dato.setTipo("char");
-			dato.setCharacter(ctx.getText());
+                        String valor=ctx.getText().replace("'", "");
+			dato.setCharacter(valor);
 			return (T) dato ;
 		}
 		
@@ -340,7 +341,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		public T visitDate_literal(SqlParser.Date_literalContext ctx) {
 			Dato dato = new Dato() ;
 			dato.setTipo("date");
-			dato.setDate(ctx.getText());
+                        String valor=ctx.getText().replace("'", "");
+			dato.setDate(valor);
 			return (T) dato ;
 		}
 	
