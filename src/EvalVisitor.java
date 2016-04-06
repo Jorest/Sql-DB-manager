@@ -1543,6 +1543,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		}
 		
 		public T visitTipoChar(SqlParser.TipoCharContext ctx) {
+			Columna new 
 			return (T)"int";
 		}
 		
