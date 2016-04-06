@@ -23,19 +23,19 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTable_definition(@NotNull SqlParser.Table_definitionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code tipoFloat}
+	 * labeled alternative in {@link SqlParser#tipo_literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTipoFloat(@NotNull SqlParser.TipoFloatContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code addConstraint}
 	 * labeled alternative in {@link SqlParser#accion}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAddConstraint(@NotNull SqlParser.AddConstraintContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code tipoFloar}
-	 * labeled alternative in {@link SqlParser#tipo_literal}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTipoFloar(@NotNull SqlParser.TipoFloarContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SqlParser#program}.
 	 * @param ctx the parse tree
@@ -190,6 +190,13 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDefconstraint(@NotNull SqlParser.DefconstraintContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code factorID2}
+	 * labeled alternative in {@link SqlParser#factor}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFactorID2(@NotNull SqlParser.FactorID2Context ctx);
+	/**
 	 * Visit a parse tree produced by the {@code check}
 	 * labeled alternative in {@link SqlParser#constraintType}.
 	 * @param ctx the parse tree
@@ -252,12 +259,12 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr34(@NotNull SqlParser.Expr34Context ctx);
 	/**
-	 * Visit a parse tree produced by the {@code tipoInr}
+	 * Visit a parse tree produced by the {@code tipoInt}
 	 * labeled alternative in {@link SqlParser#tipo_literal}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTipoInr(@NotNull SqlParser.TipoInrContext ctx);
+	T visitTipoInt(@NotNull SqlParser.TipoIntContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link SqlParser#show_column_statement}.
 	 * @param ctx the parse tree

@@ -370,9 +370,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override
 		public T visitFactorID(SqlParser.FactorIDContext ctx) {
-			Dato dato = new Dato() ;
-			dato.setId(ctx.getText());
-			return (T) dato ;
+			Columna col = controlador.getIDvalues(ctx.getText());
+			Dato dato = new Dato();
+			dato.setTipo(col.getTipo());
+			
+			return (T) dato;
 		}
 		
 		
@@ -382,7 +384,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			dato= (Dato)visit(ctx.getChild(1));
 			ArrayList<Integer> filas =dato.getFilas();
 			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
-			int tamaño = controlador.getTablaActual().getColumnas().get(0).getTamanio();
+			int tamaño = dato.getColumna().size();
 			for (int i=0; i < tamaño ; i++){
 				if (!(filas.contains(i))){
 					notFilas.add(i);
@@ -395,7 +397,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitUniFactorFactor(SqlParser.UniFactorFactorContext ctx) {
 			Dato dato = new Dato() ;
-			dato= (Dato)visit(ctx.getChild(1));
+			dato= (Dato)visit(ctx.getChild(0));
 			return (T) dato ;
 		}
 		//expr3
@@ -1323,11 +1325,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		}
 		
 		
-
-		
-		
-		
-		
+	
 }
 
 

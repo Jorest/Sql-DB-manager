@@ -40,6 +40,18 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTipoFloat(@NotNull SqlParser.TipoFloatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipoFloat(@NotNull SqlParser.TipoFloatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAddConstraint(@NotNull SqlParser.AddConstraintContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -47,18 +59,6 @@ public class SqlBaseListener implements SqlListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAddConstraint(@NotNull SqlParser.AddConstraintContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTipoFloar(@NotNull SqlParser.TipoFloarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTipoFloar(@NotNull SqlParser.TipoFloarContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -340,6 +340,18 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFactorID2(@NotNull SqlParser.FactorID2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFactorID2(@NotNull SqlParser.FactorID2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCheck(@NotNull SqlParser.CheckContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -448,13 +460,13 @@ public class SqlBaseListener implements SqlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTipoInr(@NotNull SqlParser.TipoInrContext ctx) { }
+	@Override public void enterTipoInt(@NotNull SqlParser.TipoIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTipoInr(@NotNull SqlParser.TipoInrContext ctx) { }
+	@Override public void exitTipoInt(@NotNull SqlParser.TipoIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

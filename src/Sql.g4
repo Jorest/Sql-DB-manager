@@ -215,7 +215,8 @@ unifactor
 	
 factor 		
 	: '(' expression ')'		#factorExpression
-	| (ID'.'ID|ID)              #factorID 
+	| ID              			#factorID
+	| ID.ID 					#factorID2
 	;
 	
 
