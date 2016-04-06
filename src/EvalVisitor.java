@@ -71,6 +71,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
             controlador.alterDB(ctx.getChild(2).getText(), ctx.getChild(5).getText());
             return null;
         } 
+        
         //drop database
         @Override
         public T visitDrop_schema_statement(SqlParser.Drop_schema_statementContext ctx) { 
@@ -83,6 +84,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         public T visitShow_schema_statement(SqlParser.Show_schema_statementContext ctx) { 
             return (T)controlador.showTables();
         }
+        
         //use database
         @Override
         public T visitUse_schema_statement(SqlParser.Use_schema_statementContext ctx) { 
@@ -116,6 +118,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              actual.agregarColumna(c);
              return null; 
          }
+         
 	//agregando primarykey
          @Override 
          public T visitPrimaryK(SqlParser.PrimaryKContext ctx) { 
@@ -125,7 +128,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                  if(!",".equals(a)){
                      ids.add(a);
                  }
-                 
              }
              String nombre=ctx.getChild(0).getText();
              nombre=nombre.replace("PK", "");
@@ -133,6 +135,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              actual.agregarPK(p);
              return null; 
          }
+         
          //agregando foreignK
          @Override 
          public T visitForeignK(SqlParser.ForeignKContext ctx) { 
@@ -155,7 +158,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 if(!",".equals(a)){
                      ids1.add(a);
                  }
-                 
              }
              String nombre=ctx.getChild(0).getText();
              nombre=nombre.replace("FK", "");
@@ -163,6 +165,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              actual.agregarFK(p);
              return null; 
          }
+         
          //agregando check 
          @Override public T visitCheck(SqlParser.CheckContext ctx) { 
               String nombre=ctx.getChild(0).getText();
