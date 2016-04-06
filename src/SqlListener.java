@@ -370,6 +370,16 @@ public interface SqlListener extends ParseTreeListener {
 	 */
 	void exitExpr31(@NotNull SqlParser.Expr31Context ctx);
 	/**
+	 * Enter a parse tree produced by {@link SqlParser#dmlstatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterDmlstatement(@NotNull SqlParser.DmlstatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SqlParser#dmlstatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitDmlstatement(@NotNull SqlParser.DmlstatementContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code rekB3}
 	 * labeled alternative in {@link SqlParser#rel_op3}.
 	 * @param ctx the parse tree

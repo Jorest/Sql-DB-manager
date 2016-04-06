@@ -413,16 +413,37 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T) dato ;
 		}
 		
-		
+		//****
 		@Override
 		public T visitFactorID(SqlParser.FactorIDContext ctx) {
 			Columna col = controlador.getIDvalues(ctx.getText());
 			Dato dato = new Dato();
 			dato.setTipo(col.getTipo());
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			for (int i =0 ; i< col.getTamanio(); i++){
+				lista.add(i);
+			}
 			
+			dato.setColumna(col.getValores());
+			dato.setFilas(lista);
+			dato.setTipo(col.getTipo());
 			return (T) dato;
 		}
 		
+		public T visitFactorID2(SqlParser.FactorID2Context ctx) {
+			Columna col = controlador.getIDvalues(ctx.getChild(2).getText());
+			Dato dato = new Dato();
+			dato.setTipo(col.getTipo());
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			for (int i =0 ; i< col.getTamanio(); i++){
+				lista.add(i);
+			}
+			
+			dato.setColumna(col.getValores());
+			dato.setFilas(lista);
+			dato.setTipo(col.getTipo());
+			return (T) dato;
+		}
 		
 		@Override
 		public T visitUniFactorNot(SqlParser.UniFactorNotContext ctx) {
@@ -1291,36 +1312,41 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		}
 		
 		//-----expr1 y expression operqdores
+		
 		@Override 
 		public T visitCond_op1(SqlParser.Cond_op1Context ctx) {
 			Dato dato1 = (Dato) ctx.getParent().getChild(0);
 			Dato dato2 = (Dato) ctx.getParent().getChild(2);
-			Dato newdato =new Dato() ;
+			ArrayList<Integer> lista =dato2.getFilas();
+			ArrayList<Integer> lista2 = new ArrayList<Integer>(); 
+			//agegamos los del primer dato
+			for (int i=0 ; i<dato1.getFilas().size(); i++){
+				if (!(lista.contains(dato1.getFilas().get(i)))){
+					lista2.add(dato1.getFilas().get(i));
+				}
+			}
 			
-				return (T) newdato ;
-			
-			
+			dato2.setFilas(lista2);
+			return (T) dato2;
 		}
+		
+
 		
 		@Override 
 		public T visitCond_op2(SqlParser.Cond_op2Context ctx) {
 			Dato dato1 = (Dato) ctx.getParent().getChild(0);
 			Dato dato2 = (Dato) ctx.getParent().getChild(2);
-			Dato newdato =new Dato() ;
-			if (!(dato1.getTipo().equals("bool"))& !(dato1.getTipo().equals("bool"))){
-				System.out.println("error and con operaciones no boleanas");
-				return null ;
-			}
-			else {
-				if ((dato1.getBool()==true)|(dato1.getBool()==true)){
-					newdato.setBool(true);
+			ArrayList<Integer> lista =dato2.getFilas();
+					
+			//agegamos los del primer dato
+			for (int i=0 ; i<dato1.getFilas().size(); i++){
+				if (!(lista.contains(dato1.getFilas().get(i)))){
+					lista.add(dato1.getFilas().get(i));
 				}
-				else{
-					newdato.setBool(false);
-				}
-				return (T) newdato ;
 			}
 			
+			dato2.setFilas(lista);
+			return (T) dato2;
 		}
 		
 		
@@ -1371,6 +1397,24 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T)dato ;
 		}
 		
+		//***************tipo_liteals ***************************
+		
+		@Override
+		public T visitTipoInt(SqlParser.TipoIntContext ctx) {
+			return (T)"int";
+		}
+		
+		public T visitTipoFloat(SqlParser.TipoFloatContext ctx) {
+			return (T)"float";
+		}
+		
+		public T visitTipoDate(SqlParser.TipoDateContext ctx) {
+			return (T)"date";
+		}
+		
+		public T visitTipoChar(SqlParser.TipoCharContext ctx) {
+			return (T)"int";
+		}
 		
 	
 }

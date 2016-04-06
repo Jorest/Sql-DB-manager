@@ -7,8 +7,6 @@ public class Dato {
     private float floating ;
     private String date ;
     private String tipo ;
-    private boolean bool ;
-    private String id ;
     private ArrayList<Integer> filas = new  ArrayList<Integer>() ;
     private ArrayList columna ;
 
@@ -27,18 +25,7 @@ public class Dato {
 	public void setFilas(ArrayList<Integer> filas) {
 		this.filas = filas;
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public boolean getBool() {
-		return bool;
-	}
-	public void setBool(boolean bool) {
-		this.bool = bool;
-	}
+	
 	public String getTipo() {
 		return tipo;
 	}

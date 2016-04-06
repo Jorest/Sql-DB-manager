@@ -224,6 +224,12 @@ public interface SqlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr31(@NotNull SqlParser.Expr31Context ctx);
 	/**
+	 * Visit a parse tree produced by {@link SqlParser#dmlstatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDmlstatement(@NotNull SqlParser.DmlstatementContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code rekB3}
 	 * labeled alternative in {@link SqlParser#rel_op3}.
 	 * @param ctx the parse tree
