@@ -7,12 +7,9 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         private Tabla actual; 
 	
 	ControladorDB controlador = new ControladorDB() ;
-	
-	
+		
 	//*** Todo visitor va de esta forma, podemos retornos cualquier cosa
 	//progam es el la raiz de los demas visitors
-	
-	
 	
 	@Override  
 	public T visitProgram (SqlParser.ProgramContext ctx) {
@@ -20,16 +17,15 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
 	  }
+        
         @Override
         public T visitSql_executable_statement(SqlParser.Sql_executable_statementContext ctx) { 
             for (int i = 0;i<ctx.getChildCount();i++){
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
         }
 	
@@ -39,7 +35,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
         } 
 	
@@ -49,7 +44,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
         }
 	
@@ -59,7 +53,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
         }
 	
@@ -389,6 +382,9 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                     }
                      return null; 
                 }
+                
+                //Order By
+                
                       
                 
 	
