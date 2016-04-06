@@ -7,12 +7,9 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         private Tabla actual; 
 	
 	ControladorDB controlador = new ControladorDB() ;
-	
-	
+		
 	//*** Todo visitor va de esta forma, podemos retornos cualquier cosa
 	//progam es el la raiz de los demas visitors
-	
-	
 	
 	@Override  
 	public T visitProgram (SqlParser.ProgramContext ctx) {
@@ -20,16 +17,15 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
 	  }
+        
         @Override
         public T visitSql_executable_statement(SqlParser.Sql_executable_statementContext ctx) { 
             for (int i = 0;i<ctx.getChildCount();i++){
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
         }
 	
@@ -39,7 +35,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
         } 
 	
@@ -49,7 +44,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
         }
 	
@@ -59,7 +53,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	         //  visito todas los hijos
 			visit(ctx.getChild(i));
 	            }  
-
 		  return (T)"";
         }
 	
@@ -78,6 +71,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
             controlador.alterDB(ctx.getChild(2).getText(), ctx.getChild(5).getText());
             return null;
         } 
+        
         //drop database
         @Override
         public T visitDrop_schema_statement(SqlParser.Drop_schema_statementContext ctx) { 
@@ -90,6 +84,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         public T visitShow_schema_statement(SqlParser.Show_schema_statementContext ctx) { 
             return (T)controlador.showTables();
         }
+        
         //use database
         @Override
         public T visitUse_schema_statement(SqlParser.Use_schema_statementContext ctx) { 
@@ -123,6 +118,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              actual.agregarColumna(c);
              return null; 
          }
+         
 	//agregando primarykey
          @Override 
          public T visitPrimaryK(SqlParser.PrimaryKContext ctx) { 
@@ -132,7 +128,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                  if(!",".equals(a)){
                      ids.add(a);
                  }
-                 
              }
              String nombre=ctx.getChild(0).getText();
              nombre=nombre.replace("PK", "");
@@ -140,6 +135,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              actual.agregarPK(p);
              return null; 
          }
+         
          //agregando foreignK
          @Override 
          public T visitForeignK(SqlParser.ForeignKContext ctx) { 
@@ -162,7 +158,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 if(!",".equals(a)){
                      ids1.add(a);
                  }
-                 
              }
              String nombre=ctx.getChild(0).getText();
              nombre=nombre.replace("FK", "");
@@ -170,8 +165,10 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              actual.agregarFK(p);
              return null; 
          }
+         
          //agregando check 
-         @Override public T visitCheck(SqlParser.CheckContext ctx) { 
+         @Override 
+         public T visitCheck(SqlParser.CheckContext ctx) { 
               String nombre=ctx.getChild(0).getText();
              nombre=nombre.replace("CH", "");
              String a="";
@@ -490,7 +487,38 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                     }
                      return null; 
                 }
-
+       
+                //Order By
+             /**   @Override 
+                public T orderBy_Asc(SqlParser.OrderBy_Asc ctx) { 
+                   //Tomamos la tabla en la cual insertar
+                    for(i=1;i<valores.length;i++){
+                        for(j=0;j<valores.lenght;j++){
+                            if (valores[j]>valores[j+1]){
+                                aux = valores[j];
+                                valoress[j] = valores[j+1];
+                                valores[j+1] = aux;
+                            }
+                        }
+                    } 
+                }
+                
+                 @Override 
+                public T orderBy_Desc(sqlParser.OrderBy_Desc ctx) { 
+                   //Tomamos la tabla en la cual insertar
+                    for(i=1;i<valores.length;i++){
+                        for(j=0;j<valores.lenght;j++){
+                            if (valores[j]<valores[j+1]){
+                                aux = valores[j];
+                                valores[j] = valores[j+1];
+                                valores[j+1] = aux;
+                            }
+                        }
+                    } 
+                }**/
+                      
+                
+	
 
 		//----- todas las expresiones ---------------------
 		
@@ -527,9 +555,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			dato= (Dato)visit(ctx.getChild(1));
 			ArrayList<Integer> filas =dato.getFilas();
 			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
-
-			int tamaño = dato.getColumna().size();
-			for (int i=0; i < tamaño ; i++){
+			int tamanio = dato.getColumna().size();
+			for (int i=0; i < tamanio ; i++){
 				if (!(filas.contains(i))){
 					notFilas.add(i);
 				}
@@ -589,7 +616,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -628,7 +655,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -665,7 +692,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -705,7 +732,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -762,7 +789,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break ;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -821,7 +848,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break ;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -865,7 +892,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -908,7 +935,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -948,7 +975,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -989,7 +1016,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	                break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1048,7 +1075,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break ;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -1102,7 +1129,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break ;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -1147,7 +1174,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1185,7 +1212,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1223,7 +1250,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1262,7 +1289,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror dato no reconocido");
+	            	System.out.println("error dato no reconocido");
 	            	
 				}
 			}
@@ -1319,7 +1346,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
@@ -1374,7 +1401,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	            	break;
 	                
 	            default: 
-	            	System.out.println("eror eqE dato no reconocido");
+	            	System.out.println("error eqE dato no reconocido");
 	                break;
 	          
 				}
