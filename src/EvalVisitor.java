@@ -303,11 +303,10 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	//Regresaremos un arraylist de datos 
 	@Override 
 	public T visitList_values(SqlParser.List_valuesContext ctx) {
-		ArrayList<Dato> values = new ArrayList<Dato>() ;
+		ArrayList <Dato> values = new ArrayList() ;
 		for (int i = 0;i<ctx.getChildCount();i++){
 			if(! ctx.getChild(i).getText().equals(",")){
-				Dato value = (Dato) visit(ctx.getChild(i));
-				values.add(value);
+				values.add((Dato)visit(ctx.getChild(i)));
 			}
 		}
 		return (T) values ;
@@ -325,7 +324,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			Dato dato = new Dato() ;
 			dato.setTipo("int");
 			dato.setInteger(Integer.parseInt(ctx.getText()));
-			return (T) dato ;
+                        return (T)dato;
 		}
 		
 		@Override 
@@ -352,16 +351,63 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T) dato ;
 		}
 	
-				
+                // DML .........................................................
+                @Override 
+                public T visitInsert_value(SqlParser.Insert_valueContext ctx) { 
+                   //Tomamos la tabla en la cual insertar
+                    try {
+                        actual=controlador.aletT(ctx.getChild(2).getText());
+                    } catch (IOException ex) {
+                        Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    controlador.setTablaActual(actual);
+                    ArrayList columnas =new ArrayList();
+                    ArrayList <Dato> valores;
+                    int indicador=0; 
+                    //Si hay columnas declaradas
+                    
+                    if(ctx.getChildCount()>6){
+                        //Tomamos las columnas a ingresar
+                          for(int i=4;i<ctx.getChildCount();i++){
+                              String nombre=ctx.getChild(i).getText();
+                              if(nombre.equals(")")){
+                                  indicador=i; 
+                                  break;
+                              }
+                              if(!";".equals(nombre)){
+                                  columnas.add(nombre);
+                              }
+                          }
+                          //Tomamos los valores
+                          valores=(ArrayList <Dato>) visit(ctx.getChild(indicador+2));
+                          //Contador de valores en value
+                          int valuescont=valores.size();
+                          if(valuescont<=columnas.size()){
+                              
+                              
+                          }
+                    }
+                    //no especifica columnas
+                    else{
+                        
+                    }
+                     return null; 
+                }
+                      
+                
+	
+                             
 
 
 		//----- todas las expresiones ---------------------
 		
 		@Override
 		public T visitLiteral(SqlParser.LiteralContext ctx) {
-			Dato dato = new Dato() ;
+			/**Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(0));
-			return (T) dato ;
+			return (T) dato ;*/
+                    return (T) visit(ctx.getChild(0));
+                    
 		}
 
 		@Override
