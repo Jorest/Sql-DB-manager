@@ -1550,23 +1550,28 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override
 		public T visitTipoInt(SqlParser.TipoIntContext ctx) {
-			return (T)"int";
+			Columna col = new Columna("","int");
+			return (T)"col";
 		}
 		
 		public T visitTipoFloat(SqlParser.TipoFloatContext ctx) {
-			return (T)"float";
+			Columna col = new Columna("","float");
+			return (T)"col";
 		}
 		
 		public T visitTipoDate(SqlParser.TipoDateContext ctx) {
-			return (T)"date";
+			Columna col = new Columna("","date");
+			return (T)"col";
 		}
 		
-		/**public T visitTipoChar(SqlParser.TipoCharContext ctx) {
-			Columna new 
-			return (T)"int";
+
+		public T visitTipoChar(SqlParser.TipoCharContext ctx) {
+			Columna col = new Columna("","char");
+			col.setCharCant(Integer.parseInt(ctx.getChild(1).getText()));
+			return (T)"col";
 		}
 		
-	**/
+	
 }
 
 

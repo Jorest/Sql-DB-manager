@@ -14,8 +14,19 @@ public class Columna {
     private String nombre;
     private String tipo; 
     private ArrayList valores;
+    private int charCant ; 
 
-    public Columna(String nombre, String tipo) {
+    public int getCharCant() {
+		return charCant;
+	}
+
+
+	public void setCharCant(int charCant) {
+		this.charCant = charCant;
+	}
+
+
+	public Columna(String nombre, String tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
         valores= new ArrayList();
