@@ -490,8 +490,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
        
                 //Order By
              /**   @Override 
-                public T orderBy_Asc(SqlParser.OrderBy_Asc ctx) { 
+                public T visitorderBy_Asc(SqlParser.OrderBy_Asc ctx) { 
                    //Tomamos la tabla en la cual insertar
+                    controlador.setTablaActual(actual);
+                    ArrayList columnas =new ArrayList();
+                    ArrayList <Dato> valores;
                     for(i=1;i<valores.length;i++){
                         for(j=0;j<valores.lenght;j++){
                             if (valores[j]>valores[j+1]){
@@ -504,8 +507,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 }
                 
                  @Override 
-                public T orderBy_Desc(sqlParser.OrderBy_Desc ctx) { 
+                public T visitorderBy_Desc(sqlParser.OrderBy_Desc ctx) { 
                    //Tomamos la tabla en la cual insertar
+                    controlador.setTablaActual(actual);
+                    ArrayList columnas =new ArrayList();
+                    ArrayList <Dato> valores;
                     for(i=1;i<valores.length;i++){
                         for(j=0;j<valores.lenght;j++){
                             if (valores[j]<valores[j+1]){
