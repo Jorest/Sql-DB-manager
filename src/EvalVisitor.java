@@ -431,8 +431,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			ArrayList<Integer> filas =dato.getFilas();
 			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
 
-			int tamaño = dato.getColumna().size();
-			for (int i=0; i < tamaño ; i++){
+			int tamanio = dato.getColumna().size();
+			for (int i=0; i < tamanio ; i++){
 				if (!(filas.contains(i))){
 					notFilas.add(i);
 				}
