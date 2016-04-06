@@ -357,7 +357,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                         Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     controlador.setTablaActual(actual);
-                    ArrayList columnas =new ArrayList();
+                    ArrayList <String> columnas  =new ArrayList();
                     ArrayList <Dato> valores;
                     int indicador=0; 
                     //Si hay columnas declaradas
@@ -376,23 +376,120 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                           }
                           //Tomamos los valores
                           valores=(ArrayList <Dato>) visit(ctx.getChild(indicador+2));
+                          ArrayList <Columna> col=actual.getColumnas();
                           //Contador de valores en value
                           int valuescont=valores.size();
-                          if(valuescont<=columnas.size()){
-                              
-                              
+                          //valores ingresados igual a columnas declaradas
+                          if(valuescont==columnas.size()){
+                              //verificacion que no exceda cantidad de columnas
+                              if(columnas.size()<=col.size()){
+                                  for(int i=0; i<columnas.size();i++){
+                                        Columna c=controlador.getColumna(col,(String)columnas.get(i));
+                                        if(c.getTipo().equals(valores.get(i).getTipo())){
+                                            //Ingresamos valor
+                                            c.setValor(valores.get(i).getValor());
+                                        }else{
+                                            //Realizamos casteoo
+                                            if("INT".equals(c.getTipo()) && "FLOAT".equals(valores.get(i).getTipo())){
+                                                float valor= (float)valores.get(i).getValor();
+                                                int val=(int)valor;
+                                                c.setValor(val);
+
+                                            }
+                                            if("FLOAT".equals(c.getTipo()) && "INT".equals(valores.get(i).getTipo())){
+                                                int valor= (int)valores.get(i).getValor();
+                                                float val=(float)valor;
+                                                c.setValor(val);
+
+                                            }
+                                            if("CHAR".equals(c.getTipo()) && "FLOAT".equals(valores.get(i).getTipo())){
+                                                float valor= (float)valores.get(i).getValor();
+                                                String val=Float.toString(valor);
+                                                c.setValor(val);
+
+                                            }
+                                            if("CHAR".equals(c.getTipo()) && "INT".equals(valores.get(i).getTipo())){
+                                                int valor= (int)valores.get(i).getValor();
+                                                String val=Integer.toString(valor);
+                                                c.setValor(val);
+                                            }
+                                            if("CHAR".equals(c.getTipo()) && "DATE".equals(valores.get(i).getTipo())){
+                                                c.setValor(valores.get(i).getValor());
+                                            }
+                                            else{
+                                                System.out.println("Tipos de datos no compatibles");
+                                            }
+                                        }
+                                      
+                                  }
+                                  
+                              }
                           }
+                          //si no estan definidos todas las columnas
+                          if(columnas.size()<col.size()){
+                              //buscar que columnas estan vacios
+                                for(int i=0; i<col.size();i++){
+                                    if(columnas.contains(col.get(i).getNombre())==false){
+                                        col.get(i).setValor(null);
+                                    }
+                                }
+                            }
                     }
                     //no especifica columnas
                     else{
-                        
+                        ArrayList <Columna> col=actual.getColumnas();
+                        valores=(ArrayList <Dato>) visit(ctx.getChild(4));
+                         //Si existe values para cada columna 
+                        int valuescont=valores.size();
+                        if(valuescont<=col.size()){
+                                for(int i=0; i<valores.size();i++){
+                                        //Si son del mismo tipo
+                                        if(col.get(i).getTipo().equals(valores.get(i).getTipo())){
+                                                //Ingresamos valor
+                                                col.get(i).setValor(valores.get(i).getValor());
+                                        }else{
+                                                //Realizamos casteoo
+                                                if("INT".equals(col.get(i).getTipo()) && "FLOAT".equals(valores.get(i).getTipo())){
+                                                        float valor= (float)valores.get(i).getValor();
+                                                        int val=(int)valor;
+                                                        col.get(i).setValor(val);
+
+                                                }
+                                                if("FLOAT".equals(col.get(i).getTipo()) && "INT".equals(valores.get(i).getTipo())){
+                                                        int valor= (int)valores.get(i).getValor();
+                                                        float val=(float)valor;
+                                                        col.get(i).setValor(val);
+
+                                                }
+                                                if("CHAR".equals(col.get(i).getTipo()) && "FLOAT".equals(valores.get(i).getTipo())){
+                                                        float valor= (float)valores.get(i).getValor();
+                                                        String val=Float.toString(valor);
+                                                        col.get(i).setValor(val);
+
+                                                }
+                                                if("CHAR".equals(col.get(i).getTipo()) && "INT".equals(valores.get(i).getTipo())){
+                                                        int valor= (int)valores.get(i).getValor();
+                                                        String val=Integer.toString(valor);
+                                                        col.get(i).setValor(val);
+                                                }
+                                                if("CHAR".equals(col.get(i).getTipo()) && "DATE".equals(valores.get(i).getTipo())){
+                                                        col.get(i).setValor(valores.get(i).getValor());
+                                                }
+                                                else{
+                                                        System.out.println("Tipos de datos no compatibles");
+                                                }
+                                        }
+                                        //fin else
+                                }//fin for 
+                                if(valuescont<col.size()){
+                                         for(int i=valuescont; i<col.size();i++){
+                                                col.get(i).setValor(null);
+                                                }
+                                        }
+                                }
                     }
                      return null; 
                 }
-                      
-                
-	
-                             
 
 
 		//----- todas las expresiones ---------------------
@@ -431,8 +528,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			ArrayList<Integer> filas =dato.getFilas();
 			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
 
-			int tamaño = dato.getColumna().size();
-			for (int i=0; i < tamaño ; i++){
+			int tamaÃ±o = dato.getColumna().size();
+			for (int i=0; i < tamaÃ±o ; i++){
 				if (!(filas.contains(i))){
 					notFilas.add(i);
 				}

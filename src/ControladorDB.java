@@ -217,6 +217,15 @@ public class ControladorDB {
     	return columnareturn;
     }
     
+    public Columna getColumna (ArrayList <Columna> columnas,String id){  
+    	Columna columnareturn = null;
+    	for (Columna columna : columnas) {
+    	    if (columna.getNombre().equals(id)){
+    	    	columnareturn = columna ;
+    	    }
+    	}
+    	return columnareturn;
+    }
     
     private static String readFile(String filePath) throws java.io.IOException{
 	    byte[] buffer = new byte[(int) new File(filePath).length()];
