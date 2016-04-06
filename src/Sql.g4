@@ -73,6 +73,8 @@ sql_schema_manipulation_statement
         |       rename_table_statement
         |       show_table_statement
         |       show_column_statement
+        |       dmlstatement 
+
     ;
 sql_data_statement  
 
@@ -128,7 +130,12 @@ accion:
 
 show_table_statement: 'SHOW' 'TABLES' ';';
 show_column_statement: 'SHOW' 'COLUMNS' 'FROM' ID ';';
-         
+       
+dmlstatement : insert_value
+    | update_value
+    | delete_value
+    | select_value
+    ;
 
 insert_value: 'INSERT' 'INTO' ID ( '(' ((ID)(','ID)*)? ')' )? 'VALUES' (list_values) ';';
 

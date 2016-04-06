@@ -1,16 +1,19 @@
 import java.util.ArrayList;
 
 public class Dato {
-	
-	private int integer ;
-	private String character ;
-	private float floating ;
-	private String date ;
-	private String tipo ;
-	private boolean bool ;
-	private String id ;
-	private ArrayList<Integer> filas = new  ArrayList<Integer>() ;
-	private ArrayList columna ;
+
+    private int integer ;
+    private String character ;
+    private float floating ;
+    private String date ;
+    private String tipo ;
+    private boolean bool ;
+    private String id ;
+    private ArrayList<Integer> filas = new  ArrayList<Integer>() ;
+    private ArrayList columna ;
+
+    public Dato() {
+    }
 
 	public ArrayList getColumna() {
 		return columna;
@@ -67,6 +70,22 @@ public class Dato {
 		this.date = date;
 	}
 	
-	
-
+    public Object getValor(){
+        if(tipo.equals("INT")){
+            return integer;
+        }
+        
+        if(tipo.equals("CHAR")){
+            return character;
+        }
+        
+        if(tipo.equals("FLOAT")){
+            return floating;
+        }
+        
+        if(tipo.equals("DATE")){
+            return date;
+        }
+        return null; 
+    }	
 }

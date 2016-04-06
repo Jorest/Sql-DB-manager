@@ -55,7 +55,7 @@ public class ControladorDB {
         BaseDatos b=new BaseDatos(nombre);
          try{
                     File directorio = new File("BasesDatos/"+b.getNombre());
-                    directorio.mkdir();
+                    System.out.println(directorio.mkdir());
         
          }catch(Exception e) {
               System.out.println("No se pudo crear la Base de Datos "+ nombre);
@@ -123,8 +123,9 @@ public class ControladorDB {
         String json = gson.toJson(t);
         System.out.println(json);
         //String path= "BaseDatos/"+actual.getNombre();
-        File fichero = new File ("BasesDatos/"+actual.getNombre(),t.getNombre()+".json");
-        fichero.createNewFile();
+        File fichero = new File ("BasesDatos/"+actual.getNombre(), t.getNombre()+".json");
+        boolean a=fichero.createNewFile();
+        System.out.println(a);
         System.out.println("mmmmeiureireiu");
         escribir(json,fichero.getPath());
         //actual.setTabla(t);
@@ -207,7 +208,7 @@ public class ControladorDB {
    }
     //agregado por jorge
     public Columna getIDvalues (String id){  
-    	Columna columnareturn = new Columna();
+    	Columna columnareturn = null;
     	for (Columna columna : tablaActual.getColumnas()) {
     	    if (columna.getNombre().equals(id)){
     	    	columnareturn = columna ;
