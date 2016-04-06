@@ -10,7 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Map;
+import javax.swing.JOptionPane;
+
 
 /*
  * To change this template, choose Tools | Templates
@@ -26,39 +27,73 @@ public class ControladorDB {
     private ArrayList cantTablas; 
     private BaseDatos actual;
     private Tabla tablaActual ;
+    private ArrayList Data;
+    private ArrayList Error;
+    private ArrayList log;
+    
+    public ControladorDB() {
+        Data=new ArrayList();
+        Error=new ArrayList();
+        log=new ArrayList();
+    }
 
-    public BaseDatos getActual() {
-		return actual;
-	}
+    public ArrayList getData() {
+        return Data;
+    }
 
+    public void setData(ArrayList Data) {
+        this.Data = Data;
+    }
 
-	public void setActual(BaseDatos actual) {
-		this.actual = actual;
-	}
+    public ArrayList getError() {
+        return Error;
+    }
 
+    public void setError(ArrayList Error) {
+        this.Error = Error;
+    }
 
-	public Tabla getTablaActual() {
-		return tablaActual;
-	}
+    public ArrayList getLog() {
+        return log;
+    }
 
-
-	public void setTablaActual(Tabla tablaActual) {
-		this.tablaActual = tablaActual;
-	}
-
-
-	public ControladorDB() {
+    public void setLog(ArrayList log) {
+        this.log = log;
     }
     
     
+
+    public BaseDatos getActual() {
+            return actual;
+    }
+
+
+    public void setActual(BaseDatos actual) {
+            this.actual = actual;
+    }
+
+
+    public Tabla getTablaActual() {
+            return tablaActual;
+    }
+
+
+    public void setTablaActual(Tabla tablaActual) {
+            this.tablaActual = tablaActual;
+    }
+
+
     public void createDB(String nombre){
         BaseDatos b=new BaseDatos(nombre);
          try{
                     File directorio = new File("BasesDatos/"+b.getNombre());
-                    System.out.println(directorio.mkdir());
+                    if(directorio.mkdir()==false){
+                        Error.add("No se pudo crear Base de Datos :"+nombre + ", compruebe que ese nombre no exista.");
+                    }
+                    log.add("Base de Datos creada: "+nombre);
         
          }catch(Exception e) {
-              System.out.println("No se pudo crear la Base de Datos "+ nombre);
+               Error.add("No se pudo crear Bases de Datos :"+nombre + ", compruebe que ese nombre no exista.");
          }
   
 }
@@ -67,12 +102,17 @@ public class ControladorDB {
         File directorio1= new File("BasesDatos/"+newname);
         boolean resul=directorio.renameTo(directorio1);
         if(resul==false){
-            System.out.println("Error en el cambio de nombre a Base de Datos "+ nombre);
+            Error.add("Error en el cambio de nombre a Base de Datos: "+ nombre);
         }
+        log.add("Base de Datos renombrada, Nuevo nombre: "+newname+", Nombre anterior: "+nombre);
         
     }
     public void dropDB(String nombre){
         File directorio= new File("BasesDatos/"+nombre);
+        JOptionPane optionPane = new JOptionPane(
+        "Esta seguro de quere eliminar la Base de Datos: "+nombre,
+        JOptionPane.QUESTION_MESSAGE,
+        JOptionPane.YES_NO_OPTION);
         boolean resul=directorio.delete();
         if(resul==false){
             System.out.println("Error en el borrado de nombre a Base de Datos "+ nombre);
@@ -133,8 +173,8 @@ public class ControladorDB {
     }
 
     public void renameT(String nombre, String nnombre) throws IOException{
-         File directorio= new File("BasesDatos/"+actual.getNombre(),nombre+".json");
-         String json= readFile(directorio.getPath());
+        File directorio= new File("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
+        String json= readFile(directorio.getPath());
         Gson gson1 = new Gson();
         Tabla t = gson1.fromJson(json, Tabla.class);
         t.setNombre(nnombre);

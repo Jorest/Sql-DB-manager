@@ -5,9 +5,16 @@ import java.util.logging.Logger;
 import org.antlr.v4.runtime.misc.NotNull;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         private Tabla actual; 
-	
-	ControladorDB controlador = new ControladorDB() ;
-		
+	private ControladorDB controlador = new ControladorDB() ;
+
+        public ControladorDB getControlador() {
+            return controlador;
+        }
+
+        public void setControlador(ControladorDB controlador) {
+            this.controlador = controlador;
+        }
+        	
 	//*** Todo visitor va de esta forma, podemos retornos cualquier cosa
 	//progam es el la raiz de los demas visitors
 	
@@ -169,7 +176,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
          //agregando check 
          @Override 
          public T visitCheck(SqlParser.CheckContext ctx) { 
-              String nombre=ctx.getChild(0).getText();
+             System.out.println("sere señor");
+             String nombre=ctx.getChild(0).getText();
              nombre=nombre.replace("CH", "");
              String a="";
              for (int i=3;i<ctx.getChildCount()-1;i++){
@@ -251,6 +259,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         @Override
         public T visitAddConstraint( SqlParser.AddConstraintContext ctx) { 
             //lo hace en constraintType
+            visit(ctx.getChild(1));
             return null;
         }
 	
@@ -258,13 +267,21 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         public T visitDropColumn( SqlParser.DropColumnContext ctx) { 
             ArrayList <Columna> colum=actual.getColumnas();
             String busqueda=ctx.getChild(2).getText();
+            busqueda=busqueda.replace(" ", "");
+            System.out.println(busqueda);
             for(int i=0;i<colum.size();i++){
+                System.out.println(colum.get(i).getNombre());
                 if(colum.get(i).getNombre().equals(busqueda)){
                     colum.remove(i);
                     break;
                 }
             }
             actual.setColumnas(colum);
+            return null; 
+        }
+	@Override public T visitConstraint(SqlParser.ConstraintContext ctx) { 
+            System.out.println("siiiip ");
+            visit(ctx.getChild(1)); 
             return null; 
         }
 	
@@ -1544,12 +1561,12 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T)"date";
 		}
 		
-		public T visitTipoChar(SqlParser.TipoCharContext ctx) {
+		/**public T visitTipoChar(SqlParser.TipoCharContext ctx) {
 			Columna new 
 			return (T)"int";
 		}
 		
-	
+	**/
 }
 
 

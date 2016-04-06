@@ -18,12 +18,14 @@ import org.antlr.v4.runtime.CommonTokenStream;
  * @author Luis
  */
 public class Consola extends javax.swing.JFrame {
+    private EvalVisitor eval;
 
     /**
      * Creates new form Consola
      */
     public Consola() {
         initComponents();
+        eval = new EvalVisitor();
     }
 
     /**
@@ -131,7 +133,6 @@ public class Consola extends javax.swing.JFrame {
 
             SqlParser.ProgramContext arbol = parser.program();
 
-            EvalVisitor eval = new EvalVisitor();
             //Trees.inspect(arbol, parser);
             eval.visitProgram(arbol);
 

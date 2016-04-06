@@ -1,0 +1,25 @@
+{
+  "nombre": "MAR",
+  "columnas": [
+    {
+      "nombre": "fecha",
+      "tipo": "DATE",
+      "valores": []
+    }
+  ],
+  "primaryk": [
+    {
+      "nombre": "idmarca",
+      "idref": [
+        "fecha"
+      ]
+    }
+  ],
+  "foreignk": [],
+  "check": [
+    {
+      "nombre": "porfiria",
+      "exp": "hola"
+    }
+  ]
+}

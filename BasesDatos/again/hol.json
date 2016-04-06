@@ -1,0 +1,25 @@
+{
+  "nombre": "hol",
+  "columnas": [
+    {
+      "nombre": "idmarca",
+      "tipo": "INT",
+      "valores": []
+    },
+    {
+      "nombre": "marca",
+      "tipo": "FLOAT",
+      "valores": []
+    }
+  ],
+  "primaryk": [
+    {
+      "nombre": "idmarca",
+      "idref": [
+        "idmarca"
+      ]
+    }
+  ],
+  "foreignk": [],
+  "check": []
+}

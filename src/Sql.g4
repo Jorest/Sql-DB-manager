@@ -147,7 +147,7 @@ select_value: 'SELECT' ('*' | ID (',' ID)* ) 'FROM' ID ('WHERE' expression)?  ('
 
                   
               
-list_values : (literal (',' (literal))* )? ;
+list_values : ( '(' ((literal)(','literal)*)? ')' )?
          
 literal :  
         int_literal
