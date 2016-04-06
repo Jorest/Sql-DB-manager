@@ -167,7 +167,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
          }
          
          //agregando check 
-         @Override public T visitCheck(SqlParser.CheckContext ctx) { 
+         @Override 
+         public T visitCheck(SqlParser.CheckContext ctx) { 
               String nombre=ctx.getChild(0).getText();
              nombre=nombre.replace("CH", "");
              String a="";
@@ -387,7 +388,33 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 }
                 
                 //Order By
+             /**   @Override 
+                public T orderBy_Asc(SqlParser.OrderBy_Asc ctx) { 
+                   //Tomamos la tabla en la cual insertar
+                    for(i=1;i<valores.length;i++){
+                        for(j=0;j<valores.lenght;j++){
+                            if (valores[j]>valores[j+1]){
+                                aux = valores[j];
+                                valoress[j] = valores[j+1];
+                                valores[j+1] = aux;
+                            }
+                        }
+                    } 
+                }
                 
+                 @Override 
+                public T orderBy_Desc(sqlParser.OrderBy_Desc ctx) { 
+                   //Tomamos la tabla en la cual insertar
+                    for(i=1;i<valores.length;i++){
+                        for(j=0;j<valores.lenght;j++){
+                            if (valores[j]<valores[j+1]){
+                                aux = valores[j];
+                                valores[j] = valores[j+1];
+                                valores[j+1] = aux;
+                            }
+                        }
+                    } 
+                }**/
                       
                 
 	
