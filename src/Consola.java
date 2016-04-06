@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
-import org.antlr.v4.gui.Trees;
+//import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -132,7 +132,7 @@ public class Consola extends javax.swing.JFrame {
             SqlParser.ProgramContext arbol = parser.program();
 
             EvalVisitor eval = new EvalVisitor();
-            Trees.inspect(arbol, parser);
+            //Trees.inspect(arbol, parser);
             eval.visitProgram(arbol);
 
 
