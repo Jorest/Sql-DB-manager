@@ -99,8 +99,8 @@ alter_database_statement: 'ALTER' 'DATABASE' ID 'RENAME' 'TO' ID ';' ;
 use_schema_statement: 'USE' 'DATABASE' ID ';';
 
 
-column: ID tipo_literal ','         #defcolumna
-		| constraint  ','   #defconstraint
+column: ID  tipo_literal(',' ID tipo_literal)*          #defcolumna
+		|  constraint(',' constraint)*    #defconstraint
 		;
 
 tipo_literal: 
