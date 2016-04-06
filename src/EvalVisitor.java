@@ -380,7 +380,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		public T visitUniFactorNot(SqlParser.UniFactorNotContext ctx) {
 			Dato dato = new Dato() ;
 			dato= (Dato)visit(ctx.getChild(1));
-			ArrayList<Integer> filas =dato.getColumna();
+			ArrayList<Integer> filas =dato.getFilas();
 			ArrayList<Integer> notFilas = new  ArrayList<Integer>();
 			int tamaño = controlador.getTablaActual().getColumnas().get(0).getTamaño();
 			for (int i=0; i < tamaño ; i++){
@@ -388,7 +388,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 					notFilas.add(i);
 				}
 			}
-			dato.setColumna(notFilas);
+			dato.setFilas(notFilas);
 			return (T) dato  ;
 		}
 
@@ -410,6 +410,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			Dato dato = (Dato) visit(ctx.getChild(1));
 			return (T)dato ;
 		}
+		
+		
+	
+		
+		
 		//----****************** REL_OP OPERADORES 3!!! < > <= ETC *****************************
 		
 		@Override
@@ -422,16 +427,16 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
 				switch (dato1.getTipo()) {
 	            case ("int"): 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getInteger()<dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getInteger()<(int)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break;
 	            	          
 	            case "float": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getFloating()<dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getFloating()<(float)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
@@ -445,7 +450,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			else {
 				System.out.println("los tipos deben coindicidir");
 			}
-			newdato.setColumna(lista);
+			newdato.setFilas(lista);
+			newdato.setColumna(dato2.getColumna()); newdato.setTipo(dato2.getTipo());
 			return (T) newdato ;
 			
 		}
@@ -460,16 +466,16 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
 				switch (dato1.getTipo()) {
 	            case ("int"): 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getInteger()<dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getInteger()<(int)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break;
 	            	          
 	            case "float": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getFloating()<dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getFloating()<(float)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
@@ -483,7 +489,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			else {
 				System.out.println("los tipos deben coindicidir");
 			}
-			newdato.setColumna(lista);
+			newdato.setFilas(lista);
+			newdato.setColumna(dato2.getColumna()); newdato.setTipo(dato2.getTipo());
 			return (T) newdato ;
 				}
 		
@@ -496,16 +503,16 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
 				switch (dato1.getTipo()) {
 	            case ("int"): 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getInteger()<=dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getInteger()<=(int)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break;
 	            	          
 	            case "float": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getFloating()<=dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getFloating()<=(float)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
@@ -519,9 +526,12 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			else {
 				System.out.println("los tipos deben coindicidir");
 			}
-			newdato.setColumna(lista);
+			newdato.setFilas(lista);
+			newdato.setColumna(dato2.getColumna()); newdato.setTipo(dato2.getTipo());
+
 			return (T) newdato ;
 				}
+		
 		
 		@Override
 		public T visitRelBE3(SqlParser.RelBE3Context ctx) {
@@ -533,16 +543,16 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
 				switch (dato1.getTipo()) {
 	            case ("int"): 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getInteger()>=dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getInteger()>=(int)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break;
 	            	          
 	            case "float": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getInteger()>=dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getInteger()>=(float)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
@@ -556,12 +566,14 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			else {
 				System.out.println("los tipos deben coindicidir");
 			}
-			newdato.setColumna(lista);
+			newdato.setFilas(lista);
+			newdato.setColumna(dato2.getColumna()); newdato.setTipo(dato2.getTipo());
 			return (T) newdato ;
 		}
 		
 				
 		//OPERADORES de igualdad
+		
 		
 		@Override
 		public T visitEqE3(SqlParser.EqE3Context ctx) {
@@ -572,32 +584,32 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			if (dato1.getTipo().equals(dato2.getTipo())){  
 				switch (dato1.getTipo()) {
 	            case "int": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getInteger()==dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getInteger()==(int)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break ;
 	          
 	            case "float": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getFloating()==dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getFloating()==(float)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break ;
 	                
 	            case "char": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getCharacter().equals(dato2.getColumna().get(i))){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getDate().equals(dato2.getColumna().get(dato2.getFilas().get(i)))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break ;
 	         
 	            case "date": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getDate().equals(dato2.getColumna().get(i))){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getDate().equals(dato2.getColumna().get(dato2.getFilas().get(i)))){
 	            			lista.add(i);
 	            		}
 	            	}
@@ -612,10 +624,16 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			else {
 				System.out.println("los tipos deben coindicidir");
 			}
-			newdato.setColumna(lista);
+			newdato.setFilas(lista);
+			newdato.setColumna(dato2.getColumna()); newdato.setTipo(dato2.getTipo());
+
 			return (T) newdato ;
+			
+			
+			
 		}
 				
+			
 		@Override
 		public T visitEqNE3(SqlParser.EqNE3Context ctx) {
 			Dato dato1 = (Dato) ctx.getParent().getChild(0);
@@ -625,32 +643,32 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			if (dato1.getTipo().equals(dato2.getTipo())){  
 				switch (dato1.getTipo()) {
 	            case "int": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getInteger()!=dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getInteger()!=(int)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break ;
 	          
 	            case "float": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (dato1.getFloating()!=dato2.getColumna().get(i)){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (dato1.getFloating()!=(float)dato2.getColumna().get(dato2.getFilas().get(i))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break ;
 	                
 	            case "char": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (!(dato1.getCharacter().equals(dato2.getColumna().get(i)))){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (!(dato1.getCharacter().equals(dato2.getColumna().get(dato2.getFilas().get(i))))){
 	            			lista.add(i);
 	            		}
 	            	}
 	            	break ;
 	         
 	            case "date": 
-	            	for( int i= 0;i < dato1.getColumna().size();i++){
-	            		if (!(dato1.getDate().equals(dato2.getColumna().get(i)))){
+	            	for( int i= 0;i < dato2.getFilas().size();i++){
+	            		if (!(dato1.getDate().equals(dato2.getColumna().get(dato2.getFilas().get(i))))){
 	            			lista.add(i);
 	            		}
 	            	}
@@ -665,535 +683,568 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			else {
 				System.out.println("los tipos deben coindicidir");
 			}
-			newdato.setColumna(lista);
+			newdato.setFilas(lista);
+			newdato.setColumna(dato2.getColumna()); newdato.setTipo(dato2.getTipo());
+
 			return (T) newdato ;
 		}
 
 
 		//----****************** REL_OP OPERADORES 2!!!! < > <= ETC *****************************
 		
-				@Override
-				public T visitRelL2(SqlParser.RelL2Context ctx) {
-								
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					Dato newdato =new Dato() ;
-					if (dato1.getTipo().equals(dato2.getTipo())){ 
-						switch (dato1.getTipo()) {
-			            case ("int"): 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<dato2.getInteger()){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break;
-			            	          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<dato2.getFloating()){
-			            			lista.add(i);
-			            		}
-			            	}
-			                break;
-			                
-			            default: 
-			            	System.out.println("eror dato no reconocido");
-			            	
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-				}
-				@Override
-				public T visitRekB2(SqlParser.RekB2Context ctx) {
-					
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					Dato newdato =new Dato() ;
-					if (dato1.getTipo().equals(dato2.getTipo())){ 
-						switch (dato1.getTipo()) {
-			            case ("int"): 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<dato2.getInteger()){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break;
-			            	          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<dato2.getFloating()){
-			            			lista.add(i);
-			            		}
-			            	}
-			                break;
-			                
-			            default: 
-			            	System.out.println("eror dato no reconocido");
-			            	
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-						}
-				
-				@Override
-				public T visitRelLE2(SqlParser.RelLE2Context ctx) {
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					Dato newdato =new Dato() ;
-					if (dato1.getTipo().equals(dato2.getTipo())){ 
-						switch (dato1.getTipo()) {
-			            case ("int"): 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<=dato2.getInteger()){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break;
-			            	          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<=dato2.getFloating()){
-			            			lista.add(i);
-			            		}
-			            	}
-			                break;
-			                
-			            default: 
-			            	System.out.println("eror dato no reconocido");
-			            	
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-						}
-				
-				@Override
-				public T visitRelBE2(SqlParser.RelBE2Context ctx) {
-
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					Dato newdato =new Dato() ;
-					if (dato1.getTipo().equals(dato2.getTipo())){ 
-						switch (dato1.getTipo()) {
-			            case ("int"): 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)>=dato2.getInteger()){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break;
-			            	          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)>=dato2.getFloating()){
-			            			lista.add(i);
-			            		}
-			            	}
-			                break;
-			                
-			            default: 
-			            	System.out.println("eror dato no reconocido");
-			            	
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-				}
-				
 		
-				//OPERADORES de igualdad
-				
-				@Override
-				public T visitEqE2(SqlParser.EqE2Context ctx) {
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					Dato newdato =new Dato() ;
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					if (dato1.getTipo().equals(dato2.getTipo())){  
-						switch (dato1.getTipo()) {
-			            case "int": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)==dato2.getInteger()){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)==dato2.getFloating()){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			                
-			            case "char": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i).equals(dato2.getCharacter())){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			         
-			            case "date": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i).equals(dato2.getDate())){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			                
-			            default: 
-			            	System.out.println("eror eqE dato no reconocido");
-			                break;
-			          
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-				}
+        @Override
+		public T visitRelL2(SqlParser.RelL2Context ctx) {
 						
-				@Override
-				public T visitEqNE2(SqlParser.EqNE2Context ctx) {
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					Dato newdato =new Dato() ;
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					if (dato1.getTipo().equals(dato2.getTipo())){  
-						switch (dato1.getTipo()) {
-			            case "int": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)!=dato2.getInteger()){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)!=dato2.getFloating()){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			                
-			            case "char": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (!(dato1.getColumna().get(i).equals(dato2.getCharacter()))){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			         
-			            case "date": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (!(dato1.getColumna().get(i).equals(dato2.getDate()))){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			                
-			            default: 
-			            	System.out.println("eror eqE dato no reconocido");
-			                break;
-			          
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			Dato newdato =new Dato() ;
+			if (dato1.getTipo().equals(dato2.getTipo())){ 
+				switch (dato1.getTipo()) {
+	            case ("int"): 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((int)dato1.getColumna().get(dato1.getFilas().get(i))<dato2.getInteger()){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((float)dato1.getColumna().get(dato1.getFilas().get(i))<dato2.getFloating()){
+	            			lista.add(i);
+	            		}
+	            	}
+	                break;
+	                
+	            default: 
+	            	System.out.println("eror dato no reconocido");
+	            	
 				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			newdato.setFilas(lista);
+			return (T) newdato ;
+		}
+		
+		
+		
+
+@Override
+		
+		
+		public T visitRekB2(SqlParser.RekB2Context ctx) {
+			
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			Dato newdato =new Dato() ;
+			if (dato1.getTipo().equals(dato2.getTipo())){ 
+				switch (dato1.getTipo()) {
+	            case ("int"): 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((int)dato1.getColumna().get(dato1.getFilas().get(i))<dato2.getInteger()){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((float)dato1.getColumna().get(dato1.getFilas().get(i))<dato2.getFloating()){
+	            			lista.add(i);
+	            		}
+	            	}
+	                break;
+	                
+	            default: 
+	            	System.out.println("eror dato no reconocido");
+	            	
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+				}
+		
+		
+
+		@Override
+		public T visitRelLE2(SqlParser.RelLE2Context ctx) {
+			
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			Dato newdato =new Dato() ;
+			if (dato1.getTipo().equals(dato2.getTipo())){ 
+				switch (dato1.getTipo()) {
+	            case ("int"): 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((int)dato1.getColumna().get(dato1.getFilas().get(i))<=dato2.getInteger()){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((float)dato1.getColumna().get(dato1.getFilas().get(i))<=dato2.getFloating()){
+	            			lista.add(i);
+	            		}
+	            	}
+	                break;
+	                
+	            default: 
+	            	System.out.println("eror dato no reconocido");
+	            	
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+				}
+		
+				
+
+		@Override
+		public T visitRelBE2(SqlParser.RelBE2Context ctx) {
+
+			
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			Dato newdato =new Dato() ;
+			if (dato1.getTipo().equals(dato2.getTipo())){ 
+				switch (dato1.getTipo()) {
+	            case ("int"): 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((int)dato1.getColumna().get(dato1.getFilas().get(i))>=dato2.getInteger()){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((float)dato1.getColumna().get(dato1.getFilas().get(i))>=dato2.getFloating()){
+	            			lista.add(i);
+	            		}
+	            	}
+	                break;
+	                
+	            default: 
+	            	System.out.println("eror dato no reconocido");
+	            	
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+			
+		}
+		
+
+	
+		//OPERADORES de igualdad
+		
+				
+		@Override
+		public T visitEqE2(SqlParser.EqE2Context ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			if (dato1.getTipo().equals(dato2.getTipo())){  
+				switch (dato1.getTipo()) {
+	            case "int": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((int)dato1.getColumna().get(dato1.getFilas().get(i))==dato2.getInteger()){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break ;
+	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((float)dato1.getColumna().get(dato1.getFilas().get(i))==dato2.getFloating()){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break ;
+	                
+	            case "char": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if (dato1.getColumna().get(dato1.getFilas().get(i)).equals(dato2.getCharacter())){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break ;
+	         
+	            case "date": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if (dato1.getColumna().get(dato1.getFilas().get(i)).equals(dato2.getDate())){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break ;
+	                
+	            default: 
+	            	System.out.println("eror eqE dato no reconocido");
+	                break;
+	          
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			newdato.setFilas(lista);
+			return (T) newdato ;
+		}
+				
+		@Override
+		public T visitEqNE2(SqlParser.EqNE2Context ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			if (dato1.getTipo().equals(dato2.getTipo())){  
+				switch (dato1.getTipo()) {
+	            case "int": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((int)dato1.getColumna().get(dato1.getFilas().get(i))!=dato2.getInteger()){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break ;
+	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if ((float)dato1.getColumna().get(dato1.getFilas().get(i))!=dato2.getFloating()){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break ;
+	                
+	            case "char": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if (!(dato1.getColumna().get(dato1.getFilas().get(i)).equals(dato2.getCharacter()))){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break ;
+	         
+	            case "date": 
+	            	for( int i= 0;i < dato1.getFilas().size();i++){
+	            		if (!(dato1.getColumna().get(dato1.getFilas().get(i)).equals(dato2.getDate()))){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break ;
+	                
+	            default: 
+	            	System.out.println("eror eqE dato no reconocido");
+	                break;
+	          
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+
+			return (T) newdato ;
+		}
+
+
 
 		
 		
-		
-				//----****************** REL_OP OPERADORES < > <= ETC *****************************
-				
-				@Override
-				public T visitRelL(SqlParser.RelLContext ctx) {
-								
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					Dato newdato =new Dato() ;
-					if (dato1.getTipo().equals(dato2.getTipo())){ 
-						switch (dato1.getTipo()) {
-			            case ("int"): 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break;
-			            	          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			                break;
-			                
-			            default: 
-			            	System.out.println("eror dato no reconocido");
-			            	
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
+		//----****************** REL_OP OPERADORES 1!!! < > <= ETC *****************************
+		@Override
+		public T visitRelL(SqlParser.RelLContext ctx) {
+						
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			Dato newdato =new Dato() ;
+			if (dato1.getTipo().equals(dato2.getTipo())){ 
+				switch (dato1.getTipo()) {
+	            case ("int"): 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((int)dato1.getColumna().get(i)<(int)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((float)dato1.getColumna().get(i)<(float)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	                
+	            default: 
+	            	System.out.println("eror dato no reconocido");
+	            	
 				}
-				@Override
-				public T visitRekB(SqlParser.RekBContext ctx) {
-					
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					Dato newdato =new Dato() ;
-					if (dato1.getTipo().equals(dato2.getTipo())){ 
-						switch (dato1.getTipo()) {
-			            case ("int"): 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break;
-			            	          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			                break;
-			                
-			            default: 
-			            	System.out.println("eror dato no reconocido");
-			            	
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-						}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+		}
 				
-				@Override
-				public T visitRelLE(SqlParser.RelLEContext ctx) {
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					Dato newdato =new Dato() ;
-					if (dato1.getTipo().equals(dato2.getTipo())){ 
-						switch (dato1.getTipo()) {
-			            case ("int"): 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<=dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break;
-			            	          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)<=dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			                break;
-			                
-			            default: 
-			            	System.out.println("eror dato no reconocido");
-			            	
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-						}
-				
-				@Override
-				public T visitRelBE(SqlParser.RelBEContext ctx) {
+		@Override
+		public T visitRekB(SqlParser.RekBContext ctx) {
+			
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			Dato newdato =new Dato() ;
+			if (dato1.getTipo().equals(dato2.getTipo())){ 
+				switch (dato1.getTipo()) {
+	            case ("int"): 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((int)dato1.getColumna().get(i)>(int)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((float)dato1.getColumna().get(i)>(float)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	                
+	            default: 
+	            	System.out.println("eror dato no reconocido");
+	            	
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+				}
+		
+		
+		@Override
+		public T visitRelLE(SqlParser.RelLEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			Dato newdato =new Dato() ;
+			if (dato1.getTipo().equals(dato2.getTipo())){ 
+				switch (dato1.getTipo()) {
+	            case ("int"): 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((int)dato1.getColumna().get(i)<=(int)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((float)dato1.getColumna().get(i)<=(float)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	                
+	            default: 
+	            	System.out.println("eror dato no reconocido");
+	            	
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+				}
+		
+		
+		@Override
+		public T visitRelBE(SqlParser.RelBEContext ctx) {
 
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					Dato newdato =new Dato() ;
-					if (dato1.getTipo().equals(dato2.getTipo())){ 
-						switch (dato1.getTipo()) {
-			            case ("int"): 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)>=dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break;
-			            	          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)>=dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			                break;
-			                
-			            default: 
-			            	System.out.println("eror dato no reconocido");
-			            	
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			Dato newdato =new Dato() ;
+			if (dato1.getTipo().equals(dato2.getTipo())){ 
+				switch (dato1.getTipo()) {
+	            case ("int"): 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((int)dato1.getColumna().get(i)>=(int)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((float)dato1.getColumna().get(i)>=(float)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	                
+	            default: 
+	            	System.out.println("eror dato no reconocido");
+	            	
 				}
-				
-						
-				//OPERADORES de igualdad
-				
-				@Override
-				public T visitEqE(SqlParser.EqEContext ctx) {
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					Dato newdato =new Dato() ;
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					if (dato1.getTipo().equals(dato2.getTipo())){  
-						switch (dato1.getTipo()) {
-			            case "int": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)==dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)==dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			                
-			            case "char": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i).equals(dato2.getColumna().get(i))){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			         
-			            case "date": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i).equals(dato2.getColumna().get(i))){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			                
-			            default: 
-			            	System.out.println("eror eqE dato no reconocido");
-			                break;
-			          
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-				}
-						
-				@Override
-				public T visitEqNE(SqlParser.EqNEContext ctx) {
-					Dato dato1 = (Dato) ctx.getParent().getChild(0);
-					Dato dato2 = (Dato) ctx.getParent().getChild(2);
-					Dato newdato =new Dato() ;
-					ArrayList<Integer> lista = new ArrayList<Integer>();
-					if (dato1.getTipo().equals(dato2.getTipo())){  
-						switch (dato1.getTipo()) {
-			            case "int": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)!=dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			          
-			            case "float": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (dato1.getColumna().get(i)!=dato2.getColumna().get(i)){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			                
-			            case "char": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (!(dato1.getColumna().get(i).equals(dato2.getColumna().get(i)))){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			         
-			            case "date": 
-			            	for( int i= 0;i < dato1.getColumna().size();i++){
-			            		if (!(dato1.getColumna().get(i).equals(dato2.getColumna().get(i)))){
-			            			lista.add(i);
-			            		}
-			            	}
-			            	break ;
-			                
-			            default: 
-			            	System.out.println("eror eqE dato no reconocido");
-			                break;
-			          
-						}
-					}
-					else {
-						System.out.println("los tipos deben coindicidir");
-					}
-					newdato.setColumna(lista);
-					return (T) newdato ;
-				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+		}
+		
 		
 				
-				
-				
-				
-				
+		//OPERADORES de igualdad
+		
+		@Override
+		public T visitEqE(SqlParser.EqEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			if (dato1.getTipo().equals(dato2.getTipo())){  
+				switch (dato1.getTipo()) {
+	            case "int": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((int)dato1.getColumna().get(i)==(int)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	          
+	            case "float": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((float)dato1.getColumna().get(i)==(float)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	                
+	            case "char": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if (dato1.getColumna().get(i).equals(dato2.getColumna().get(i))){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	         
+	            case "date": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if (dato1.getColumna().get(i).equals(dato2.getColumna().get(i))){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	                
+	            default: 
+	            	System.out.println("eror eqE dato no reconocido");
+	                break;
+	          
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+		}
 				
 		
+		
+		@Override
+		public T visitEqNE(SqlParser.EqNEContext ctx) {
+			Dato dato1 = (Dato) ctx.getParent().getChild(0);
+			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato newdato =new Dato() ;
+			ArrayList<Integer> lista = new ArrayList<Integer>();
+			if (dato1.getTipo().equals(dato2.getTipo())){  
+				switch (dato1.getTipo()) {
+	            case "int": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((int)dato1.getColumna().get(i)!=(int)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	            case "float": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((float)dato1.getColumna().get(i)!=(float)dato2.getColumna().get(i)){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	                
+	            case "char": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((!dato1.getColumna().get(i).equals(dato2.getColumna().get(i)))){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	         
+	            case "date": 
+	            	for( int i= 0;i < dato1.getColumna().size();i++){
+	            		if ((!dato1.getColumna().get(i).equals(dato2.getColumna().get(i)))){
+	            			lista.add(i);
+	            		}
+	            	}
+	            	break;
+	                
+	            default: 
+	            	System.out.println("eror eqE dato no reconocido");
+	                break;
+	          
+				}
+			}
+			else {
+				System.out.println("los tipos deben coindicidir");
+			}
+			newdato.setFilas(lista);
+			newdato.setColumna(dato1.getColumna()); newdato.setTipo(dato1.getTipo());
+			return (T) newdato ;
+		}
+
+			
+			
+			
+			
 		
 		//-----expr1 y expression operqdores
 		@Override 
@@ -1201,19 +1252,9 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			Dato dato1 = (Dato) ctx.getParent().getChild(0);
 			Dato dato2 = (Dato) ctx.getParent().getChild(2);
 			Dato newdato =new Dato() ;
-			if (!(dato1.getTipo().equals("bool"))& !(dato1.getTipo().equals("bool"))){
-				System.out.println("error and con operaciones no boleanas");
-				return null ;
-			}
-			else {
-				if ((dato1.getBool()==true)&(dato1.getBool()==true)){
-					newdato.setBool(true);
-				}
-				else{
-					newdato.setBool(false);
-				}
+			
 				return (T) newdato ;
-			}
+			
 			
 		}
 		
@@ -1245,6 +1286,49 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T)dato ;
 		}
 		
+	
+		
+		
+		
+		
+		//********expr1 y expression operqdores**************
+		@Override
+		public T visitExpr33(SqlParser.Expr33Context ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(1));
+			return (T) dato ;
+		}
+		
+		@Override
+		public T visitExpr34(SqlParser.Expr34Context ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(1));
+			return (T) dato ;
+		}
+		
+		
+		@Override
+		public T visitExpr12(SqlParser.Expr12Context ctx) {
+			Dato dato = new Dato() ;
+			dato= (Dato)visit(ctx.getChild(0));
+			return (T) dato ;
+		}
+		
+		
+		@Override
+		public T visitExpression1(SqlParser.Expression1Context ctx) {
+			Dato dato = (Dato) visit(ctx.getChild(1));
+			return (T)dato ;
+		}
+		
+		@Override
+		public T visitExpression2(SqlParser.Expression2Context ctx) {
+			Dato dato = (Dato) visit(ctx.getChild(0));
+			return (T)dato ;
+		}
+		
+		
+
 		
 		
 		

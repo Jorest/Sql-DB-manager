@@ -204,7 +204,7 @@ expr1
 expr3								
 	: expr3 rel_op unifactor			#expr31
 	| unifactor							#expr32
-	|expr3 rel_op2 literal  				#expr33
+	|expr3 rel_op2 literal  			#expr33
 	|literal rel_op3 expr3				#expr34
 	;
 

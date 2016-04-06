@@ -9,13 +9,20 @@ public class Dato {
 	private String tipo ;
 	private boolean bool ;
 	private String id ;
-	private ArrayList<Integer> columna = new  ArrayList<Integer>() ;
+	private ArrayList<Integer> filas = new  ArrayList<Integer>() ;
+	private ArrayList columna ;
 
-	public ArrayList<Integer> getColumna() {
+	public ArrayList getColumna() {
 		return columna;
 	}
-	public void setColumna(ArrayList<Integer> filas) {
-		this.columna = filas;
+	public void setColumna(ArrayList columna) {
+		this.columna = columna;
+	}
+	public ArrayList<Integer> getFilas() {
+		return filas;
+	}
+	public void setFilas(ArrayList<Integer> filas) {
+		this.filas = filas;
 	}
 	public String getId() {
 		return id;
