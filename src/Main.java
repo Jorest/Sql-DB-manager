@@ -17,10 +17,10 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 
-/*Universidad del Valle de Guatemala
- * 
- * 
+/*
+ * Clase principal que redirecciona a la interfaz
  * @author Luis
+ * version 07/04/2016/A
  */
 
 public class Main {
@@ -35,7 +35,8 @@ public class Main {
         c.createDB("prueba");
         c.useDB("prueba");
         */
-        //System.out.println(" hola");
+        
+        //Enlace a la interfaz
         Consola ventana=new Consola();
         ventana.setVisible(true);  
         ventana.setResizable(false);
