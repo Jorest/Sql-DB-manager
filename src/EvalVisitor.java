@@ -675,7 +675,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                               }
                           }
                           //Tomamos los valores
-                          valores=(ArrayList <Dato>) visit(ctx.getChild(indicador+2));
+                          valores=(ArrayList <Dato>) visit(ctx.getChild(indicador+3));
                           ArrayList <Columna> col=actual.getColumnas();
                           //Contador de valores en value
                           int valuescont=valores.size();
