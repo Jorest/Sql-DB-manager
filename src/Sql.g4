@@ -115,7 +115,7 @@ constraint: 'CONSTRAINT' constraintType;
 constraintType:
             ID 'PRIMARY' 'KEY' '(' ID (',' ID)*')'                                           #primaryK
         |   ID 'FOREIGN' 'KEY'  '(' ID (',' ID)*')' 'REFERENCES' ID '(' ID (',' ID)*')'		 #foreignK
-        |   ID 'CHECK'  '('ID expression ID ')'													 #check
+        |   ID 'CHECK'  '('expression')'													 #check
         ;
 
 rename_table_statement: 'ALTER' 'TABLE' ID 'RENAME' 'TO' ID ';';

@@ -4,21 +4,18 @@
  * and open the template in the editor.
  */
 
-/**
- *
- * @author Luis
- */
-public class Check {
-    private String nombre; 
-    private String exp; 
+import java.util.ArrayList;
+import org.antlr.runtime.tree.ParseTree;
 
-    public Check(String nombre, String exp) {
-        this.nombre = nombre;
-        this.exp = exp;
-    }
+public class Check {
+    private String nombre;  //nombre de la tabla
+    private String exp = null;
+    private ArrayList<ParseTree> trees ;
 
     public Check() {
+      
     }
+
 
     public String getNombre() {
         return nombre;
@@ -27,8 +24,18 @@ public class Check {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
+    public ArrayList<ParseTree> getTrees() {
+		return trees;
+	}
 
-    public String getExp() {
+
+	public void setTrees(ArrayList<ParseTree> trees) {
+		this.trees = trees;
+	}
+
+
+	public String getExp() {
         return exp;
     }
 
@@ -37,5 +44,8 @@ public class Check {
     }
     
     
+    public void addTree(ParseTree exp) {
+        this.trees.add(exp);
+    }
     
 }
