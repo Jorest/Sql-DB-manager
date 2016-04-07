@@ -4,13 +4,17 @@
     {
       "nombre": "id",
       "tipo": "int",
-      "valores": [],
+      "valores": [
+        1
+      ],
       "charCant": 0
     },
     {
       "nombre": "pais",
       "tipo": "char",
-      "valores": [],
+      "valores": [
+        "Guatemala"
+      ],
       "charCant": 20
     }
   ],
