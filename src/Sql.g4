@@ -137,7 +137,7 @@ dmlstatement : insert_value
     | select_value
     ;
 
-insert_value: 'INSERT' 'INTO' ID ( '(' ((ID)(','ID)*)? ')' )? 'VALUES' (list_values) ';';
+insert_value: 'INSERT' 'INTO' ID ( '(' ((ID)(','ID)*)? ')' )? 'VALUES' (list_values) ;
 
 update_value: 'UPDATE' ID 'SET'  ID '=' literal (','ID '=' literal)* ('WHERE' expression)? ';' ;
 
@@ -147,7 +147,7 @@ select_value: 'SELECT' ('*' | ID (',' ID)* ) 'FROM' ID ('WHERE' expression)?  ('
 
                   
               
-list_values : ( '(' ((literal)(','literal)*)? ')' )? ;
+list_values : ( '(' ((literal)(','literal)*)? ')' )?  ';';
          
 literal :  
         int_literal
