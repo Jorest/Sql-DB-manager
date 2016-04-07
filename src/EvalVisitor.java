@@ -850,6 +850,38 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 
                 @Override 
                 public T visitDelete_value(SqlParser.Delete_valueContext ctx) { 
+                     try {
+                        actual=controlador.aletT(ctx.getChild(1).getText());
+                    } catch (IOException ex) {
+                        Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(actual!=null){
+                        if(ctx.getChildCount()>4){
+                            Dato data=(Dato) visit(ctx.getChild(4));
+                            ArrayList <Integer> valores=data.getFilas();
+                            ArrayList <Columna> columnas=actual.getColumnas();
+                            for(int i=0; i<columnas.size();i++){
+                                ArrayList datos=columnas.get(i).getValores();
+                                 for(int l=0; l<valores.size();l++){
+                                     datos.remove(valores.get(i));
+                                     columnas.get(i).setValores(datos);
+                                 }
+                            }
+                            actual.setColumnas(columnas);
+                        }
+                        else{
+                            ArrayList <Columna> columnas=actual.getColumnas();
+                            for(int i=0; i<columnas.size();i++){
+                                columnas.get(i).setValores(new ArrayList());
+                            }
+                            actual.setColumnas(columnas);
+                        }
+                        try {
+                            controlador.createT(actual);
+                        } catch (IOException ex) {
+                            Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                     return null; 
                 }
 	
