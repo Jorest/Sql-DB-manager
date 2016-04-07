@@ -103,7 +103,7 @@ public class ControladorDB {
          }
   
 }
-    public void alterDB(String nombre, String newname){
+    public void alterDB(String nombre, String newname) throws IOException{
         File directorio= new File("BasesDatos/"+nombre);
         if(directorio.exists()==true){
             File directorio1= new File("BasesDatos/"+newname);
@@ -307,9 +307,9 @@ public class ControladorDB {
        try{
            FileWriter fw= new FileWriter(path);
            BufferedWriter bw = new BufferedWriter(fw);
-           PrintWriter salida= new PrintWriter(bw);
-           salida.println(datos);
-           salida.close();
+           try (PrintWriter salida = new PrintWriter(bw)) {
+               salida.println(datos);
+           }
                    
        }
        catch(java.io.IOException ioex){

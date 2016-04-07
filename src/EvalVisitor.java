@@ -74,14 +74,22 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	//alter database
         @Override
         public T visitAlter_database_statement( SqlParser.Alter_database_statementContext ctx) { 
-            controlador.alterDB(ctx.getChild(2).getText(), ctx.getChild(5).getText());
+            try {
+                controlador.alterDB(ctx.getChild(2).getText(), ctx.getChild(5).getText());
+            } catch (IOException ex) {
+                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return null;
         } 
         
         //drop database
         @Override
         public T visitDrop_schema_statement(SqlParser.Drop_schema_statementContext ctx) { 
-            controlador.dropDB(ctx.getChild(2).getText());
+            try {
+                controlador.dropDB(ctx.getChild(2).getText());
+            } catch (IOException ex) {
+                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return null;
         }
         
