@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,11 +9,12 @@ import java.util.logging.Logger;
 import org.antlr.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.misc.NotNull;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
-        private Tabla actual;
-        private boolean error=false; 
+	private Tabla actual; 
+    private boolean error=false; 
 	private ControladorDB controlador = new ControladorDB() ;
 	private ArrayList<Check> checks = new ArrayList(); ;
-        public ControladorDB getControlador() {
+       
+	public ControladorDB getControlador() {
             return controlador;
         }
 
@@ -267,7 +269,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              
              for (Check check : checks){
             	 //si la tabla ya tiene un check solo agregamos el nuevo arbol
-            	 if (check.getNombre().equals(controlador.getTablaActual().getNombre())){
+            	 if (check.getTabla().equals(controlador.getTablaActual().getNombre())){
             		 contains= true ;
             		 check.addTree(ctx.getChild(3));
             	 }
@@ -276,8 +278,9 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              //si no creamos un nuevo check para la tabla 
              if (contains ==false ){
                  Check regla = new Check();
-                 regla.setNombre(actual.getNombre());
+                 regla.setTabla(actual.getNombre());
             	 regla.addTree(ctx.getChild(3));
+            	 regla.setNombre(ctx.getChild(0).getText());
                  checks.add(regla);
              }
              return null; 
@@ -288,7 +291,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         	 ArrayList<Integer> lista = new ArrayList<Integer>();
         	 ArrayList<org.antlr.v4.runtime.tree.ParseTree> arboles = new ArrayList<org.antlr.v4.runtime.tree.ParseTree>();
         	 for (Check check : checks){
-        		 if (check.getNombre().equals(tabla)){
+        		 if (check.getTabla().equals(tabla)){
         			 arboles = check.getTrees();
         		 }        	 		 
         	 }
@@ -423,18 +426,40 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	
         @Override
         public T visitDropColumn( SqlParser.DropColumnContext ctx) { 
-            ArrayList <Columna> colum=actual.getColumnas();
-            String busqueda=ctx.getChild(2).getText();
-            busqueda=busqueda.replace(" ", "");
-            System.out.println(busqueda);
-            for(int i=0;i<colum.size();i++){
-                System.out.println(colum.get(i).getNombre());
-                if(colum.get(i).getNombre().equals(busqueda)){
-                    colum.remove(i);
-                    break;
-                }
-            }
-            actual.setColumnas(colum);
+            
+        	//verificamos si no existe alguna tabla que lo referencie 
+        	boolean fkexist= false ;
+        	for (int i= 0 ; i< controlador.getActual().getTablas().size();i++){
+        		ArrayList <ForeignKey> fks =controlador.getActual().getTablas().get(i).getForeignk();
+        		for (int j= 0 ; j< fks.size();j++){
+        			if (fks.get(j).getTablaref().equals(actual.getNombre())){
+        				for (int k= 0 ; k< fks.get(j).getId2().size();k++){
+        					if (fks.get(j).getId2().get(k).equals(ctx.getChild(2).getText())){
+        						fkexist=true ;
+        					}
+        				}
+        			}
+        		}
+        	}
+        	
+        	if (fkexist==false ){
+        	
+		    	ArrayList <Columna> colum=actual.getColumnas();
+		        String busqueda=ctx.getChild(2).getText();
+		        busqueda=busqueda.replace(" ", "");
+		        System.out.println(busqueda);
+		        for(int i=0;i<colum.size();i++){
+		            System.out.println(colum.get(i).getNombre());
+		            if(colum.get(i).getNombre().equals(busqueda)){
+		                colum.remove(i);
+		                break;
+		            }
+		        }
+		        actual.setColumnas(colum);
+		    	}
+        	else {
+        		System.out.println("no puede borrar columna ya que es referncia de una PK");
+        	}
             return null; 
         }
 	@Override public T visitConstraint(SqlParser.ConstraintContext ctx) { 
@@ -460,7 +485,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 }
             }
             for(int i=0; i<c.size();i++){
-                 if(c.get(i).getNombre().equals(nombreCons)){
+                 if(c.get(i).getTabla().equals(nombreCons)){
                     c.remove(i);
                 }
             }
@@ -1949,7 +1974,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			col.setCharCant(Integer.parseInt(ctx.getChild(1).getText()));
 			return (T)col;
 		}
-		
+
 }
 
 
