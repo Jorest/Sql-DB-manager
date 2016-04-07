@@ -73,7 +73,7 @@ public class Columna {
              valores.add(valor);
              return true;
          }else{
-             System.out.println("Si es");
+             /**System.out.println("Si es");
              if(valor.getClass().getSimpleName().equals("Integer")){
                  System.out.println("neeeelll");
                  int coso=(int)valor;
@@ -86,7 +86,7 @@ public class Columna {
                      System.out.println("si ta1");
                     return false;
                 }
-             }
+             }**/
                 if(valores.contains(valor)==false){
                     valores.add(valor);
                     return true;
