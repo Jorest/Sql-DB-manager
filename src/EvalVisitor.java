@@ -294,7 +294,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
             	 
                  checks.add(regla);
              }
-             generarCheck();
+             //generarCheck();
              actual.agregarColumna(new Columna(ctx.getChild(0).getText()));
              return null; 
          }
@@ -352,7 +352,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
             GsonBuilder builder = new GsonBuilder();
             builder.serializeNulls();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(checks);
+            String json = gson.toJson(checks, ArrayList.class);
             File fichero = new File ("BasesDatos","check.json");
             if(fichero.exists()==false){
                 try {
@@ -582,9 +582,12 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	@Override 
 	public T visitList_values(SqlParser.List_valuesContext ctx) {
 		ArrayList <Dato> values = new ArrayList() ;
+                System.out.println("CONTADOR"+ctx.getChildCount());
 		for (int i = 0;i<ctx.getChildCount();i++){
 			if(! ctx.getChild(i).getText().equals(",")&&! ctx.getChild(i).getText().equals("(")&&! ctx.getChild(i).getText().equals(")")){
 				values.add((Dato)visit(ctx.getChild(i)));
+                                Dato a=(Dato)visit(ctx.getChild(i));
+                                System.out.println(a.getValor());
 			}
 		}
 		return (T) values ;
@@ -613,7 +616,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		public T visitChar_literal(SqlParser.Char_literalContext ctx) {
 			Dato dato = new Dato() ;
 			dato.setTipo("char");
-                        String valor=ctx.getText().replace("'", "");
+                        String valor=ctx.getText();
+                        valor=valor.replace("'","");
 			dato.setCharacter(valor);
 			return (T) dato ;
 		}
@@ -956,15 +960,17 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 
                 @Override 
                 public T visitDelete_value(SqlParser.Delete_valueContext ctx) { 
-                	System.out.println("QUE DISHEEEE "); 
-                	try {
-                        actual=controlador.aletT(ctx.getChild(1).getText());
+                    
+                     try {
+                        actual=controlador.aletT(ctx.getChild(2).getText());
                     } catch (IOException ex) {
                         Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                     System.out.println("que ishee");
                     if(actual!=null){
+                        controlador.setTablaActual(actual);
+                        System.out.println("passoo");
                         if(ctx.getChildCount()>4){
-                        	System.out.println("Puta pidieron pizar pepito");
                             Dato data=(Dato) visit(ctx.getChild(4));
                             System.out.println("si regesa al visitor");
                             ArrayList <Integer> valores=data.getFilas();
@@ -972,11 +978,14 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                             for(int i=0; i<columnas.size();i++){
                                 ArrayList datos=columnas.get(i).getValores();
                                  for(int l=0; l<valores.size();l++){
+                                     System.out.println("e");
+                                     datos.remove(valores.get(l));
                                      datos.remove(valores.get(l));
                                      columnas.get(i).setValores(datos);
                                  }
+                                 System.out.println("aqui como mueve la colita");
+                                 columnas.get(i).setValores(datos);
                             }
-                            System.out.println("QUE DISHEEEE ");
                             actual.setColumnas(columnas);
                         }
                         else{
