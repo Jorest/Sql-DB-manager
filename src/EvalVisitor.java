@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -475,7 +477,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	public T visitList_values(SqlParser.List_valuesContext ctx) {
 		ArrayList <Dato> values = new ArrayList() ;
 		for (int i = 0;i<ctx.getChildCount();i++){
-			if(! ctx.getChild(i).getText().equals(",")){
+			if(! ctx.getChild(i).getText().equals(",")&&! ctx.getChild(i).getText().equals("(")&&! ctx.getChild(i).getText().equals(")")){
 				values.add((Dato)visit(ctx.getChild(i)));
 			}
 		}
@@ -521,14 +523,28 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	
                 // DML .........................................................
                 @Override 
+                public T visitDmlstatement(SqlParser.DmlstatementContext ctx) { 
+                    for(int i=0; i<ctx.getChildCount();i++){
+                        visit(ctx.getChild(i));
+                    }
+                    return null; 
+                }
+	
+                
+                
+                @Override 
                 public T visitInsert_value(SqlParser.Insert_valueContext ctx) { 
+                   
                    //Tomamos la tabla en la cual insertar
+                    System.out.println("puta aqui estoy");
                     try {
                         actual=controlador.aletT(ctx.getChild(2).getText());
                         controlador.setTablaActual(actual);
                     } catch (IOException ex) {
                         Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                     //cargamos la lista de pks
+                    ArrayList <String> pk=actual.getPrimaryk().get(0).getIdref();
                     controlador.setTablaActual(actual);
                     ArrayList <String> columnas  =new ArrayList();
                     ArrayList <Dato> valores;
@@ -540,10 +556,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                           for(int i=4;i<ctx.getChildCount();i++){
                               String nombre=ctx.getChild(i).getText();
                               if(nombre.equals(")")){
-                                  indicador=i; 
+                                  indicador=i;
+                                  System.out.println(indicador);
                                   break;
                               }
-                              if(!";".equals(nombre)){
+                              if(!",".equals(nombre)){
                                   columnas.add(nombre);
                               }
                           }
@@ -554,119 +571,289 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                           int valuescont=valores.size();
                           //valores ingresados igual a columnas declaradas
                           if(valuescont==columnas.size()){
+                              System.out.println("aqui toy");
                               //verificacion que no exceda cantidad de columnas
                               if(columnas.size()<=col.size()){
                                   for(int i=0; i<columnas.size();i++){
                                         Columna c=controlador.getColumna(col,(String)columnas.get(i));
+                                        System.out.println(c.getNombre());
+                                        if(c.getTipo().equals("char")){
+                                            int cant=valores.get(i).getValor().toString().length();
+                                            if(cant>c.getCharCant()){
+                                                ArrayList errores=controlador.getError();
+                                                errores.add("Error el valor ingresado sobrepasa la cantidad de caracters."); 
+                                                controlador.setError(errores);
+                                                error=true;
+                                                break;
+                                            }
+                                        }
+                                        boolean ingreso=true;
                                         if(c.getTipo().equals(valores.get(i).getTipo())){
                                             //Ingresamos valor
-                                            c.setValor(valores.get(i).getValor());
+                                            ingreso=c.setValor(valores.get(i).getValor(),pk);
+                                            System.out.println("ooooollleeeee");
                                         }else{
                                             //Realizamos casteoo
-                                            if("INT".equals(c.getTipo()) && "FLOAT".equals(valores.get(i).getTipo())){
+                                            if("int".equals(c.getTipo()) && "float".equals(valores.get(i).getTipo())){
                                                 float valor= (float)valores.get(i).getValor();
-                                                int val=(int)valor;
-                                                c.setValor(val);
+                                                int val=Math.round(valor);
+                                                ingreso=c.setValor(val,pk);
 
                                             }
-                                            if("FLOAT".equals(c.getTipo()) && "INT".equals(valores.get(i).getTipo())){
+                                            if("float".equals(c.getTipo()) && "int".equals(valores.get(i).getTipo())){
                                                 int valor= (int)valores.get(i).getValor();
                                                 float val=(float)valor;
-                                                c.setValor(val);
+                                                ingreso=c.setValor(val,pk);
 
                                             }
-                                            if("CHAR".equals(c.getTipo()) && "FLOAT".equals(valores.get(i).getTipo())){
+                                            if("char".equals(c.getTipo()) && "float".equals(valores.get(i).getTipo())){
                                                 float valor= (float)valores.get(i).getValor();
                                                 String val=Float.toString(valor);
-                                                c.setValor(val);
+                                                ingreso=c.setValor(val,pk);
 
                                             }
-                                            if("CHAR".equals(c.getTipo()) && "INT".equals(valores.get(i).getTipo())){
+                                            if("char".equals(c.getTipo()) && "int".equals(valores.get(i).getTipo())){
                                                 int valor= (int)valores.get(i).getValor();
                                                 String val=Integer.toString(valor);
-                                                c.setValor(val);
+                                                ingreso=c.setValor(val,pk);
                                             }
-                                            if("CHAR".equals(c.getTipo()) && "DATE".equals(valores.get(i).getTipo())){
-                                                c.setValor(valores.get(i).getValor());
+                                            if("char".equals(c.getTipo()) && "date".equals(valores.get(i).getTipo())){
+                                                ingreso=c.setValor(valores.get(i).getValor(),pk);
                                             }
                                             else{
                                                 System.out.println("Tipos de datos no compatibles");
                                             }
                                         }
+                                        if(ingreso==false){
+                                            ArrayList errores=controlador.getError();
+                                            errores.add("Error una primary no puede tener valores repetidos."); 
+                                            controlador.setError(errores);
+                                            error=true;
+                                            break;
+                                        }
+                                        //Lo ingresamos a la lista de columnas
+                                        for(int l=0; l<col.size();l++){
+                                            if(col.get(l).equals(c.getNombre())){
+                                                col.set(l, c);
+                                            }
+                                        }
                                       
                                   }
+                                  //si no estan definidos todas las columnas
+                                 if(columnas.size()<col.size()){
+                                      //buscar que columnas estan vacios
+                                        for(int i=0; i<col.size();i++){
+                                            if(columnas.contains(col.get(i).getNombre())==false){
+                                                col.get(i).setValor(null);
+                                            }
+                                        }
+                                  }
+                                  
+                              }else{
+                                ArrayList errores=controlador.getError();
+                                errores.add("Error cantidad de columnas instanciadas sobrepasa la cantidad de columnas en la tabla."); 
+                                controlador.setError(errores);
+                                error=true;
                                   
                               }
+                           }else{
+                                ArrayList errores=controlador.getError();
+                                errores.add("Error cantidad de columnas instanciadas no conincide con cantidad de valores."); 
+                                controlador.setError(errores);
+                                error=true;
+                              
                           }
-                          //si no estan definidos todas las columnas
-                          if(columnas.size()<col.size()){
-                              //buscar que columnas estan vacios
-                                for(int i=0; i<col.size();i++){
-                                    if(columnas.contains(col.get(i).getNombre())==false){
-                                        col.get(i).setValor(null);
-                                    }
-                                }
-                            }
+                          //AGREGAMOS EL VALOR SI NO HAY ERROR
+                          if(error==false){
+                              actual.setColumnas(col);
+                              try {
+                                  controlador.createT(actual);
+                              } catch (IOException ex) {
+                                  Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                              }
+                          }
                     }
                     //no especifica columnas
                     else{
+                        System.out.println("sippp aqui putito");
                         ArrayList <Columna> col=actual.getColumnas();
                         valores=(ArrayList <Dato>) visit(ctx.getChild(4));
                          //Si existe values para cada columna 
                         int valuescont=valores.size();
+                        System.out.println(valuescont);
+                        System.out.println(col.size());
                         if(valuescont<=col.size()){
+                            System.out.println("ssssiiii qui");
                                 for(int i=0; i<valores.size();i++){
                                         //Si son del mismo tipo
+                                        if(col.get(i).getTipo().equals("char")){
+                                            int cant=valores.get(i).getValor().toString().length();
+                                            if(cant>col.get(i).getCharCant()){
+                                                ArrayList errores=controlador.getError();
+                                                errores.add("Error el valor ingresado sobrepasa la cantidad de caracters."); 
+                                                controlador.setError(errores);
+                                                error=true;
+                                                break;
+                                            }
+                                        }
+                                        boolean ingreso=true;
                                         if(col.get(i).getTipo().equals(valores.get(i).getTipo())){
+                                            System.out.println("oppp");
                                                 //Ingresamos valor
                                                 //verficar aqui
-                                            
-                                                
-                                                col.get(i).setValor(valores.get(i).getValor());
+                                                 ingreso=col.get(i).setValor(valores.get(i).getValor(),pk);
+                                                 System.out.println("oleee");
                                         }else{
                                                 //Realizamos casteoo
-                                                if("INT".equals(col.get(i).getTipo()) && "FLOAT".equals(valores.get(i).getTipo())){
+                                                if("int".equals(col.get(i).getTipo()) && "float".equals(valores.get(i).getTipo())){
+                                                        System.out.println("noo?");
                                                         float valor= (float)valores.get(i).getValor();
                                                         int val=(int)valor;
-                                                        col.get(i).setValor(val);
+                                                        ingreso=col.get(i).setValor(val,pk);
 
                                                 }
-                                                if("FLOAT".equals(col.get(i).getTipo()) && "INT".equals(valores.get(i).getTipo())){
+                                                if("float".equals(col.get(i).getTipo()) && "int".equals(valores.get(i).getTipo())){
                                                         int valor= (int)valores.get(i).getValor();
                                                         float val=(float)valor;
-                                                        col.get(i).setValor(val);
+                                                        ingreso=col.get(i).setValor(val,pk);
 
                                                 }
-                                                if("CHAR".equals(col.get(i).getTipo()) && "FLOAT".equals(valores.get(i).getTipo())){
+                                                if("char".equals(col.get(i).getTipo()) && "float".equals(valores.get(i).getTipo())){
                                                         float valor= (float)valores.get(i).getValor();
                                                         String val=Float.toString(valor);
-                                                        col.get(i).setValor(val);
+                                                        ingreso=col.get(i).setValor(val,pk);
 
                                                 }
-                                                if("CHAR".equals(col.get(i).getTipo()) && "INT".equals(valores.get(i).getTipo())){
+                                                if("char".equals(col.get(i).getTipo()) && "int".equals(valores.get(i).getTipo())){
                                                         int valor= (int)valores.get(i).getValor();
                                                         String val=Integer.toString(valor);
-                                                        col.get(i).setValor(val);
+                                                        ingreso=col.get(i).setValor(val,pk);
                                                 }
-                                                if("CHAR".equals(col.get(i).getTipo()) && "DATE".equals(valores.get(i).getTipo())){
-                                                        col.get(i).setValor(valores.get(i).getValor());
+                                                if("char".equals(col.get(i).getTipo()) && "date".equals(valores.get(i).getTipo())){
+                                                        ingreso=col.get(i).setValor(valores.get(i).getValor(),pk);
                                                 }
                                                 else{
                                                         System.out.println("Tipos de datos no compatibles");
                                                 }
                                         }
+                                        if(ingreso==false){
+                                            ArrayList errores=controlador.getError();
+                                            errores.add("Error una primary no puede tener valores repetidos."); 
+                                            controlador.setError(errores);
+                                            error=true;
+                                            break;
+                                        }
                                         //fin else
                                 }//fin for 
                                 if(valuescont<col.size()){
+                                    System.out.println("menor?");
                                          for(int i=valuescont; i<col.size();i++){
                                                 col.get(i).setValor(null);
                                                 }
                                         }
-                                }
+                        }else{
+                            ArrayList errores=controlador.getError();
+                            errores.add("Error cantidad de columnas instanciadas sobrepasa la cantidad de columnas en la tabla."); 
+                            controlador.setError(errores);
+                            error=true;
+                        }
+                        if(error==false){
+                              actual.setColumnas(col);
+                              try {
+                                  controlador.createT(actual);
+                              } catch (IOException ex) {
+                                  Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                              }
+                          }
                     }
+                    error=false;
                      return null; 
                 }
        
+                //update
+                
+                @Override 
+                public T visitUpdate_value(SqlParser.Update_valueContext ctx) { 
+                    try {
+                        actual=controlador.aletT(ctx.getChild(1).getText());
+                    } catch (IOException ex) {
+                        Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(actual!=null){
+                        controlador.setTablaActual(actual);
+                        Map <String, Dato> map= new HashMap <String, Dato>();
+                        int cont=0;
+                        String id="";
+                        Dato literal=null;
+                        boolean where=false;
+                        int indicador=0; 
+                        for(int i=3;i<ctx.getChildCount()-1;i++){
+                          if(ctx.getChild(i).getText().equals("WHERE")){
+                                indicador=i;
+                                where=true;
+                                break; 
+                            }
+                            if(!",".equals(ctx.getChild(i).getText())&&!"=".equals(ctx.getChild(i).getText())){
+                                if(cont==1){
+                                    System.out.println("ingresando");
+                                    System.out.println(id);
+                                    literal=(Dato)visit(ctx.getChild(i));
+                                    map.put(id,literal);
+                                    cont=0;
+                                }
+                                if(cont==0){
+                                    id=ctx.getChild(i).getText();
+                                    cont++;
+                                }
+                            }
+                        }
+                        if(where==true){
+                            Dato data=(Dato) visit(ctx.getChild(indicador+1));
+                            ArrayList <Integer> valores=data.getFilas();
+                            ArrayList <Columna> columnas=actual.getColumnas();
+                            for(int i=0; i<columnas.size();i++){
+                                Dato ingreso=map.get(columnas.get(i).getNombre());
+                                if(ingreso!= null){
+                                    ArrayList datos=columnas.get(i).getValores();
+                                    for(int l=0; l<valores.size();l++){
+                                        datos.set(valores.get(l), ingreso.getValor());
+                                        columnas.get(i).setValores(datos);
+                                    }
+                                }
+                            }
+                            actual.setColumnas(columnas);
+                        }
+                        else{
+                            ArrayList <Columna> columnas=actual.getColumnas();
+                            for(int i=0; i<columnas.size();i++){
+                                Dato ingreso=map.get(columnas.get(i).getNombre());
+                                if(ingreso!= null){
+                                    System.out.println("ingreso cargado listo para update");
+                                    ArrayList datos=columnas.get(i).getValores();
+                                    for(int l=0; l<datos.size();l++){
+                                        datos.set(l, ingreso.getValor());
+                                        columnas.get(i).setValores(datos);
+                                    }
+                                }
+                            }
+                            actual.setColumnas(columnas);
+                        }
+                        try {
+                            controlador.createT(actual);
+                        } catch (IOException ex) {
+                            Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    return null; 
+                }
+                
+                
+                @Override 
+                public T visitDelete_value(SqlParser.Delete_valueContext ctx) { 
+                    return null; 
+                }
+	
+	
                 //Order By
              /**   @Override 
                 public T visitorderBy_Asc(SqlParser.OrderBy_Asc ctx) { 
@@ -1731,9 +1918,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T)col;
 		}
 		
-	
-	
-	
 }
 
 

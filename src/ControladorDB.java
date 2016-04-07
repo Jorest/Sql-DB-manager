@@ -214,15 +214,15 @@ public class ControladorDB {
         String json = gson.toJson(t);
         System.out.println(json);
         File fichero = new File ("BasesDatos/"+actual.getNombre(), t.getNombre()+".json");
-        if(fichero.exists()==false){
+        //if(fichero.exists()==false){
             boolean a=fichero.createNewFile();
             escribir(json,fichero.getPath());
             log.add("Tabla "+t.getNombre()+" creada, en Base de Datos "+actual.getNombre());
             cargarTablas();
             generarA();
-        }else{
+        /*}else{
             Error.add("Error al intentar crear Tabla, Tabla"+ t.getNombre()+" ya existe");
-        }
+        }*/
     }
 
     public void renameT(String nombre, String nnombre) throws IOException{
@@ -279,7 +279,7 @@ public class ControladorDB {
         }
         
     }
-   
+    
     public ArrayList showTables(){
         ArrayList resul=new ArrayList();
         if(actual!=null){

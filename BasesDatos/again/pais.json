@@ -4,17 +4,30 @@
     {
       "nombre": "id",
       "tipo": "int",
-      "valores": [],
+      "valores": [
+        123,
+        123
+      ],
       "charCant": 0
     },
     {
       "nombre": "pais",
       "tipo": "char",
-      "valores": [],
+      "valores": [
+        "GuatePOwer",
+        "GuatePOwer"
+      ],
       "charCant": 20
     }
   ],
-  "primaryk": [],
+  "primaryk": [
+    {
+      "nombre": "hola",
+      "idref": [
+        "id"
+      ]
+    }
+  ],
   "foreignk": [],
   "check": []
 }

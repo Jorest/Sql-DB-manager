@@ -58,19 +58,19 @@ public class Dato {
 	}
 	
     public Object getValor(){
-        if(tipo.equals("INT")){
+        if(tipo.equals("int")){
             return integer;
         }
         
-        if(tipo.equals("CHAR")){
+        if(tipo.equals("char")){
             return character;
         }
         
-        if(tipo.equals("FLOAT")){
+        if(tipo.equals("float")){
             return floating;
         }
         
-        if(tipo.equals("DATE")){
+        if(tipo.equals("date")){
             return date;
         }
         return null; 
