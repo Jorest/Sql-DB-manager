@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 
@@ -91,8 +93,11 @@ public class ControladorDB {
                     if(directorio.mkdir()==false){
                         Error.add("No se pudo crear Base de Datos :"+nombre + ", compruebe que ese nombre no exista.");
                     }
-                    log.add("Base de Datos creada: "+nombre);
-        
+                    else{
+                        generarA();
+                        log.add("Base de Datos creada: "+nombre);
+                    }
+                    
          }catch(Exception e) {
                Error.add("No se pudo crear Bases de Datos :"+nombre + ", compruebe que ese nombre no exista.");
          }
@@ -106,6 +111,7 @@ public class ControladorDB {
             if(resul==false){
                 Error.add("Error en el cambio de nombre a Base de Datos: "+ nombre);
             }else{
+                generarA();
                 log.add("Base de Datos renombrada, Nuevo nombre: "+newname+", Nombre anterior: "+nombre);
             }
         }else{
@@ -113,7 +119,7 @@ public class ControladorDB {
             Error.add("Error en el cambio de nombre a Base de Datos, Bases de Datos "+ nombre+" no existe");
         }
     }
-    public void dropDB(String nombre){
+    public void dropDB(String nombre) throws IOException{
         File directorio= new File("BasesDatos/"+nombre);
         if(directorio.exists()==true){
             int response = JOptionPane.showConfirmDialog(null, "Esta seguro de quere eliminar la Base de Datos: "+nombre+" ?", "Confirm",
@@ -124,6 +130,7 @@ public class ControladorDB {
                 if(resul==false){
                     Error.add("Error en el borrado de nombre a Base de Datos "+ nombre);
                 }else{
+                    generarA();
                     log.add("Base de Datos "+nombre+" elimnada.");
 
                 }
@@ -158,10 +165,33 @@ public class ControladorDB {
             log.add("Bases de Datos ");
             log.add("Base de Datos en uso: "+nombre);
             cargarTablas();
+            generarA();
          }//Ingresar las tablas a la base de datos con el set
          else{
              Error.add("Error al cargar Base de Datos para ser utilizada, BD "+ nombre+" no existe");
          }
+    }
+    public void generarA() throws IOException{
+         Map <String,Integer> archivo = new HashMap();
+         File directorio= new File("BasesDatos");
+         File[] bases=directorio.listFiles();
+         File base=null;
+         for(int i=0; i<bases.length;i++){
+            File directorio1= new File(bases[i].getPath());
+            File[] bas=directorio1.listFiles();
+            archivo.put(bases[i].getName(), bas.length);
+         }
+        GsonBuilder builder = new GsonBuilder();
+        builder.serializeNulls();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(archivo);
+        File fichero = new File ("BasesDatos","basesDato.json");
+        if(fichero.exists()==false){
+            boolean a=fichero.createNewFile();
+            escribir(json,fichero.getPath());
+        }else{
+            escribir(json,fichero.getPath());
+        }
     }
     public void cargarTablas() throws IOException{
          ArrayList <Tabla> tablas=new ArrayList();
@@ -187,6 +217,7 @@ public class ControladorDB {
             escribir(json,fichero.getPath());
             log.add("Tabla "+t.getNombre()+" creada, en Base de Datos "+actual.getNombre());
             cargarTablas();
+            generarA();
         }else{
             Error.add("Error al intentar crear Tabla, Tabla"+ t.getNombre()+" ya existe");
         }
@@ -209,6 +240,7 @@ public class ControladorDB {
             escribir(json,fichero.getPath()); 
             log.add("Tabla  renombrada. Nomnre Actual: "+nnombre+", Nombre Anterior: "+nombre);
             cargarTablas();
+            generarA();
         }else{
             Error.add("Error al intentar renombra Tabla, Tabla "+ nombre+" no existe");
         }
@@ -237,6 +269,7 @@ public class ControladorDB {
             }else{
                 log.add("Tabla "+nombre+ " eliminada.");
                 cargarTablas();
+                generarA();
             }
         }else{
             Error.add("Error al intentar eliminar Tabla, Tabla "+ nombre+" no existe");
