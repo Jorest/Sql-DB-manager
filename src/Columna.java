@@ -20,6 +20,12 @@ public class Columna {
 		return charCant;
 	}
 
+    public Columna(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
+
 
 	public void setCharCant(int charCant) {
 		this.charCant = charCant;
