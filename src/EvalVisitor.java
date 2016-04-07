@@ -551,7 +551,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		ArrayList <Dato> values = new ArrayList() ;
                 System.out.println("CONTADOR"+ctx.getChildCount());
 		for (int i = 0;i<ctx.getChildCount();i++){
-			if(! ctx.getChild(i).getText().equals(",")&&! ctx.getChild(i).getText().equals("(")&&! ctx.getChild(i).getText().equals(")")){
+			if(! ctx.getChild(i).getText().equals(",")){
 				values.add((Dato)visit(ctx.getChild(i)));
                                 Dato a=(Dato)visit(ctx.getChild(i));
                                 System.out.println(a.getValor());
@@ -628,7 +628,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                     int indicador=0; 
                     //Si hay columnas declaradas
                     
-                    if(ctx.getChildCount()>6){
+                    if(ctx.getChildCount()>8){
                         //Tomamos las columnas a ingresar
                           for(int i=4;i<ctx.getChildCount();i++){
                               String nombre=ctx.getChild(i).getText();
@@ -642,7 +642,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                               }
                           }
                           //Tomamos los valores
-                          valores=(ArrayList <Dato>) visit(ctx.getChild(indicador+2));
+                          valores=(ArrayList <Dato>) visit(ctx.getChild(indicador+3));
                           ArrayList <Columna> col=actual.getColumnas();
                           //Contador de valores en value
                           int valuescont=valores.size();
@@ -754,7 +754,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                     else{
                         System.out.println("sippp aqui putito");
                         ArrayList <Columna> col=actual.getColumnas();
-                        valores=(ArrayList <Dato>) visit(ctx.getChild(4));
+                        valores=(ArrayList <Dato>) visit(ctx.getChild(5));
                          //Si existe values para cada columna 
                         int valuescont=valores.size();
                         System.out.println(valuescont);
