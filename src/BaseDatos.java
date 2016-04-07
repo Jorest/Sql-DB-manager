@@ -23,7 +23,7 @@ public class BaseDatos {
     private String nombre; 
     private List <Tabla> tablas; 
 
-    //
+    //Constructor
     public BaseDatos(String nombre) {
         this.nombre = nombre;
         tablas=new ArrayList() ;
@@ -33,6 +33,7 @@ public class BaseDatos {
     	
     }
     
+    //Gets y Sets
     public String getNombre() {
         return nombre;
     }
