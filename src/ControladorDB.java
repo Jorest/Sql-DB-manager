@@ -327,6 +327,9 @@ public class ControladorDB {
     	    	columnareturn = columna ;
     	    }
     	}
+    	if (columnareturn == null){
+    		System.out.println("SHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+    	}
     	return columnareturn;
     }
     

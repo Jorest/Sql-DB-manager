@@ -1002,6 +1002,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			dato.setColumna(col.getValores());
 			dato.setFilas(lista);
 			dato.setTipo(col.getTipo());
+			System.out.println("DAATOOOOOO111111111111111111111111");
 			return (T) dato;
 		}
 		
@@ -1064,8 +1065,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitRelL3(SqlParser.RelL3Context ctx) {
 						
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1103,8 +1104,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitRekB3( SqlParser.RekB3Context ctx) {
 			
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1140,8 +1141,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override
 		public T visitRelLE3(SqlParser.RelLE3Context ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1180,8 +1181,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitRelBE3(SqlParser.RelBE3Context ctx) {
 
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1221,8 +1222,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override
 		public T visitEqE3(SqlParser.EqE3Context ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			Dato newdato =new Dato() ;
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			if (dato1.getTipo().equals(dato2.getTipo())){  
@@ -1280,8 +1281,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			
 		@Override
 		public T visitEqNE3(SqlParser.EqNE3Context ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			Dato newdato =new Dato() ;
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			if (dato1.getTipo().equals(dato2.getTipo())){  
@@ -1340,8 +1341,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         @Override
 		public T visitRelL2(SqlParser.RelL2Context ctx) {
 						
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1378,13 +1379,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		
 
-@Override
-		
-		
+@Override				
 		public T visitRekB2(SqlParser.RekB2Context ctx) {
 			
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1423,8 +1422,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitRelLE2(SqlParser.RelLE2Context ctx) {
 			
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1464,8 +1463,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		public T visitRelBE2(SqlParser.RelBE2Context ctx) {
 
 			
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1507,8 +1506,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 				
 		@Override
 		public T visitEqE2(SqlParser.EqE2Context ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			Dato newdato =new Dato() ;
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			if (dato1.getTipo().equals(dato2.getTipo())){  
@@ -1561,8 +1560,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 				
 		@Override
 		public T visitEqNE2(SqlParser.EqNE2Context ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			Dato newdato =new Dato() ;
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			if (dato1.getTipo().equals(dato2.getTipo())){  
@@ -1622,8 +1621,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitRelL(SqlParser.RelLContext ctx) {
 						
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1660,8 +1659,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitRekB(SqlParser.RekBContext ctx) {
 			
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1698,8 +1697,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override
 		public T visitRelLE(SqlParser.RelLEContext ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1737,8 +1736,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitRelBE(SqlParser.RelBEContext ctx) {
 
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			Dato newdato =new Dato() ;
 			if (dato1.getTipo().equals(dato2.getTipo())){ 
@@ -1778,8 +1777,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override
 		public T visitEqE(SqlParser.EqEContext ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			Dato newdato =new Dato() ;
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			if (dato1.getTipo().equals(dato2.getTipo())){  
@@ -1834,8 +1833,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override
 		public T visitEqNE(SqlParser.EqNEContext ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			Dato newdato =new Dato() ;
 			ArrayList<Integer> lista = new ArrayList<Integer>();
 			if (dato1.getTipo().equals(dato2.getTipo())){  
@@ -1889,8 +1888,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override 
 		public T visitCond_op1(SqlParser.Cond_op1Context ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista =dato2.getFilas();
 			ArrayList<Integer> lista2 = new ArrayList<Integer>(); 
 			//agegamos los del primer dato
@@ -1908,8 +1907,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		
 		@Override 
 		public T visitCond_op2(SqlParser.Cond_op2Context ctx) {
-			Dato dato1 = (Dato) ctx.getParent().getChild(0);
-			Dato dato2 = (Dato) ctx.getParent().getChild(2);
+			Dato dato1 = (Dato) visit(ctx.getParent().getChild(0));
+			Dato dato2 = (Dato) visit(ctx.getParent().getChild(2));
 			ArrayList<Integer> lista =dato2.getFilas();
 					
 			//agegamos los del primer dato
