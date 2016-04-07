@@ -6,7 +6,8 @@ import java.util.logging.Logger;
 import org.antlr.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.misc.NotNull;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
-        private Tabla actual; 
+        private Tabla actual;
+        private boolean error=false; 
 	private ControladorDB controlador = new ControladorDB() ;
 	private ArrayList<Check> checks = new ArrayList(); ;
         public ControladorDB getControlador() {
@@ -125,10 +126,13 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                     //  visito todas los hijos
                            visit(ctx.getChild(i));
                        }  
-               try {
-                   controlador.createT(actual);
-               } catch (IOException ex) {
-                   Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+               if(error==false){
+                    try {
+                        controlador.createT(actual);
+                    } catch (IOException ex) {
+                        Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    error=false;
                }
             }else{
                 ArrayList errores=controlador.getError();
@@ -172,11 +176,13 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                     ArrayList errores=controlador.getError();
                     errores.add("Error al intentar agregar primary key, los ids de referencia no se encontraron como columnas de la tabla."); 
                     controlador.setError(errores);
+                    error=true;
                 }
              }else{
                 ArrayList errores=controlador.getError();
                 errores.add("Error al intentar agregar primary key, la tabla ya posee una."); 
                 controlador.setError(errores);
+                error=true;
             }
              return null; 
          }
@@ -233,17 +239,20 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                         ArrayList errores=controlador.getError();
                         errores.add("Error al intentar agregar foreign key, ids de referencia no fueron encontrados como columnas en tabla de referencia."); 
                         controlador.setError(errores);
+                        error=true;
                     }
                 }else{
                     ArrayList errores=controlador.getError();
                     errores.add("Error al intentar agregar foreign key, tabla de referencia no existe."); 
                     controlador.setError(errores);
+                    error=true;
                     
                 }
              }else{
                 ArrayList errores=controlador.getError();
                 errores.add("Error al intentar agregar foreign key, los ids de referencia no se encontraron como columnas de la tabla."); 
                 controlador.setError(errores);
+                error=true;
              }              
              return null; 
          }
@@ -607,6 +616,9 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                                         //Si son del mismo tipo
                                         if(col.get(i).getTipo().equals(valores.get(i).getTipo())){
                                                 //Ingresamos valor
+                                                //verficar aqui
+                                            
+                                                
                                                 col.get(i).setValor(valores.get(i).getValor());
                                         }else{
                                                 //Realizamos casteoo

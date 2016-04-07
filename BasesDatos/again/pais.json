@@ -1,0 +1,20 @@
+{
+  "nombre": "pais",
+  "columnas": [
+    {
+      "nombre": "id",
+      "tipo": "int",
+      "valores": [],
+      "charCant": 0
+    },
+    {
+      "nombre": "pais",
+      "tipo": "char",
+      "valores": [],
+      "charCant": 20
+    }
+  ],
+  "primaryk": [],
+  "foreignk": [],
+  "check": []
+}
