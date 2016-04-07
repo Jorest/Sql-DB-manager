@@ -6,6 +6,18 @@
       "tipo": "int",
       "valores": [],
       "charCant": 0
+    },
+    {
+      "nombre": "nombre",
+      "tipo": "char",
+      "valores": [],
+      "charCant": 20
+    },
+    {
+      "nombre": "comision",
+      "tipo": "float",
+      "valores": [],
+      "charCant": 0
     }
   ],
   "primaryk": [],

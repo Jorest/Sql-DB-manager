@@ -1,4 +1,7 @@
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +13,7 @@ import org.antlr.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.misc.NotNull;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	private Tabla actual; 
-    private boolean error=false; 
+        private boolean error=false;
 	private ControladorDB controlador = new ControladorDB() ;
 	private ArrayList<Check> checks = new ArrayList();
 	private ArrayList<CheckBase> checksB = new ArrayList();
@@ -289,8 +292,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
             	 
                  checks.add(regla);
              }
+             generarCheck();
+             actual.agregarColumna(new Columna(ctx.getChild(0).getText()));
              return null; 
          }
+
          
          public void CheckstoBase() {
         	 ArrayList<CheckBase> result = new ArrayList<CheckBase>(); 
@@ -308,6 +314,25 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
          }
          
 	
+
+	public void generarCheck(){
+            GsonBuilder builder = new GsonBuilder();
+            builder.serializeNulls();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(checks);
+            File fichero = new File ("BasesDatos","check.json");
+            if(fichero.exists()==false){
+                try {
+                    boolean a=fichero.createNewFile();
+                } catch (IOException ex) {
+                    Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                controlador.escribir(json,fichero.getPath());
+            }else{
+                controlador.escribir(json,fichero.getPath());
+            }
+        }
+
          //metodo para devolver las filas que pasan el check
          public ArrayList<Integer> getcheck (String tabla){
         	 ArrayList<Integer> lista = new ArrayList<Integer>();
