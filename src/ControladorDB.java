@@ -35,6 +35,7 @@ public class ControladorDB {
         Data=new ArrayList();
         Error=new ArrayList();
         log=new ArrayList();
+        actual=null;
     }
 
     public ArrayList getData() {
@@ -99,23 +100,37 @@ public class ControladorDB {
 }
     public void alterDB(String nombre, String newname){
         File directorio= new File("BasesDatos/"+nombre);
-        File directorio1= new File("BasesDatos/"+newname);
-        boolean resul=directorio.renameTo(directorio1);
-        if(resul==false){
-            Error.add("Error en el cambio de nombre a Base de Datos: "+ nombre);
+        if(directorio.exists()==true){
+            File directorio1= new File("BasesDatos/"+newname);
+            boolean resul=directorio.renameTo(directorio1);
+            if(resul==false){
+                Error.add("Error en el cambio de nombre a Base de Datos: "+ nombre);
+            }else{
+                log.add("Base de Datos renombrada, Nuevo nombre: "+newname+", Nombre anterior: "+nombre);
+            }
+        }else{
+            System.out.println("No existe");
+            Error.add("Error en el cambio de nombre a Base de Datos, Bases de Datos "+ nombre+" no existe");
         }
-        log.add("Base de Datos renombrada, Nuevo nombre: "+newname+", Nombre anterior: "+nombre);
-        
     }
     public void dropDB(String nombre){
         File directorio= new File("BasesDatos/"+nombre);
-        JOptionPane optionPane = new JOptionPane(
-        "Esta seguro de quere eliminar la Base de Datos: "+nombre,
-        JOptionPane.QUESTION_MESSAGE,
-        JOptionPane.YES_NO_OPTION);
-        boolean resul=directorio.delete();
-        if(resul==false){
-            System.out.println("Error en el borrado de nombre a Base de Datos "+ nombre);
+        if(directorio.exists()==true){
+            int response = JOptionPane.showConfirmDialog(null, "Esta seguro de quere eliminar la Base de Datos: "+nombre+" ?", "Confirm",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                //System.out.println("ssisisi");
+                boolean resul=directorio.delete();
+                if(resul==false){
+                    Error.add("Error en el borrado de nombre a Base de Datos "+ nombre);
+                }else{
+                    log.add("Base de Datos "+nombre+" elimnada.");
+
+                }
+
+            }
+        }else{
+            Error.add("Error al intentar elimnar Base de Datos, BD "+ nombre+" no existe");
         }
     }
     public ArrayList showDB(){
@@ -125,6 +140,7 @@ public class ControladorDB {
         for(int i=0; i<bases.length;i++){
             nombre.add(bases[i].getName());
         }
+        log.add("Cargando Bases de Datos");
         return nombre;
     }
     public void useDB(String nombre) throws IOException{
@@ -137,12 +153,15 @@ public class ControladorDB {
                  break;
              }
          }
-         System.out.println("Encontrado");
-         actual= new BaseDatos(base.getName());
-         cargarTablas();
-         System.out.println("yapppp");
-         //Ingresar las tablas a la base de datos con el set
-        
+         if(base!=null){
+            actual= new BaseDatos(base.getName());
+            log.add("Bases de Datos ");
+            log.add("Base de Datos en uso: "+nombre);
+            cargarTablas();
+         }//Ingresar las tablas a la base de datos con el set
+         else{
+             Error.add("Error al cargar Base de Datos para ser utilizada, BD "+ nombre+" no existe");
+         }
     }
     public void cargarTablas() throws IOException{
          ArrayList <Tabla> tablas=new ArrayList();
@@ -162,48 +181,67 @@ public class ControladorDB {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(t);
         System.out.println(json);
-        //String path= "BaseDatos/"+actual.getNombre();
         File fichero = new File ("BasesDatos/"+actual.getNombre(), t.getNombre()+".json");
-        boolean a=fichero.createNewFile();
-        System.out.println(a);
-        System.out.println("mmmmeiureireiu");
-        escribir(json,fichero.getPath());
-        //actual.setTabla(t);
-        cargarTablas();
+        if(fichero.exists()==false){
+            boolean a=fichero.createNewFile();
+            escribir(json,fichero.getPath());
+            log.add("Tabla "+t.getNombre()+" creada, en Base de Datos "+actual.getNombre());
+            cargarTablas();
+        }else{
+            Error.add("Error al intentar crear Tabla, Tabla"+ t.getNombre()+" ya existe");
+        }
     }
 
     public void renameT(String nombre, String nnombre) throws IOException{
         File directorio= new File("BasesDatos/"+actual.getNombre()+"/"+nombre+".json");
-        String json= readFile(directorio.getPath());
-        Gson gson1 = new Gson();
-        Tabla t = gson1.fromJson(json, Tabla.class);
-        t.setNombre(nnombre);
-        dropT(nombre);
-        GsonBuilder builder = new GsonBuilder();
-        builder.serializeNulls();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        json = gson.toJson(t);
-        File fichero = new File ("BasesDatos/"+actual.getNombre(),t.getNombre()+".json");
-        fichero.createNewFile();
-        escribir(json,fichero.getPath()); 
-        cargarTablas();
+        if(directorio.exists()){
+            String json= readFile(directorio.getPath());
+            Gson gson1 = new Gson();
+            Tabla t = gson1.fromJson(json, Tabla.class);
+            t.setNombre(nnombre);
+            dropT(nombre);
+            GsonBuilder builder = new GsonBuilder();
+            builder.serializeNulls();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            json = gson.toJson(t);
+            File fichero = new File ("BasesDatos/"+actual.getNombre(),t.getNombre()+".json");
+            fichero.createNewFile();
+            escribir(json,fichero.getPath()); 
+            log.add("Tabla  renombrada. Nomnre Actual: "+nnombre+", Nombre Anterior: "+nombre);
+            cargarTablas();
+        }else{
+            Error.add("Error al intentar renombra Tabla, Tabla "+ nombre+" no existe");
+        }
      
     }
    
     public Tabla aletT(String nombre) throws IOException{
          File directorio= new File("BasesDatos/"+actual.getNombre(),nombre+".json");
-         String json= readFile(directorio.getPath());
-         Gson gson1 = new Gson();
-         Tabla t = gson1.fromJson(json, Tabla.class);
-         return t; 
+         if(directorio.exists()){
+            String json= readFile(directorio.getPath());
+            Gson gson1 = new Gson();
+            Tabla t = gson1.fromJson(json, Tabla.class);
+            return t;
+          }else{
+            Tabla t= null;
+            Error.add("Error al intentar cargar Tabla, Tabla "+ nombre+" no existe");
+            return t; 
+          }
     }
     public void dropT(String nombre) throws IOException{
         File directorio= new File("BasesDatos/"+actual.getNombre(),nombre+".json");
-        boolean resul=directorio.delete();
-        if(resul==false){
-            System.out.println("Error AL BORRAR TABLA "+ nombre);
+        if(directorio.exists()){
+            boolean resul=directorio.delete();
+            if(resul==false){
+                System.out.println("Error AL BORRAR TABLA "+ nombre);
+            }else{
+                log.add("Tabla "+nombre+ " eliminada.");
+                cargarTablas();
+            }
+        }else{
+            Error.add("Error al intentar eliminar Tabla, Tabla "+ nombre+" no existe");
+           
         }
-        cargarTablas();
         
     }
    
@@ -214,7 +252,7 @@ public class ControladorDB {
             File[] bases=directorio.listFiles();
             File base=null; 
             for(int i=0; i<bases.length;i++){
-                resul.add(bases[i].getName());
+                resul.add(bases[i].getName().replace(".json", ""));
             }
         }
         return resul;
