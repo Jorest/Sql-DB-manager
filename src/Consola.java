@@ -3,6 +3,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 //import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -136,12 +137,28 @@ public class Consola extends javax.swing.JFrame {
             //Trees.inspect(arbol, parser);
             eval.visitProgram(arbol);
 
-
+            ArrayList data=eval.getControlador().getData();
+            ArrayList log=eval.getControlador().getLog();
+            ArrayList error=eval.getControlador().getError();
+            jTextPane1.setText(arraytoString(data));
+            jTextPane2.setText(arraytoString(log));
+            jTextPane3.setText(arraytoString(error));
+            eval.getControlador().setData(new ArrayList());
+            eval.getControlador().setLog(new ArrayList());
+            eval.getControlador().setError(new ArrayList());
+            //jTextPane1.setText(arraytoString(data));
              //escribir(parsear);
            
           }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public String arraytoString(ArrayList list){
+        String resul=""; 
+        for(int i=0; i<list.size(); i++){
+            resul=resul+(String)list.get(i)+"\n";
+        }
+        return resul; 
+    }
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;

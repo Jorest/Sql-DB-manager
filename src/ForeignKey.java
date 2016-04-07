@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class ForeignKey {
     private String nombre; 
     private ArrayList <String>  id1;
+    private String tablaref;
     private ArrayList <String>  id2; 
 
     public ForeignKey() {
@@ -25,6 +26,21 @@ public class ForeignKey {
         this.id2 = id2;
     }
 
+    public ForeignKey(String nombre, ArrayList<String> id1, String tablaref, ArrayList<String> id2) {
+        this.nombre = nombre;
+        this.id1 = id1;
+        this.tablaref = tablaref;
+        this.id2 = id2;
+    }
+
+    public String getTablaref() {
+        return tablaref;
+    }
+
+    public void setTablaref(String tablaref) {
+        this.tablaref = tablaref;
+    }
+    
     public String getNombre() {
         return nombre;
     }

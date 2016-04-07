@@ -89,7 +89,11 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         //show databases
         @Override
         public T visitShow_schema_statement(SqlParser.Show_schema_statementContext ctx) { 
-            return (T)controlador.showTables();
+            ArrayList da=controlador.getData(); 
+            da.addAll(controlador.showDB());
+            controlador.setData(da);
+            return null;
+            
         }
         
         //use database
@@ -106,22 +110,29 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         //create table 
         @Override
          public T visitTable_definition(SqlParser.Table_definitionContext ctx) { 
-             actual= new Tabla(ctx.getChild(2).getText());
-              for (int i = 0;i<ctx.getChildCount();i++){
-	         //  visito todas los hijos
-			visit(ctx.getChild(i));
-	            }  
-            try {
-                controlador.createT(actual);
-            } catch (IOException ex) {
-                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            if(controlador.getActual()!=null){
+                actual= new Tabla(ctx.getChild(2).getText());
+                 for (int i = 0;i<ctx.getChildCount();i++){
+                    //  visito todas los hijos
+                           visit(ctx.getChild(i));
+                       }  
+               try {
+                   controlador.createT(actual);
+               } catch (IOException ex) {
+                   Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+               }
+            }else{
+                ArrayList errores=controlador.getError();
+                errores.add("Error no se establecido que Base de Datos usar."); 
+                controlador.setError(errores);
             }
              return null;  
          }
         
          @Override public T visitDefcolumna(SqlParser.DefcolumnaContext ctx) {  
              //System.out.println("NO TE OLVIDES DE MI");
-             Columna c= new Columna(ctx.getChild(0).getText(),ctx.getChild(1).getText());
+             Columna c= (Columna)visit(ctx.getChild(1));
+             c.setNombre(ctx.getChild(0).getText());
              actual.agregarColumna(c);
              return null; 
          }
@@ -129,17 +140,35 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	//agregando primarykey
          @Override 
          public T visitPrimaryK(SqlParser.PrimaryKContext ctx) { 
-             ArrayList<String> ids=new ArrayList();
-             for (int i=4;i<ctx.getChildCount()-1;i++){
-                 String a= ctx.getChild(i).getText();
-                 if(!",".equals(a)){
-                     ids.add(a);
-                 }
-             }
-             String nombre=ctx.getChild(0).getText();
-             nombre=nombre.replace("PK", "");
-             PrimaryKey p=new PrimaryKey(nombre,ids);
-             actual.agregarPK(p);
+             if(actual.getForeignk().isEmpty()){
+                ArrayList<String> ids=new ArrayList();
+                for (int i=4;i<ctx.getChildCount()-1;i++){
+                    String a= ctx.getChild(i).getText();
+                    if(!",".equals(a)){
+                        ids.add(a);
+                    }
+                }
+                int cont=0; 
+                for(int i=0; i<ids.size();i++){
+                    if(controlador.getColumna(actual.getColumnas(), ids.get(i))!=null){
+                        cont++;
+                    }
+                }
+                if(cont==ids.size()){
+                    String nombre=ctx.getChild(0).getText();
+                    nombre=nombre.replace("PK", "");
+                    PrimaryKey p=new PrimaryKey(nombre,ids);
+                    actual.agregarPK(p);
+                }else{
+                    ArrayList errores=controlador.getError();
+                    errores.add("Error al intentar agregar primary key, los ids de referencia no se encontraron como columnas de la tabla."); 
+                    controlador.setError(errores);
+                }
+             }else{
+                ArrayList errores=controlador.getError();
+                errores.add("Error al intentar agregar primary key, la tabla ya posee una."); 
+                controlador.setError(errores);
+            }
              return null; 
          }
          
@@ -154,22 +183,59 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                      particion=i;
                      break;
                  }
-                 if(!",".equals(a)){
+                 if(!",".equals(a) && !")".equals(a)){
                      ids.add(a);
                  }
                  
              }
-             ArrayList<String> ids1=new ArrayList();
-             for (int i=particion+1;i<ctx.getChildCount()-1;i++){
-                 String a= ctx.getChild(i).getText();
-                if(!",".equals(a)){
-                     ids1.add(a);
-                 }
+             int cont=0; 
+             for(int i=0; i<ids.size();i++){
+                if(controlador.getColumna(actual.getColumnas(), ids.get(i))!=null){
+                    cont++;
+                }
              }
-             String nombre=ctx.getChild(0).getText();
-             nombre=nombre.replace("FK", "");
-             ForeignKey p=new ForeignKey(nombre,ids,ids1);
-             actual.agregarFK(p);
+             if(cont==ids.size()){
+                ArrayList<String> ids1=new ArrayList();
+                for (int i=particion+3;i<ctx.getChildCount()-1;i++){
+                    String a= ctx.getChild(i).getText();
+                   if(!",".equals(a)&& !")".equals(a)){
+                        ids1.add(a);
+                    }
+                }
+                Tabla ref=null;
+                 try {
+                     ref = controlador.aletT(ctx.getChild(particion+1).getText());
+                 } catch (IOException ex) {
+                     Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+                if(ref!=null){
+                    int cont1=0;
+                    for(int i=0; i<ids1.size();i++){
+                       if(controlador.getColumna(ref.getColumnas(), ids1.get(i))!=null){
+                           cont1++;
+                       }
+                    }
+                    if(cont1==ids1.size()){
+                        String nombre=ctx.getChild(0).getText();
+                        nombre=nombre.replace("FK", "");
+                        ForeignKey p=new ForeignKey(nombre,ids,ref.getNombre(),ids1);
+                        actual.agregarFK(p);
+                    }else{
+                        ArrayList errores=controlador.getError();
+                        errores.add("Error al intentar agregar foreign key, ids de referencia no fueron encontrados como columnas en tabla de referencia."); 
+                        controlador.setError(errores);
+                    }
+                }else{
+                    ArrayList errores=controlador.getError();
+                    errores.add("Error al intentar agregar foreign key, tabla de referencia no existe."); 
+                    controlador.setError(errores);
+                    
+                }
+             }else{
+                ArrayList errores=controlador.getError();
+                errores.add("Error al intentar agregar foreign key, los ids de referencia no se encontraron como columnas de la tabla."); 
+                controlador.setError(errores);
+             }              
              return null; 
          }
          
@@ -193,12 +259,18 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
          
          //renombrar tabla 
         @Override
-         public T visitRename_table_statement(SqlParser.Rename_table_statementContext ctx) { 
-            try {
-                controlador.renameT(ctx.getChild(2).getText(),ctx.getChild(5).getText());
-                return null;
-            } catch (IOException ex) {
-                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+         public T visitRename_table_statement(SqlParser.Rename_table_statementContext ctx) {
+            if(controlador.getActual()!=null){
+                try {
+                    controlador.renameT(ctx.getChild(2).getText(),ctx.getChild(5).getText());
+                    return null;
+                } catch (IOException ex) {
+                    Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                ArrayList errores=controlador.getError();
+                errores.add("Error no se establecido que Base de Datos usar.");
+                controlador.setError(errores);
             }
             return null;
         }
@@ -206,10 +278,16 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         //drop tabla
         @Override 
         public Object visitDrop_table_statement(SqlParser.Drop_table_statementContext ctx) { 
-            try {
-                controlador.dropT(ctx.getChild(2).getText());
-            } catch (IOException ex) {
-                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            if(controlador.getActual()!=null){
+                try {
+                    controlador.dropT(ctx.getChild(2).getText());
+                } catch (IOException ex) {
+                    Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                ArrayList errores=controlador.getError();
+                errores.add("Error no se establecido que Base de Datos usar.");
+                controlador.setError(errores);
             }
             return null; 
         }
@@ -217,32 +295,61 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         //show tablas
         @Override 
         public T visitShow_table_statement(SqlParser.Show_table_statementContext ctx) { 
-            return (T)controlador.showTables();
+            if(controlador.getActual()!=null){
+                ArrayList da=controlador.getData(); 
+                da.addAll(controlador.showTables());
+                controlador.setData(da);
+                return null; 
+            }else{
+                ArrayList errores=controlador.getError();
+                errores.add("Error no se establecido que Base de Datos usar.");
+                controlador.setError(errores);
+                return null;
+            }
         }
 	
         //show columnas
         @Override 
-        public T visitShow_column_statement(@NotNull SqlParser.Show_column_statementContext ctx) {  
-            try {
-                return (T) controlador.showCololums(ctx.getChild(3).getText()); 
-            } catch (IOException ex) {
-                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
+        public T visitShow_column_statement(SqlParser.Show_column_statementContext ctx) {
+            if(controlador.getActual()!=null){
+                try {
+                    ArrayList da=controlador.getData(); 
+                    da.addAll(controlador.showCololums(ctx.getChild(3).getText()));
+                    controlador.setData(da);
+                    return null; 
+                } catch (IOException ex) {
+                    Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                    return null;
+                }
+            }else{
+                ArrayList errores=controlador.getError();
+                errores.add("Error no se establecido que Base de Datos usar.");
+                controlador.setError(errores);
+                return null; 
             }
         }
         
         //alterar tabla
         @Override public T visitAlter_table_statement(SqlParser.Alter_table_statementContext ctx) {
-            try {
-                actual=controlador.aletT(ctx.getChild(2).getText());
-            } catch (IOException ex) {
-                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            visit(ctx.getChild(3));
-            try {
-                controlador.createT(actual);
-            } catch (IOException ex) {
-                Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+            if(controlador.getActual()!=null){
+                try {
+                    actual=controlador.aletT(ctx.getChild(2).getText());
+                } catch (IOException ex) {
+                    Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(actual!=null){
+                    visit(ctx.getChild(3));
+                    try {
+                        controlador.createT(actual);
+                    } catch (IOException ex) {
+                        Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            
+            }else{
+                ArrayList errores=controlador.getError();
+                errores.add("Error no se establecido que Base de Datos usar.");
+                controlador.setError(errores);
             }
             ///seteralo
             return null;
