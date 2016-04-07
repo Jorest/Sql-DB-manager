@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.antlr.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.NotNull;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	private Tabla actual; 
@@ -311,8 +313,39 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         		 }
         		 result.add(checkb);
         	 }
+        	 checksB=result ;
          }
          
+         
+         public void BasetoCheck() {
+        	 ArrayList<Check> result = new ArrayList<Check>(); 
+        	 for (int i=0 ; i<checksB.size();i++){
+        		 Check check = new Check() ;
+        		 check.setBase(checksB.get(i).getBase());
+        		 check.setExp(checksB.get(i).getExp());
+        		 check.setNombre(checksB.get(i).getNombre());
+        		 check.setTabla(checksB.get(i).getTabla());
+        		 for (int j =0 ; j< checksB.get(i).getTrees().size(); j++){
+				 	ANTLRInputStream input = new ANTLRInputStream(checksB.get(i).getTrees().get(j));
+	
+		            // Create an Lexer that receives the char stream
+		            SqlLexer lexer = new SqlLexer(input);
+		            //lexer.removeErrorListeners();
+		            // Create a token stream from the lexer
+		            CommonTokenStream tokens = new CommonTokenStream(lexer);
+	
+		            // Create a parser that receives the token stream
+		            SqlParser parser = new SqlParser(tokens);
+	
+		            SqlParser.ProgramContext arbol = parser.program();
+		            
+		            check.addTree(arbol);
+		            
+        		 }
+        		 result.add(check);
+        	 }
+        	 checks=result;
+         }
 	
 
 	public void generarCheck(){
@@ -346,7 +379,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         	 
         	 for (org.antlr.v4.runtime.tree.ParseTree arbol : arboles)
         	 {
-        		Dato dato = (Dato) visit((org.antlr.v4.runtime.tree.ParseTree) arbol);
+        		Dato dato = (Dato) visitExpression2((SqlParser.Expression2Context)arbol);
         		 for (int num : dato.getFilas()){
         			 if (!(lista.contains(num))){
         				 lista.add(num);
