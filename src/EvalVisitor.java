@@ -122,6 +122,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
          public T visitTable_definition(SqlParser.Table_definitionContext ctx) { 
             if(controlador.getActual()!=null){
                 actual= new Tabla(ctx.getChild(2).getText());
+                controlador.setTablaActual(actual);
                  for (int i = 4;i<ctx.getChildCount()-2;i++){
                     //  visito todas los hijos
                            visit(ctx.getChild(i));
@@ -266,7 +267,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
             	 //si la tabla ya tiene un check solo agregamos el nuevo arbol
             	 if (check.getNombre().equals(controlador.getTablaActual().getNombre())){
             		 contains= true ;
-            		 check.addTree((ParseTree)ctx.getChild(3));
+            		 check.addTree(ctx.getChild(3));
             	 }
              }
              
@@ -274,7 +275,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              if (contains ==false ){
                  Check regla = new Check();
                  regla.setNombre(actual.getNombre());
-            	 regla.addTree((ParseTree)ctx.getChild(3));
+            	 regla.addTree(ctx.getChild(3));
                  checks.add(regla);
              }
              return null; 
@@ -283,14 +284,14 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
          //metodo para devolver las filas que pasan el check
          public ArrayList<Integer> getcheck (String tabla){
         	 ArrayList<Integer> lista = new ArrayList<Integer>();
-        	 ArrayList<ParseTree> arboles = new ArrayList<ParseTree>();
+        	 ArrayList<org.antlr.v4.runtime.tree.ParseTree> arboles = new ArrayList<org.antlr.v4.runtime.tree.ParseTree>();
         	 for (Check check : checks){
         		 if (check.getNombre().equals(tabla)){
-        			 arboles =check.getTrees();        			 
-        		 }        	 
+        			 arboles = check.getTrees();
+        		 }        	 		 
         	 }
         	 
-        	 for (ParseTree arbol : arboles)
+        	 for (org.antlr.v4.runtime.tree.ParseTree arbol : arboles)
         	 {
         		Dato dato = (Dato) visit((org.antlr.v4.runtime.tree.ParseTree) arbol);
         		 for (int num : dato.getFilas()){
@@ -381,6 +382,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
             if(controlador.getActual()!=null){
                 try {
                     actual=controlador.aletT(ctx.getChild(2).getText());
+                    controlador.setTablaActual(actual);
                 } catch (IOException ex) {
                     Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -523,6 +525,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                    //Tomamos la tabla en la cual insertar
                     try {
                         actual=controlador.aletT(ctx.getChild(2).getText());
+                        controlador.setTablaActual(actual);
                     } catch (IOException ex) {
                         Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
                     }
