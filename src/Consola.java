@@ -135,8 +135,18 @@ public class Consola extends javax.swing.JFrame {
             SqlParser.ProgramContext arbol = parser.program();
 
             //Trees.inspect(arbol, parser);
+            System.out.println("                                                     ");
+            System.out.println("                                                     ");
+            
+            System.out.println("                                                     ");
+            
+        	//Trees.inspect(arbol, parser);
             eval.visitProgram(arbol);
 
+            System.out.println("                                                     ");
+            System.out.println("                                                     ");
+            
+            
             ArrayList data=eval.getControlador().getData();
             ArrayList log=eval.getControlador().getLog();
             ArrayList error=eval.getControlador().getError();

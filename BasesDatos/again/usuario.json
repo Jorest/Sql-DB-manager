@@ -1,0 +1,14 @@
+{
+  "nombre": "usuario",
+  "columnas": [
+    {
+      "nombre": "id",
+      "tipo": "int",
+      "valores": [],
+      "charCant": 0
+    }
+  ],
+  "primaryk": [],
+  "foreignk": [],
+  "check": []
+}

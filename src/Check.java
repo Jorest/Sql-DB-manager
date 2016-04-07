@@ -10,7 +10,7 @@ import org.antlr.runtime.tree.ParseTree;
 public class Check {
     private String nombre;  //nombre de la tabla
     private String exp = null;
-    private ArrayList<ParseTree> trees ;
+    private ArrayList<org.antlr.v4.runtime.tree.ParseTree> trees ;
 
     public Check() {
         trees=new ArrayList();
@@ -26,12 +26,12 @@ public class Check {
         this.nombre = nombre;
     }
     
-    public ArrayList<ParseTree> getTrees() {
+    public ArrayList<org.antlr.v4.runtime.tree.ParseTree> getTrees() {
 		return trees;
 	}
 
 
-	public void setTrees(ArrayList<ParseTree> trees) {
+	public void setTrees(ArrayList<org.antlr.v4.runtime.tree.ParseTree> trees) {
 		this.trees = trees;
 	}
 
@@ -45,8 +45,8 @@ public class Check {
     }
     
     
-    public void addTree(ParseTree exp) {
-        this.trees.add(exp);
+    public void addTree(org.antlr.v4.runtime.tree.ParseTree parseTree) {
+        this.trees.add(parseTree);
     }
     
 }
