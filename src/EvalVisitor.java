@@ -2,11 +2,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.antlr.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.misc.NotNull;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         private Tabla actual; 
 	private ControladorDB controlador = new ControladorDB() ;
-
+	private ArrayList<Check> checks ;
         public ControladorDB getControlador() {
             return controlador;
         }
@@ -246,22 +248,50 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              return null; 
          }
          
-         //agregando check 
+         //****agregando check 
          @Override 
          public T visitCheck(SqlParser.CheckContext ctx) { 
-             System.out.println("sere señor");
-             String nombre=ctx.getChild(0).getText();
-             nombre=nombre.replace("CH", "");
-             String a="";
-             for (int i=3;i<ctx.getChildCount()-1;i++){
-                 a= a+ctx.getChild(i).getText();
+             boolean contains = false ;
+             for (Check check : checks){
+            	 //si la tabla ya tiene un check solo agregamos el nuevo arbol
+            	 if (check.getNombre().equals(controlador.getTablaActual().getNombre())){
+            		 contains= true ;
+            		 check.addTree((ParseTree)ctx.getChild(3));
+            	 }
              }
-             Check c=new Check(nombre,a);
-             actual.agregarCheck(c);
+             
+             //si no creamos un nuevo check para la tabla 
+             if (contains ==false ){
+                 Check regla = new Check();
+                 regla.setNombre(controlador.getTablaActual().getNombre());
+            	 regla.addTree((ParseTree)ctx.getChild(3));
+                 checks.add(regla);
+             }
              return null; 
          }
 	
-	
+         //metodo para devolver las filas que pasan el check
+         public ArrayList<Integer> getcheck (String tabla){
+        	 ArrayList<Integer> lista = new ArrayList<Integer>();
+        	 ArrayList<ParseTree> arboles = new ArrayList<ParseTree>();
+        	 for (Check check : checks){
+        		 if (check.getNombre().equals(tabla)){
+        			 arboles =check.getTrees();        			 
+        		 }        	 
+        	 }
+        	 
+        	 for (ParseTree arbol : arboles)
+        	 {
+        		Dato dato = (Dato) visit((org.antlr.v4.runtime.tree.ParseTree) arbol);
+        		 for (int num : dato.getFilas()){
+        			 if (!(lista.contains(num))){
+        				 lista.add(num);
+        			 }
+        		 }
+        	 }
+
+        	 return lista;
+         }
 	
          
          //renombrar tabla 
@@ -1685,6 +1715,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			return (T)"col";
 		}
 		
+	
+	
 	
 }
 
