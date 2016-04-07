@@ -15,7 +15,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 	private Tabla actual; 
         private boolean error=false;
 	private ControladorDB controlador = new ControladorDB() ;
-	private ArrayList<Check> checks = new ArrayList(); ;
+	private ArrayList<Check> checks = new ArrayList();
+	private ArrayList<CheckBase> checksB = new ArrayList();
        
 	public ControladorDB getControlador() {
             return controlador;
@@ -284,12 +285,36 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                  regla.setTabla(actual.getNombre());
             	 regla.addTree(ctx.getChild(3));
             	 regla.setNombre(ctx.getChild(0).getText());
+            	 
+            	 //creacion del checkbase 
+            	 
+            	 
+            	 
                  checks.add(regla);
              }
              //generarCheck();
              actual.agregarColumna(new Columna(ctx.getChild(0).getText()));
              return null; 
          }
+
+         
+         public void CheckstoBase() {
+        	 ArrayList<CheckBase> result = new ArrayList<CheckBase>(); 
+        	 for (int i=0 ; i<checks.size();i++){
+        		 CheckBase checkb = new CheckBase() ;
+        		 checkb.setBase(checks.get(i).getBase());
+        		 checkb.setExp(checks.get(i).getExp());
+        		 checkb.setNombre(checks.get(i).getNombre());
+        		 checkb.setTabla(checks.get(i).getTabla());
+        		 for (int j =0 ; j< checks.get(i).getTrees().size(); j++){
+        			 checkb.addTree(checks.get(i).getTrees().get(j).getText());
+        		 }
+        		 result.add(checkb);
+        	 }
+         }
+         
+	
+
 	public void generarCheck(){
             GsonBuilder builder = new GsonBuilder();
             builder.serializeNulls();
@@ -307,6 +332,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                 controlador.escribir(json,fichero.getPath());
             }
         }
+
          //metodo para devolver las filas que pasan el check
          public ArrayList<Integer> getcheck (String tabla){
         	 ArrayList<Integer> lista = new ArrayList<Integer>();
@@ -316,6 +342,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         			 arboles = check.getTrees();
         		 }        	 		 
         	 }
+ 
         	 
         	 for (org.antlr.v4.runtime.tree.ParseTree arbol : arboles)
         	 {
@@ -911,8 +938,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                         controlador.setTablaActual(actual);
                         System.out.println("passoo");
                         if(ctx.getChildCount()>4){
-                            System.out.println("aqui toy bi..");
                             Dato data=(Dato) visit(ctx.getChild(4));
+                            System.out.println("si regesa al visitor");
                             ArrayList <Integer> valores=data.getFilas();
                             ArrayList <Columna> columnas=actual.getColumnas();
                             for(int i=0; i<columnas.size();i++){
@@ -920,11 +947,12 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                                  for(int l=0; l<valores.size();l++){
                                      System.out.println("e");
                                      datos.remove(valores.get(l));
+                                     datos.remove(valores.get(l));
+                                     columnas.get(i).setValores(datos);
                                  }
                                  System.out.println("aqui como mueve la colita");
                                  columnas.get(i).setValores(datos);
                             }
-                            System.out.println("eeeeso");
                             actual.setColumnas(columnas);
                         }
                         else{
@@ -1014,7 +1042,6 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 			dato.setColumna(col.getValores());
 			dato.setFilas(lista);
 			dato.setTipo(col.getTipo());
-			System.out.println("DAATOOOOOO111111111111111111111111");
 			return (T) dato;
 		}
 		

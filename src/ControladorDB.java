@@ -328,7 +328,7 @@ public class ControladorDB {
     	    }
     	}
     	if (columnareturn == null){
-    		System.out.println("SHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+    		System.out.println("columna no existente");
     	}
     	return columnareturn;
     }
