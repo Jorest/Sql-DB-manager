@@ -175,12 +175,14 @@ public class ControladorDB {
          Map <String,Integer> archivo = new HashMap();
          File directorio= new File("BasesDatos");
          File[] bases=directorio.listFiles();
-         File base=null;
          for(int i=0; i<bases.length;i++){
-            File directorio1= new File(bases[i].getPath());
-            File[] bas=directorio1.listFiles();
-            archivo.put(bases[i].getName(), bas.length);
-         }
+            File directorio1= new File("BasesDatos/"+bases[i].getName());
+            File [] files=directorio1.listFiles();
+            if(files!=null){
+                archivo.put(bases[i].getName(), files.length);
+         
+            }
+        }
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

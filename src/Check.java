@@ -13,6 +13,7 @@ public class Check {
     private ArrayList<ParseTree> trees ;
 
     public Check() {
+        trees=new ArrayList();
       
     }
 

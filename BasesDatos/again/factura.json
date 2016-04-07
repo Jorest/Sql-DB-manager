@@ -1,0 +1,38 @@
+{
+  "nombre": "factura",
+  "columnas": [
+    {
+      "nombre": "id",
+      "tipo": "int",
+      "valores": [],
+      "charCant": 0
+    },
+    {
+      "nombre": "nombre",
+      "tipo": "char",
+      "valores": [],
+      "charCant": 20
+    },
+    {
+      "nombre": "nit",
+      "tipo": "char",
+      "valores": [],
+      "charCant": 10
+    },
+    {
+      "nombre": "total",
+      "tipo": "float",
+      "valores": [],
+      "charCant": 0
+    },
+    {
+      "nombre": "compradoen",
+      "tipo": "date",
+      "valores": [],
+      "charCant": 0
+    }
+  ],
+  "primaryk": [],
+  "foreignk": [],
+  "check": []
+}

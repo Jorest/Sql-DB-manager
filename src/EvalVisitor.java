@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
         private Tabla actual; 
 	private ControladorDB controlador = new ControladorDB() ;
-	private ArrayList<Check> checks ;
+	private ArrayList<Check> checks = new ArrayList(); ;
         public ControladorDB getControlador() {
             return controlador;
         }
@@ -121,7 +121,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
          public T visitTable_definition(SqlParser.Table_definitionContext ctx) { 
             if(controlador.getActual()!=null){
                 actual= new Tabla(ctx.getChild(2).getText());
-                 for (int i = 0;i<ctx.getChildCount();i++){
+                 for (int i = 4;i<ctx.getChildCount()-2;i++){
                     //  visito todas los hijos
                            visit(ctx.getChild(i));
                        }  
@@ -252,6 +252,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
          @Override 
          public T visitCheck(SqlParser.CheckContext ctx) { 
              boolean contains = false ;
+             
              for (Check check : checks){
             	 //si la tabla ya tiene un check solo agregamos el nuevo arbol
             	 if (check.getNombre().equals(controlador.getTablaActual().getNombre())){
@@ -263,7 +264,7 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
              //si no creamos un nuevo check para la tabla 
              if (contains ==false ){
                  Check regla = new Check();
-                 regla.setNombre(controlador.getTablaActual().getNombre());
+                 regla.setNombre(actual.getNombre());
             	 regla.addTree((ParseTree)ctx.getChild(3));
                  checks.add(regla);
              }
@@ -1695,24 +1696,24 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		@Override
 		public T visitTipoInt(SqlParser.TipoIntContext ctx) {
 			Columna col = new Columna("","int");
-			return (T)"col";
+			return (T)col;
 		}
 		
 		public T visitTipoFloat(SqlParser.TipoFloatContext ctx) {
 			Columna col = new Columna("","float");
-			return (T)"col";
+			return (T)col;
 		}
 		
 		public T visitTipoDate(SqlParser.TipoDateContext ctx) {
 			Columna col = new Columna("","date");
-			return (T)"col";
+			return (T)col;
 		}
 		
 
 		public T visitTipoChar(SqlParser.TipoCharContext ctx) {
 			Columna col = new Columna("","char");
 			col.setCharCant(Integer.parseInt(ctx.getChild(1).getText()));
-			return (T)"col";
+			return (T)col;
 		}
 		
 	
