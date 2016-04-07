@@ -1,4 +1,11 @@
-
+/*
+ * Universidad del Valle Guatemala
+ * CC3040 Bases de datos
+ * Proyecto 1: DBMS
+ * Jorge Estuardo Garcia 13175
+ * Luis Humberto Duarte 13003
+ * Kevin Eduardo Rivera 13389
+ */
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -15,8 +22,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
  */
 
 /**
- *
+ * Clase interfaz
  * @author Luis
+ * @version 02/04/2016/A
  */
 public class Consola extends javax.swing.JFrame {
     private EvalVisitor eval;
