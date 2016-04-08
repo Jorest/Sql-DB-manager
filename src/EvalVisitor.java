@@ -1,3 +1,11 @@
+/*
+ * Universidad del Valle Guatemala
+ * CC3040 Bases de datos
+ * Proyecto 1: DBMS
+ * Jorge Estuardo Garcia 13175
+ * Luis Humberto Duarte 13003
+ * Kevin Eduardo Rivera 13389
+ */
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
