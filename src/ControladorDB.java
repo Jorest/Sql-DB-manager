@@ -1,4 +1,11 @@
-
+/*
+ * Universidad del Valle Guatemala
+ * CC3040 Bases de datos
+ * Proyecto 1: DBMS
+ * Jorge Estuardo Garcia 13175
+ * Luis Humberto Duarte 13003
+ * Kevin Eduardo Rivera 13389
+ */
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,10 +28,13 @@ import javax.swing.JOptionPane;
  */
 
 /**
- *
+ * Clase encargada de manejar las funciones de comandos especificos
  * @author Luis
+ * @version 07/04/2016/A
  */
+ 
 public class ControladorDB {
+    //Campos de la clase
     private ArrayList nombresBD; 
     private ArrayList cantTablas; 
     private BaseDatos actual;
