@@ -1,3 +1,11 @@
+/*
+ * Universidad del Valle Guatemala
+ * CC3040 Bases de datos
+ * Proyecto 1: DBMS
+ * Jorge Estuardo Garcia 13175
+ * Luis Humberto Duarte 13003
+ * Kevin Eduardo Rivera 13389
+ */
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -8,17 +16,21 @@ import java.util.Map;
  */
 
 /**
- *
+ * Clase que maneja las tablas utilizadas en una base de datos
  * @author Luis
+ * @version 03/07/2016/A
  */
+ 
 public class Tabla {
+    
+    //Campos de la clase
     private String nombre; 
     private ArrayList <Columna> columnas; 
     private ArrayList <PrimaryKey> primaryk; 
     private ArrayList <ForeignKey> foreignk; 
     private ArrayList <Check> check; 
     
-
+    //Constructor
     public Tabla(String nombre) {
         this.nombre = nombre;
         columnas= new ArrayList();
@@ -30,6 +42,7 @@ public class Tabla {
     public Tabla() {
     }
 
+    //Metodos de manejo de atributos de una tabla
     public void agregarPK(PrimaryKey p){
         primaryk.add(p);
     }

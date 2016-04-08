@@ -1,4 +1,11 @@
-
+/*
+ * Universidad del Valle Guatemala
+ * CC3040 Bases de datos
+ * Proyecto 1: DBMS
+ * Jorge Estuardo Garcia 13175
+ * Luis Humberto Duarte 13003
+ * Kevin Eduardo Rivera 13389
+ */
 
 import java.util.ArrayList;
 
@@ -8,10 +15,13 @@ import java.util.ArrayList;
  */
 
 /**
- *
+ * Clase encargada de trabajar con las llaves foraneas en una base de datos
  * @author Luis
+ * @version 06/06/2016/A
  */
+ 
 public class ForeignKey {
+    //Campos de la clase
     private String nombre; 
     private ArrayList <String>  id1;
     private String tablaref;

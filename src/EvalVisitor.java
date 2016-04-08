@@ -1,3 +1,11 @@
+/*
+ * Universidad del Valle Guatemala
+ * CC3040 Bases de datos
+ * Proyecto 1: DBMS
+ * Jorge Estuardo Garcia 13175
+ * Luis Humberto Duarte 13003
+ * Kevin Eduardo Rivera 13389
+ */
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -584,7 +592,8 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
 		ArrayList <Dato> values = new ArrayList() ;
                 System.out.println("CONTADOR"+ctx.getChildCount());
 		for (int i = 0;i<ctx.getChildCount();i++){
-			if(! ctx.getChild(i).getText().equals(",")&&! ctx.getChild(i).getText().equals("(")&&! ctx.getChild(i).getText().equals(")")){
+			if(! ctx.getChild(i).getText().equals(",")){
+                            //System.out.println("");
 				values.add((Dato)visit(ctx.getChild(i)));
                                 Dato a=(Dato)visit(ctx.getChild(i));
                                 System.out.println(a.getValor());
@@ -656,12 +665,13 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                      //cargamos la lista de pks
                     ArrayList <String> pk=actual.getPrimaryk().get(0).getIdref();
                     controlador.setTablaActual(actual);
+                    int cantidadDatos=actual.getColumnas().get(0).getValores().size();
                     ArrayList <String> columnas  =new ArrayList();
                     ArrayList <Dato> valores;
                     int indicador=0; 
                     //Si hay columnas declaradas
                     
-                    if(ctx.getChildCount()>6){
+                    if(!ctx.getChild(3).getText().equals("VALUES")){
                         //Tomamos las columnas a ingresar
                           for(int i=4;i<ctx.getChildCount();i++){
                               String nombre=ctx.getChild(i).getText();
@@ -781,13 +791,29 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                               } catch (IOException ex) {
                                   Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
                               }
+                              ArrayList <Integer> vals= getcheck(actual.getNombre());
+                              if(vals.contains(cantidadDatos)==false){
+                                  ArrayList <Columna> c=actual.getColumnas();
+                                  for(int i=0;i<c.size();i++){
+                                      ArrayList a=c.get(i).getValores();
+                                      a.remove(cantidadDatos);
+                                      c.get(i).setValores(a);
+                                  }
+                                  actual.setColumnas(c);
+                                   try {
+                                  controlador.createT(actual);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                }
                           }
                     }
                     //no especifica columnas
                     else{
                         System.out.println("sippp aqui putito");
                         ArrayList <Columna> col=actual.getColumnas();
-                        valores=(ArrayList <Dato>) visit(ctx.getChild(4));
+                        valores=(ArrayList <Dato>) visit(ctx.getChild(5));
                          //Si existe values para cada columna 
                         int valuescont=valores.size();
                         System.out.println(valuescont);
@@ -874,6 +900,22 @@ public class EvalVisitor<T> extends SqlBaseVisitor<Object> {
                               } catch (IOException ex) {
                                   Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
                               }
+                              ArrayList <Integer> vals= getcheck(actual.getNombre());
+                              if(vals.contains(cantidadDatos)==false){
+                                  ArrayList <Columna> c=actual.getColumnas();
+                                  for(int i=0;i<c.size();i++){
+                                      ArrayList a=c.get(i).getValores();
+                                      a.remove(cantidadDatos);
+                                      c.get(i).setValores(a);
+                                  }
+                                  actual.setColumnas(c);
+                                   try {
+                                  controlador.createT(actual);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(EvalVisitor.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                }
                           }
                     }
                     error=false;
