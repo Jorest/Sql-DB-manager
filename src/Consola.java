@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 //import org.antlr.v4.gui.Trees;
+//import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -148,7 +149,8 @@ public class Consola extends javax.swing.JFrame {
             
             System.out.println("                                                     ");**/
             
-        	//Trees.inspect(arbol, parser);
+        //	Trees.inspect(arbol, parser);
+           
             eval.visitProgram(arbol);
 
           /*  System.out.println("                                                     ");

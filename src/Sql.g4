@@ -24,19 +24,13 @@ fragment DAY       : DIGIT | TWO_DIGITS ;
 ID : LETTER ( LETTER | DIGIT )* ;
 NUM : DIGIT ( DIGIT )* ;
 FLOAT: DIGIT ( DIGIT )* ('.' (DIGIT)* )? ;
-Char : '\'' ASCII* '\'';
+Char: '\''~('\r'|'\n'|'\'')* '\'';
 DATE: YEAR '-' MONTH '-' DAY ;
  
  
 
 WS : 
     [\t\r\n\f ]+ -> skip
-    ;
-
-COMMENT
-    :   ( '//' ~[\r\n]* '\r'? '\n'	
-        | '/*' .*? '*/'	
-        ) -> skip
     ;
 
 
