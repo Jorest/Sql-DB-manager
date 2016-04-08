@@ -155,7 +155,9 @@ public class ControladorDB {
         File directorio= new File("BasesDatos");
         File[] bases=directorio.listFiles();
         for(int i=0; i<bases.length;i++){
+            if(!"basesDato.json".equals(bases[i].getName())){
             nombre.add(bases[i].getName());
+            }
         }
         log.add("Cargando Bases de Datos");
         return nombre;

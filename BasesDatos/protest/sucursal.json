@@ -1,0 +1,33 @@
+{
+  "nombre": "sucursal",
+  "columnas": [
+    {
+      "nombre": "id",
+      "tipo": "int",
+      "valores": [],
+      "charCant": 0
+    },
+    {
+      "nombre": "direccion",
+      "tipo": "char",
+      "valores": [],
+      "charCant": 40
+    },
+    {
+      "nombre": "abiertaen",
+      "tipo": "date",
+      "valores": [],
+      "charCant": 0
+    }
+  ],
+  "primaryk": [
+    {
+      "nombre": "pksucursal",
+      "idref": [
+        "id"
+      ]
+    }
+  ],
+  "foreignk": [],
+  "check": []
+}
