@@ -23,8 +23,7 @@ public class SqlParser extends Parser {
 		T__20=31, T__19=32, T__18=33, T__17=34, T__16=35, T__15=36, T__14=37, 
 		T__13=38, T__12=39, T__11=40, T__10=41, T__9=42, T__8=43, T__7=44, T__6=45, 
 		T__5=46, T__4=47, T__3=48, T__2=49, T__1=50, T__0=51, INT=52, CHAR=53, 
-		BOOLEAN=54, DATETIME=55, ID=56, NUM=57, FLOAT=58, Char=59, DATE=60, WS=61, 
-		COMMENT=62;
+		BOOLEAN=54, DATETIME=55, ID=56, NUM=57, FLOAT=58, Char=59, DATE=60, WS=61;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'FOREIGN'", "'CONSTRAINT'", "'FROM'", "'REFERENCES'", "'='", 
 		"'('", "','", "'COLUMNS'", "'PRIMARY'", "'ASC'", "'VALUES'", "'CHECK'", 
@@ -34,7 +33,7 @@ public class SqlParser extends Parser {
 		"'KEY'", "'ORDER'", "'*'", "'SELECT'", "'DROP'", "'DATE'", "'INT'", "'TO'", 
 		"'RENAME'", "'>'", "'OR'", "'ALTER'", "'USE'", "'FLOAT'", "')'", "'DESC'", 
 		"'DATABASE'", "'SET'", "'int'", "'char'", "'boolean'", "'datetime'", "ID", 
-		"NUM", "FLOAT", "Char", "DATE", "WS", "COMMENT"
+		"NUM", "FLOAT", "Char", "DATE", "WS"
 	};
 	public static final int
 		RULE_program = 0, RULE_sql_executable_statement = 1, RULE_sql_schema_statement = 2, 
@@ -3573,7 +3572,7 @@ public class SqlParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3@\u01d0\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3?\u01d0\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
